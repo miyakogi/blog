@@ -1,7 +1,8 @@
 Title: Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました
-Date: 2016-02-05 10:00
+Date: 2016-01-29 19:00
 Category: Vim
 Tags: Python, Vim
+slug: livemark
 
 Vimにchannel機能が実装されました。
 

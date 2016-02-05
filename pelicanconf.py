@@ -4,13 +4,16 @@ from __future__ import unicode_literals
 
 AUTHOR = 'miyakogi'
 SITENAME = 'Blank File'
-SITEURL = ''
+SITEURL = 'https://miyakogi.github.io/blog'
 
 PATH = 'content'
 
 TIMEZONE = 'Asia/Tokyo'
 
 DEFAULT_LANG = 'ja'
+
+ARTICLE_URL = 'posts/{date:%Y}-{date:%m}-{date:%d}/{slug}.html'
+ARTICLE_SAVE_AS = 'posts/{date:%Y}-{date:%m}-{date:%d}/{slug}.html'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
