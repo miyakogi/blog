@@ -65,6 +65,33 @@ Blank File            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
+                <h2><a href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">Vim の channel と json のパフォーマンス</a></h2>
+                <div class="summary"><p>先日公開した <a href="https://github.com/miyakogi/livemark.vim">livemark.vim</a> には想像以上にたくさんの反響をいただきました。
+ありがとうございます。
+最近では海外の方からもGithubのスターをいただきました。
+思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。</p>
+<ul>
+<li>channel をサポートしない vim では python を使うように修正<ul>
+<li>channelをサポートするvimでもpythonを使いたい場合は <code>let g:livemark_force_pysocket=1</code> で使えます</li>
+</ul>
+</li>
+<li>マークダウンの変換及びプレビュー表示をするpythonを指定する設定追加<ul>
+<li><code>let g:livemark_python='/path/to/python'</code> で指定できます</li>
+</ul>
+</li>
+<li>プレビューを表示するブラウザを vim から設定できるように修正<ul>
+<li><code>let g:livemark_browser='[ブラウザ名]'</code> で設定できます</li>
+<li>設定可能なブラウザと名前は<a href="http://docs.python.jp/3/library/webbrowser.html#webbrowser.register">ここ</a>を参照してください</li>
+</ul>
+</li>
+<li>プレビュー表示に使うポートと vim からデータを送るために使うポートの設定を追加<ul>
+<li>それぞれ <code>g:livemark_browser_port</code> と <code>g:livemark_vim_port</code> です</li>
+<li>デフォルト値はそれぞれ ...</li></ul></li></ul>
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark.html">Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</a></h2>
                 <div class="summary"><p>Vimにchannel機能が実装されました。</p>
 <p><a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm">Big Sky :: Vim にchannel(ソケット通信機能)が付いた。</a></p>
@@ -110,6 +137,11 @@ Blank File            </a>
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">
+                            Vim の channel と json のパフォーマンス
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark.html">
                             Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました
                         </a>
@@ -129,14 +161,14 @@ Blank File            </a>
 
             <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/python.html">
-                            Python
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            Vim
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
-                            Vim
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            Python
                         </a>
                     </li>
                 </ul>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Vim の channel と json のパフォーマンス - Blank File</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">
+
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="Vim" />
+        <meta name="description" content="先日公開した livemark.vim には想像以上にたくさんの反響をいただきました。 ありがとうございます。 最近では海外の方からもGithubのスターをいただきました。 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。 channel をサポートしない vim では python を使うように修正 channelをサポートするvimでもpythonを使いたい場合は let g:livemark_force_pysocket=1 で使えます マークダウンの変換及びプレビュー表示をするpythonを指定する設定追加 let g:livemark_python=&#39;/path/to/python&#39; で指定できます プレビューを表示するブラウザを vim から設定できるように修正 let g:livemark_browser=&#39;[ブラウザ名]&#39; で設定できます 設定可能なブラウザと名前はここを参照してください プレビュー表示に使うポートと vim からデータを送るために使うポートの設定を追加 それぞれ g:livemark_browser_port と g:livemark_vim_port です デフォルト値はそれぞれ ..." />
+
+        <meta property="og:site_name" content="Blank File" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Vim の channel と json のパフォーマンス"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html"/>
+        <meta property="og:description" content="先日公開した livemark.vim には想像以上にたくさんの反響をいただきました。 ありがとうございます。 最近では海外の方からもGithubのスターをいただきました。 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。 channel をサポートしない vim では python を使うように修正 channelをサポートするvimでもpythonを使いたい場合は let g:livemark_force_pysocket=1 で使えます マークダウンの変換及びプレビュー表示をするpythonを指定する設定追加 let g:livemark_python=&#39;/path/to/python&#39; で指定できます プレビューを表示するブラウザを vim から設定できるように修正 let g:livemark_browser=&#39;[ブラウザ名]&#39; で設定できます 設定可能なブラウザと名前はここを参照してください プレビュー表示に使うポートと vim からデータを送るために使うポートの設定を追加 それぞれ g:livemark_browser_port と g:livemark_vim_port です デフォルト値はそれぞれ ..."/>
+        <meta property="article:published_time" content="2016-02-06" />
+            <meta property="article:section" content="Vim" />
+            <meta property="article:tag" content="Vim" />
+            <meta property="article:author" content="miyakogi" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
+Blank File            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="https://miyakogi.github.io/blog/category/vim.html">Vim</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html"
+                       rel="bookmark"
+                       title="Permalink to Vim の channel と json のパフォーマンス">
+                        Vim の channel と json のパフォーマンス
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-02-06T10:00:00+09:00"> Sat 06 February 2016</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://miyakogi.github.io/blog/tag/vim.html">Vim</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>先日公開した <a href="https://github.com/miyakogi/livemark.vim">livemark.vim</a> には想像以上にたくさんの反響をいただきました。
+ありがとうございます。
+最近では海外の方からもGithubのスターをいただきました。
+思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。</p>
+<ul>
+<li>channel をサポートしない vim では python を使うように修正<ul>
+<li>channelをサポートするvimでもpythonを使いたい場合は <code>let g:livemark_force_pysocket=1</code> で使えます</li>
+</ul>
+</li>
+<li>マークダウンの変換及びプレビュー表示をするpythonを指定する設定追加<ul>
+<li><code>let g:livemark_python='/path/to/python'</code> で指定できます</li>
+</ul>
+</li>
+<li>プレビューを表示するブラウザを vim から設定できるように修正<ul>
+<li><code>let g:livemark_browser='[ブラウザ名]'</code> で設定できます</li>
+<li>設定可能なブラウザと名前は<a href="http://docs.python.jp/3/library/webbrowser.html#webbrowser.register">ここ</a>を参照してください</li>
+</ul>
+</li>
+<li>プレビュー表示に使うポートと vim からデータを送るために使うポートの設定を追加<ul>
+<li>それぞれ <code>g:livemark_browser_port</code> と <code>g:livemark_vim_port</code> です</li>
+<li>デフォルト値はそれぞれ 8089, 8090 です</li>
+</ul>
+</li>
+</ul>
+<p>とはいえ、まだ安定しているとは言いがたい状態なので、マークダウンのプレビューには <a href="https://github.com/kannokanno/previm">previm</a> などを使うのがいいと思います。</p>
+<p>今の実装だと変更がある度に画面全体を再描画していて大きいファイルのプレビューは厳しいので、差分だけ更新するような処理を実装中です。そんな感じで地味に更新したりしてたのですが、</p>
+<p>このパッチでchannel関係の関数名が全部かわったので動かなくなりました（つらい</p>
+<p>修正してもまた仕様変更あったら面倒だなぁ、と微妙にやる気が減退気味だったのと、pythonでデータ送ってもそんなにもたつきを感じなかったりして「もしかして vim の channel より python の方が速い・・・？いや channel も json も C で書かれてるしそんなはずは・・・でも Vim だし何が起きるかわからん」という疑問が沸き起こったのでベンチマーク取ってみました。</p>
+<p>Livemark.vim では編集中のバッファの文字列を取得して json として送っているので、</p>
+<ol>
+<li>データをjsonに変換する処理</li>
+<li>変換されたデータをサーバーに送りつける処理</li>
+</ol>
+<p>に分けて計測しました。また、Vimは一旦jsonに変換してから送る場合 (raw channel) とjsonへの変換も一気に行う場合 (json channel) の両方を測りました。</p>
+<p>データを送りつけられるサーバーがボトルネックになると意味ないので、サーバーは Nim で書きました。 サーバーのコードはこんな感じです。</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="n">nativesockets</span>
+<span class="kn">import</span> <span class="n">net</span>
+
+<span class="kd">var</span> <span class="n">server</span> <span class="o">=</span> <span class="n">newSocket</span><span class="p">()</span>
+<span class="k">let</span> <span class="n">port</span> <span class="o">=</span> <span class="n">Port</span><span class="p">(</span><span class="mi">8090</span><span class="p">)</span>
+<span class="n">server</span><span class="p">.</span><span class="n">bindAddr</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="s">&quot;localhost&quot;</span><span class="p">)</span>
+<span class="n">server</span><span class="p">.</span><span class="n">listen</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="kp">true</span><span class="p">:</span>
+  <span class="kd">var</span> <span class="n">client</span> <span class="o">=</span> <span class="n">newSocket</span><span class="p">()</span>
+  <span class="n">server</span><span class="p">.</span><span class="n">accept</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+  <span class="n">echo</span> <span class="s">&quot;accepted&quot;</span>
+
+  <span class="k">while</span> <span class="kp">true</span><span class="p">:</span>
+    <span class="kd">var</span> <span class="n">data</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="kd">var</span> <span class="n">res_client</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">res_client</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">echo</span> <span class="s">&quot;connection closed&quot;</span>
+      <span class="n">client</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+      <span class="k">break</span>
+
+<span class="n">server</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<p>ベンチマークのコードはこんな感じ</p>
+<div class="highlight"><pre><span class="k">scriptencoding</span> utf<span class="m">-8</span>
+
+<span class="k">let</span> s:data <span class="p">=</span> readfile<span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+
+<span class="k">function</span><span class="p">!</span> s:py_eval<span class="p">()</span> abort
+  <span class="k">python</span> <span class="o">&lt;&lt;</span>EOF
+<span class="kn">import</span> <span class="nn">socket</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">vim</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;s:data&#39;</span><span class="p">)</span>
+<span class="n">EOF</span>
+<span class="n">endfunction</span>
+
+<span class="n">function</span><span class="err">!</span> <span class="n">s</span><span class="p">:</span><span class="n">json_vim</span><span class="p">()</span> <span class="n">abort</span>
+  <span class="n">let</span> <span class="n">s</span><span class="p">:</span><span class="n">json_data</span> <span class="o">=</span> <span class="n">jsonencode</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">data</span><span class="p">)</span>
+<span class="n">endfunction</span>
+
+<span class="n">function</span><span class="err">!</span> <span class="n">s</span><span class="p">:</span><span class="n">json_py</span><span class="p">()</span> <span class="n">abort</span>
+  <span class="n">python</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">EOF</span>
+<span class="n">endfunction</span>
+
+<span class="n">function</span><span class="err">!</span> <span class="n">s</span><span class="p">:</span><span class="n">send_data_raw</span><span class="p">()</span> <span class="n">abort</span>
+  <span class="n">let</span> <span class="n">handler</span> <span class="o">=</span> <span class="n">ch_open</span><span class="p">(</span><span class="s1">&#39;localhost:8090&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;raw&#39;</span><span class="p">})</span>
+  <span class="n">call</span> <span class="n">ch_sendraw</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span><span class="n">json_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="n">call</span> <span class="n">ch_close</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+<span class="n">endfunction</span>
+
+<span class="n">function</span><span class="err">!</span> <span class="n">s</span><span class="p">:</span><span class="n">send_data_py</span><span class="p">()</span> <span class="n">abort</span>
+  <span class="n">python</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="c1"># data = json.dumps(vim.eval(&#39;s:data&#39;)).encode(&#39;utf-8&#39;)</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">create_connection</span><span class="p">((</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8090</span><span class="p">))</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+EOF
+<span class="k">endfunction</span>
+
+<span class="k">function</span><span class="p">!</span> s:send_data_sock<span class="p">()</span> abort
+  <span class="k">let</span> handler <span class="p">=</span> ch_open<span class="p">(</span><span class="s1">&#39;localhost:8090&#39;</span><span class="p">,</span> {<span class="s1">&#39;mode&#39;</span>: <span class="s1">&#39;json&#39;</span>}<span class="p">)</span>
+  <span class="k">call</span> ch_sendexpr<span class="p">(</span>handler<span class="p">,</span> s:data<span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+  <span class="k">call</span> ch_close<span class="p">(</span>handler<span class="p">)</span>
+<span class="k">endfunction</span>
+
+<span class="k">let</span> start_time <span class="p">=</span> reltime<span class="p">()</span>
+<span class="k">call</span> s:py_eval<span class="p">()</span>
+echo <span class="s1">&#39;py_eval:&#39;</span> . reltimestr<span class="p">(</span>reltime<span class="p">(</span>start_time<span class="p">))</span>
+
+<span class="k">let</span> start_time <span class="p">=</span> reltime<span class="p">()</span>
+<span class="k">call</span> s:json_vim<span class="p">()</span>
+echo <span class="s1">&#39;json_vim:&#39;</span> . reltimestr<span class="p">(</span>reltime<span class="p">(</span>start_time<span class="p">))</span>
+
+<span class="k">let</span> start_time <span class="p">=</span> reltime<span class="p">()</span>
+<span class="k">call</span> s:json_py<span class="p">()</span>
+echo <span class="s1">&#39;json_py:&#39;</span> . reltimestr<span class="p">(</span>reltime<span class="p">(</span>start_time<span class="p">))</span>
+
+<span class="k">let</span> start_time <span class="p">=</span> reltime<span class="p">()</span>
+<span class="k">call</span> s:send_data_raw<span class="p">()</span>
+echo <span class="s1">&#39;raw_channel:&#39;</span> . reltimestr<span class="p">(</span>reltime<span class="p">(</span>start_time<span class="p">))</span>
+
+<span class="k">let</span> start_time <span class="p">=</span> reltime<span class="p">()</span>
+<span class="k">call</span> s:send_data_py<span class="p">()</span>
+echo <span class="s1">&#39;python:&#39;</span> . reltimestr<span class="p">(</span>reltime<span class="p">(</span>start_time<span class="p">))</span>
+
+<span class="k">let</span> start_time <span class="p">=</span> reltime<span class="p">()</span>
+<span class="k">call</span> s:send_data_sock<span class="p">()</span>
+echo <span class="s1">&#39;json_channel:&#39;</span> . reltimestr<span class="p">(</span>reltime<span class="p">(</span>start_time<span class="p">))</span>
+</pre></div>
+
+
+<p><code>data.txt</code> には <code>This is sample data\n\n</code> が10万回、合計20万行入っています。
+Pythonの場合は Vim で読み込んだデータを python に渡す処理も入ってくるので、そこは別で計測しています。</p>
+<p>結果はこうなりました。（単位は秒、Vim のバージョンは 7.4.1265 です）</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>vim (json)</th>
+<th>vim (raw)</th>
+<th>python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vim -&gt; py</td>
+<td>-</td>
+<td>-</td>
+<td>0.165894</td>
+</tr>
+<tr>
+<td>json化</td>
+<td>-</td>
+<td>0.496177</td>
+<td>0.300104</td>
+</tr>
+<tr>
+<td>データ送信</td>
+<td>0.488828</td>
+<td>0.023818</td>
+<td>0.087396</td>
+</tr>
+<tr>
+<td>合計</td>
+<td>0.488828</td>
+<td>0.519995</td>
+<td>0.553394</td>
+</tr>
+</tbody>
+</table>
+<p>合計あまり変わらない・・・jsonのエンコードに時間かかってますね・・・しかもpython標準のjsonモジュールって（<a href="http://postd.cc/memory-use-and-speed-of-json-parsers/">略</a></p>
+<p>というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！レッツポジティブ！channelの仕様変更に負けずに地味に更新していきたいと思います！</p>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/miyakogi"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/MiyakoDev"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">
+                            Vim の channel と json のパフォーマンス
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark.html">
+                            Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Vim
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            Vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            Python
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 miyakogi
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
+
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
+</body>
+</html>
