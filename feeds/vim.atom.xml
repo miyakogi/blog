@@ -199,6 +199,8 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;p&gt;また、Vim上のカーソル位置も取得していますので、長い文章でブラウザの画面に収まらない場合、カーソル位置が画面に収まるようにいい感じ（自称）にスクロールします。&lt;/p&gt;
 &lt;p&gt;スタイルが何もないと寂しいので、&lt;a href="http://honokak.osaka/"&gt;Honoka&lt;/a&gt; という日本語向けの Bootstrap テーマを同梱させていただきました&lt;sup id="fnref:honoka-cdn"&gt;&lt;a class="footnote-ref" href="#fn:honoka-cdn" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。日本語でもきれいに表示されると思います。&lt;/p&gt;
 &lt;p&gt;終了する時は&lt;code&gt;:LiveMarkDisable&lt;/code&gt;です。何もしなくてもVimが終了した時にサーバープロセスは止まります。&lt;/p&gt;
+&lt;h4&gt;手抜き感の漂うスクリーンキャスト・・・&lt;/h4&gt;
+&lt;p&gt;&lt;img alt="screen cast" src="images/livemark_sample.gif" /&gt;&lt;/p&gt;
 &lt;h2&gt;諸注意&lt;/h2&gt;
 &lt;p&gt;エラーなどでPythonのプロセスが残ってしまう場合があります。その時はプロセスを殺してください。&lt;/p&gt;
 &lt;div class="footnote"&gt;
