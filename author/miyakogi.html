@@ -21,12 +21,14 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.min.css" type="text/css"/>
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
     <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
     <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
 
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
 
 
 
@@ -48,12 +50,6 @@ Blank File            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                        <li >
-                            <a href="https://miyakogi.github.io/blog/category/python.html">Python</a>
-                        </li>
-                        <li >
-                            <a href="https://miyakogi.github.io/blog/category/vim.html">Vim</a>
-                        </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
@@ -68,70 +64,40 @@ Blank File            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
-                <h2><a href="https://miyakogi.github.io/blog/posts/2016-02-06/ci1.html">カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</a></h2>
-                <div class="summary"><p>※注意：この記事には主観とグチが含まれています。</p>
-<p>コードのカバレッジ取得サービスを少し調べてみました。</p>
-<p>↓こんな感じのバッジがREADMEに表示されるやつです。</p>
-<p>TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
-カバレッジを取得できるCIサービスだと Coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったりエラーの時のおっさんのイラストにイラッときたりサイトの色合いが好みじゃなかったり全体的にデザインが好みじゃなかったり(作ってる人が)Ruby中心っぽくてPythonの公式サポートがわかりにくかったり(ってゆーかpypiのパッケージに説明丸投げ)なんか反応が遅かったりとあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか<a href="https://codecov.io/">Codecov</a>しか試してませんが。Codecovは<a href="http://blog-ja.sideci.com/entry/2016/01/13/110000">SideCIさんのブログ記事</a>で知りました。</p>
-<p><strong>結論：Codecovいい感じ！おすすめですよ！</strong></p>
-<h3>利用方法</h3>
-<p>どちらも公開リポジトリは無料です。プライベートリポジトリは優良プランになるので要確認です。</p>
-<p>公開リポジトリの使い方はどちらも大差ありません。Githubのアカウント連携で認証して、連携したいリポジトリを指定して、Travisとも連携してテスト後にそれぞれのサービス向けに用意されているコマンドを叩くだけです。Travis + Pythonの場合、<code>.travis.yml</code>に以下のように設定します。</p>
-<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install pytest pytest-cov</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install coveralls codecov</span>
-<span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">py.test --cov [module ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts/2016-02-06/ci1.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">Vim の channel と json のパフォーマンス</a></h2>
-                <div class="summary"><p>※注意：この記事には主観とグチが含まれています。</p>
+                <h2><a href="https://miyakogi.github.io/blog/posts_2016-02-06_ci1.html">カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</a></h2>
+                <div class="summary"><p>※ 注意：この記事には主観とグチが含まれています。</p>
 <p>コードのカバレッジ取得サービスを調べてみました。<a href="https://coveralls.io/">Coveralls.io</a>と<a href="https://codecov.io/">Codecov.io</a>の比較です。</p>
 <p>↓こんな感じのバッジがREADMEに表示されるやつです。</p>
 <p><a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"><img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /></a></p>
 <p>TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
-カバレッジを取得できるCIサービスだと coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったりエラーの時のおっさんのイラストにイラッときたりサイトの色合いが好みじゃなかったり全体的にデザインが好みじゃなかったり(作ってる人が)Ruby中心っぽくてPythonの公式サポートがわかりにくかったり(ってゆーかpypiのパッケージに説明丸投げ)なんか反応が遅かったりとあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか<a href="https://codecov.io/">Codecov</a>しか試してませんが。Codecovは<a href="http://blog-ja.sideci.com/entry/2016/01/13/110000">SideCIさんのブログ記事</a>で知りました。ありがとうございます。</p>
-<p><strong>結論：<a href="https://codecov.io/">Codecov</a>いい感じ！おすすめですよ！</strong></p>
-<h3>利用方法</h3>
-<p>どちらも公開リポジトリは無料です。プライベートリポジトリは有料プランになります。</p>
-<p>公開リポジトリの使い方はどちらも大差ありません。Githubのアカウント連携で認証して、連携したいリポジトリを指定して、Travisとも連携してテスト後にそれぞれのサービス向けに用意されているコマンドを叩くだけです。Travis + Pythonの場合、<code>.travis.yml</code>に以下のように設定します。</p>
-<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install pytest pytest-cov</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">more ...</a>
+カバレッジを取得できるCIサービスだと coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったり...とあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか<a href="https://codecov.io/">Codecov ...</a></p>
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts_2016-02-06_ci1.html">more ...</a>
                 </div>
             </article>
             <hr/>
             <article>
-                <h2><a href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark.html">Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</a></h2>
+                <h2><a href="https://miyakogi.github.io/blog/posts_2016-02-06_channel1.html">Vim の channel と json のパフォーマンス</a></h2>
+                <div class="summary"><p>先日公開した <a href="https://github.com/miyakogi/livemark.vim">livemark.vim</a> には想像以上にたくさんの反響をいただきました。
+ありがとうございます。
+最近では海外の方からもGithubのスターをいただきました。
+思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。</p>
+<ul>
+<li>channel をサポートしない vim では python を使うように修正<ul>
+<li>channelをサポートするvimでもpythonを使いたい場合は <code>let g:livemark_force_pysocket=1</code> で使えます ...</li></ul></li></ul>
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts_2016-02-06_channel1.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="https://miyakogi.github.io/blog/posts_2016-01-29_livemark1.html">Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</a></h2>
                 <div class="summary"><p>Vimにchannel機能が実装されました。</p>
 <p><a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm">Big Sky :: Vim にchannel(ソケット通信機能)が付いた。</a></p>
 <p>昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。</p>
 <p>というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
 みんな大好きMarkdownのリアルタイムプレビューです。</p>
 <p><a href="https://github.com/miyakogi/livemark.vim">miyakogi/livemark.vim</a></p>
-<p>channelを使ってみたかっただけなので、今のところデバッグ・エラー処理・設定などはやっつけです。
-お遊び以外では使わないでください。</p>
-<h2>インストール</h2>
-<p>インストール方法は普通のvimプラグインと同じです。コピーするなりプラグインマネージャを使うなり、お好みの方法でインストールしてください。</p>
-<p>NeoBundleをお使いの場合は <code>NeoBundle 'miyakogi/livemark.vim'</code> です。</p>
-<p>残念ながらVimはまだmarkdownの変換やwebサーバーなどの機能はないので、その辺りはPythonで処理しています。 以下のようにpythonのライブラリを別途インストールして下さい。</p>
-<div class="highlight"><pre>pip3 install misaka pygments tornado
-</pre></div>
-
-
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">a</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello!&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<p>pygments はコードのシンタックスハイライトに使っています。</p>
-<p>Vimのpythonではなく外部プロセスでpythonを起動しているので、vimは<code>+python3 ...</code></p>
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark.html">more ...</a>
+<p>channelを使ってみたかっただけなので、今のところデバッグ ...</p>
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/posts_2016-01-29_livemark1.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -152,17 +118,17 @@ Blank File            </a>
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/posts/2016-02-06/ci1.html">
+                        <a href="https://miyakogi.github.io/blog/posts_2016-02-06_ci1.html">
                             カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html">
+                        <a href="https://miyakogi.github.io/blog/posts_2016-02-06_channel1.html">
                             Vim の channel と json のパフォーマンス
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark.html">
+                        <a href="https://miyakogi.github.io/blog/posts_2016-01-29_livemark1.html">
                             Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました
                         </a>
                     </li>
@@ -187,13 +153,13 @@ Blank File            </a>
             <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
-                        <a href="https://miyakogi.github.io/blog/tag/python.html">
-                            Python
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            Vim
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
-                            Vim
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            Python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
