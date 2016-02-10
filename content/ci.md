@@ -4,22 +4,23 @@ Category: Python
 Tags: Python, CI
 slug: ci1
 
-※注意：この記事には主観とグチが含まれています。
+※ 注意：この記事には主観とグチが含まれています。
 
-コードのカバレッジ取得サービスを少し調べてみました。
+コードのカバレッジ取得サービスを調べてみました。[Coveralls.io](https://coveralls.io/)と[Codecov.io](https://codecov.io/)の比較です。
 
 ↓こんな感じのバッジがREADMEに表示されるやつです。
 
+[![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master)](https://codecov.io/github/miyakogi/coveralls_sample?branch=master)
 
 TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
-カバレッジを取得できるCIサービスだと Coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったりエラーの時のおっさんのイラストにイラッときたりサイトの色合いが好みじゃなかったり全体的にデザインが好みじゃなかったり(作ってる人が)Ruby中心っぽくてPythonの公式サポートがわかりにくかったり(ってゆーかpypiのパッケージに説明丸投げ)なんか反応が遅かったりとあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか[Codecov](https://codecov.io/)しか試してませんが。Codecovは[SideCIさんのブログ記事](http://blog-ja.sideci.com/entry/2016/01/13/110000)で知りました。
+カバレッジを取得できるCIサービスだと coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったり...とあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか[Codecov](https://codecov.io/)しか試してませんが。Codecovは[SideCIさんのブログ記事](http://blog-ja.sideci.com/entry/2016/01/13/110000)で知りました。ありがとうございます。
 
 
-**結論：Codecovいい感じ！おすすめですよ！**
+**結論：[Codecov](https://codecov.io/)いい感じ！おすすめですよ！**
 
-### 利用方法
+## 利用方法
 
-どちらも公開リポジトリは無料です。プライベートリポジトリは優良プランになるので要確認です。
+どちらも公開リポジトリは無料です。プライベートリポジトリは有料プランになります。
 
 公開リポジトリの使い方はどちらも大差ありません。Githubのアカウント連携で認証して、連携したいリポジトリを指定して、Travisとも連携してテスト後にそれぞれのサービス向けに用意されているコマンドを叩くだけです。Travis + Pythonの場合、`.travis.yml`に以下のように設定します。
 
@@ -42,6 +43,8 @@ after_success:
 
 下の画像はcoverallsのドキュメントのpythonの説明です。本当にこれだけです。やる気が感じられません。好みじゃないのでリンクは貼りません。対応言語は結構たくさんありました。Rubyとかはドキュメントも結構充実してました。
 
+![coveralls python document](images/coveralls_pydoc.png)
+
 まずpypiにcoveralls用のパッケージが二つあります。coverallsとpython-coverallsです。よくわからないのでざっくり説明を見た結果、おそらく大差ありません。coverallsの方がユーザーが一桁くらい多そうでした。公式が一つだけ用意してそれだけドキュメントに書いておいてくれればいいのに・・・
 
 また、coverallsの説明にはテストを走らせたあとに`coverage run`を実行してカバレッジを計算すると説明があるのですが、`py.test`を使った場合の説明がありません。私はpytestでテストを走らせてpytest-covというパッケージでテストと同時にカバレッジを取得していたので、追加でさらにcoverageを走らせるのか、スキップするテストの設定はどうするのか、カバレッジの計算から除外するモジュールの設定はどうするのか、などの情報がなくて困りました。実際にはpytest-covがcoverageを走らせているっぽいので特に何もしなくてよかったのですが。これは自分の知識不足が悪いのですが。。。情報少ない。。。そもそもトライするためのリポジトリをgithubに作っても、タイミングが悪かったのかgithubの更新が上手く取得できず、かなりストレスを感じました。
@@ -57,12 +60,16 @@ after_success:
 
 [miyakogi/coveralls_sample](https://github.com/miyakogi/coveralls_sample)
 
-どちらのバッジも大差ありません。カバレッジが表示されて、カバレッジが低いと赤っぽい色になります。
+バッジのデザインは大差ありません。カバレッジが表示されて、カバレッジが低いと赤っぽい色になります。
 
 ### リポジトリのページ
 
-バッジから対象リポジトリの結果を開いたところです。
+バッジから対象リポジトリの結果を開いたところです。（上：coveralls、下：codecov）
 どちらも全体のカバレッジはすぐわかるように大きく表示されています。
+
+![coveralls repository top](images/coveralls_top.png)
+
+![codecov repository top](images/codecov_top.png)
 
 Coverallsはビルド毎のカバレッジ変化が表示されているのですが、個別のファイルのカバレッジはパッと見ではわかりません。ここからさらにリンクをクリックしてページ遷移する必要があります。
 
@@ -72,6 +79,10 @@ Codecovは最新のカバレッジしか表示されていませんが、個別�
 
 どちらのサービスも行ベースでテストされている/されていない箇所を表示する機能があります。
 むしろこの機能のためにカバレッジ取得サービスを使うようなものなので、ないと話になりません。
+
+![coveralls file view](images/coveralls_file.png)
+
+![codecov file view](images/codecov_file.png)
 
 テストされている行は緑、されていない行は赤くなっています。
 色に関しては好みの範囲だと思いますが、私はcodecovの方が違いがわかりやすくて好きです。
@@ -83,20 +94,24 @@ Codecovは最新のカバレッジしか表示されていませんが、個別�
 - codecov
     - バッジ→ ファイル
 
-となっていてcodecovの方がファイルへのアクセスはしやすくなっています。その上、ユーザーが少ないからなのか、Codecovの方がページを開くのが速いです(体感)。
+となっていてcodecovの方がファイルへのアクセスはしやすくなっています。その上、ユーザーが少ないからなのか、codecovの方がページを開くのが速くて快適です(体感)。
 
-また、Codecovは[Chrome, Firefox, Opera向けのブラウザ拡張機能](https://github.com/codecov/browser-extension#codecov-extension)が用意されています。この拡張をインストールすると、GithubでCodecovと連携しているリポジトリのファイルを開いた時にテストの状況が表示されるようになります。
+また、codecovは[Chrome, Firefox, Opera向けのブラウザ拡張機能](https://github.com/codecov/browser-extension#codecov-extension)が用意されています。この拡張をインストールすると、Githubでcodecovと連携しているリポジトリのファイルを開いた時にテストの状況が表示されるようになります。
+
+![codecov github extension](images/codecov_github.png)
 
 邪魔な時は「Coverage xx.xx%」のところをクリックすれば消せます。
-個人的にはこの機能は気に入っています。Github上でカバレッジが確認できるのはポイント高いと思います。
+Github上でカバレッジが確認できるのはポイント高いと思います。
 見た目もいい感じです。
 
 
 ### その他の機能
 
-Codecovはslackなどへの通知機能もあるようです。Coverallsもあるのかもしれませんがよくわかりません。この機能は自分は使っていないのでよくわかりません。
+Codecovはslackなどへの通知機能もあるようです。Coverallsもあるのかもしれませんがよくわかりません。
 
 Codecovはリポジトリのページにビルド毎のカバレッジ変化が表示されていませんでしたが、カバレッジの変化をグラフ表示する機能があります。前述のサンプルリポジトリのグラフはこれです。
+
+![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master)
 
 バッジのようにMarkdownやHTMLで簡単に貼り付けることができます。上のグラフのMarkdownはこんな感じです。
 
@@ -104,14 +119,14 @@ Codecovはリポジトリのページにビルド毎のカバレッジ変化が�
 
 バッジやグラフのMarkdown表示などはここから取得できます。
 
-
+![codecov graph code](images/codecov_getgraph.png)
 
 <small>サイトのデザインは全体的にとてもオシャレな感じなのですが、なぜグラフだけこんなに残念な感じなのでしょうか。エクセルでももう少しマシなグラフを書いてくれそうです。しかも下部の会社名の所、見事にデザインが崩れています。改善を期待しています。。。</small>
 
-### まとめ
+## まとめ
 
-というわけで、全体的にCoverallsが印象悪かったせいでCodecovの広告記事みたいになってしまいましたが、Codecov良かったのでしばらく使うつもりです。
+というわけで、全体的にcoverallsが印象悪かったせいでcodecovの広告記事みたいになってしまいましたが、codecov良かったのでしばらく使うつもりです。
 
-Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にCodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません・・・)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・
+Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にcodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・
 
 長文にお付き合いいただきありがとうございました。参考になれば幸いです。

@@ -4,129 +4,149 @@ Category: Vim
 Tags: Vim
 slug: channel1
 
-※注意：この記事には主観とグチが含まれています。
+先日公開した [livemark.vim](https://github.com/miyakogi/livemark.vim) には想像以上にたくさんの反響をいただきました。
+ありがとうございます。
+最近では海外の方からもGithubのスターをいただきました。
+思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。
 
-コードのカバレッジ取得サービスを調べてみました。[Coveralls.io](https://coveralls.io/)と[Codecov.io](https://codecov.io/)の比較です。
+- channel をサポートしない vim では python を使うように修正
+    - channelをサポートするvimでもpythonを使いたい場合は `let g:livemark_force_pysocket=1` で使えます
+- マークダウンの変換及びプレビュー表示をするpythonを指定する設定追加
+    - `let g:livemark_python='/path/to/python'` で指定できます
+- プレビューを表示するブラウザを vim から設定できるように修正
+    - `let g:livemark_browser='[ブラウザ名]'` で設定できます
+    - 設定可能なブラウザと名前は[ここ](http://docs.python.jp/3/library/webbrowser.html#webbrowser.register)を参照してください
+- プレビュー表示に使うポートと vim からデータを送るために使うポートの設定を追加
+    - それぞれ `g:livemark_browser_port` と `g:livemark_vim_port` です
+    - デフォルト値はそれぞれ 8089, 8090 です
 
-↓こんな感じのバッジがREADMEに表示されるやつです。
+とはいえ、まだ安定しているとは言いがたい状態なので、マークダウンのプレビューには [previm](https://github.com/kannokanno/previm) などを使うのがいいと思います。
 
-[![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master)](https://codecov.io/github/miyakogi/coveralls_sample?branch=master)
+今の実装だと変更がある度に画面全体を再描画していて大きいファイルのプレビューは厳しいので、差分だけ更新するような処理を実装中です。
 
-TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
-カバレッジを取得できるCIサービスだと coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったりエラーの時のおっさんのイラストにイラッときたりサイトの色合いが好みじゃなかったり全体的にデザインが好みじゃなかったり(作ってる人が)Ruby中心っぽくてPythonの公式サポートがわかりにくかったり(ってゆーかpypiのパッケージに説明丸投げ)なんか反応が遅かったりとあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか[Codecov](https://codecov.io/)しか試してませんが。Codecovは[SideCIさんのブログ記事](http://blog-ja.sideci.com/entry/2016/01/13/110000)で知りました。ありがとうございます。
+そんな感じで地味に更新したりしてたのですが、[このパッチ](http://ftp.vim.org/vim/patches/7.4/7.4.1244)でchannel関係の関数名が全部変わったので動かなくなりました（つらい
 
+![channel error](images/channel_error.png)
 
-**結論：[Codecov](https://codecov.io/)いい感じ！おすすめですよ！**
+修正してもまた仕様変更あったら面倒だなぁ、と微妙にやる気が減退気味だったのと、pythonでデータ送ってもそんなにもたつきを感じなかったりして「もしかして Vim の channel より python の方が速い・・・？いや channel も json も C で書かれてるしそんなはずは・・・でも Vim だし何が起きるかわからん」という疑問が沸き起こったので測ってみました。
 
-### 利用方法
+Livemark.vim では編集中のバッファの文字列を取得して json として送っているので、
 
-どちらも公開リポジトリは無料です。プライベートリポジトリは有料プランになります。
+1. データをjsonに変換する処理
+2. 変換されたデータをサーバーに送りつける処理
 
-公開リポジトリの使い方はどちらも大差ありません。Githubのアカウント連携で認証して、連携したいリポジトリを指定して、Travisとも連携してテスト後にそれぞれのサービス向けに用意されているコマンドを叩くだけです。Travis + Pythonの場合、`.travis.yml`に以下のように設定します。
+に分けて計測しました。また、Vimは一旦jsonに変換してから送る場合 (raw channel) とjsonへの変換も一気に行う場合 (json channel) の両方を測りました。
 
-```yaml
-install:
-  - pip install pytest pytest-cov
-  - pip install coveralls codecov
-script:
-  - py.test --cov [module or package]
-after_success:
-  - coveralls
-  - codecov
+データを送りつけられるサーバーがボトルネックになると意味ないので、サーバーは Nim で書きました。 サーバーのコードはこんな感じです。
+
+```nim
+import nativesockets
+import net
+
+var server = newSocket()
+let port = Port(8090)
+server.bindAddr(port, "localhost")
+server.listen()
+
+while true:
+  var client = newSocket()
+  server.accept(client)
+  echo "accepted"
+
+  while true:
+    var data = ""
+    var res_client = client.recv(data, 4000)
+    if res_client <= 0:
+      echo "connection closed"
+      client.close()
+      break
+
+server.close()
 ```
 
-インストールの二行目で両方のサービス用のパッケージをインストールして、after_successのところでそれぞれのサービス用のコマンドを実行して結果を送信しています。
+ベンチマークのコードはこんな感じ
 
-実際には使う方のサービスだけ設定すればOKです。ってゆーかですね、coverallsはこれだけで済むということに気づくまで結構時間がかかりました。
+```vim
+scriptencoding utf-8
 
-#### 以下、しばらくcoverallsへの愚痴です
+let s:data = readfile('data.txt')
 
-下の画像はcoverallsのドキュメントのpythonの説明です。本当にこれだけです。やる気が感じられません。好みじゃないのでリンクは貼りません。対応言語は結構たくさんありました。Rubyとかはドキュメントも結構充実してました。
+function! s:py_eval() abort
+  python <<EOF
+import socket, json, vim
+data = vim.eval('s:data')
+EOF
+endfunction
 
-[f:id:h-miyako:20160206192641p:plain]
+function! s:json_vim() abort
+  let s:json_data = jsonencode(s:data)
+endfunction
 
-まずpypiにcoveralls用のパッケージが二つあります。coverallsとpython-coverallsです。よくわからないのでざっくり説明を見た結果、おそらく大差ありません。coverallsの方がユーザーが一桁くらい多そうでした。公式が一つだけ用意してそれだけドキュメントに書いておいてくれればいいのに・・・
+function! s:json_py() abort
+  python <<EOF
+json_data = json.dumps(data)
+EOF
+endfunction
 
-また、coverallsの説明にはテストを走らせたあとに`coverage run`を実行してカバレッジを計算すると説明があるのですが、`py.test`を使った場合の説明がありません。私はpytestでテストを走らせてpytest-covというパッケージでテストと同時にカバレッジを取得していたので、追加でさらにcoverageを走らせるのか、スキップするテストの設定はどうするのか、カバレッジの計算から除外するモジュールの設定はどうするのか、などの情報がなくて困りました。実際にはpytest-covがcoverageを走らせているっぽいので特に何もしなくてよかったのですが。これは自分の知識不足が悪いのですが。。。情報少ない。。。そもそもトライするためのリポジトリをgithubに作っても、タイミングが悪かったのかgithubの更新が上手く取得できず、かなりストレスを感じました。
+function! s:send_data_raw() abort
+  let handler = ch_open('localhost:8090', {'mode': 'raw'})
+  call ch_sendraw(handler, s:json_data, 0)
+  call ch_close(handler)
+endfunction
 
-#### 一方、codecovは
+function! s:send_data_py() abort
+  python <<EOF
+# data = json.dumps(vim.eval('s:data')).encode('utf-8')
+sock = socket.create_connection(('localhost', 8090))
+sock.send(json_data.encode('utf-8'))
+sock.close()
+EOF
+endfunction
 
-他の言語の説明でも結果のレポートはpipでインストールしたcodecovを使っていたので、pythonメインでやっている企業という印象です。[公式のリポジトリ](https://github.com/codecov/example-python)には必要十分な説明がって、すぐに使えました。`coverage`を使う方法、`nosetest`を使う方法、`pytest`を使う方法全て書かれています。また、Travisとの連携やCircleCIとの連携も書かれています。
+function! s:send_data_sock() abort
+  let handler = ch_open('localhost:8090', {'mode': 'json'})
+  call ch_sendexpr(handler, s:data, 0)
+  call ch_close(handler)
+endfunction
 
+let start_time = reltime()
+call s:py_eval()
+echo 'py_eval:' . reltimestr(reltime(start_time))
 
-## 両サービスの比較
+let start_time = reltime()
+call s:json_vim()
+echo 'json_vim:' . reltimestr(reltime(start_time))
 
-比較用のリポジトリをGithubに用意しました。それぞれのバッジから対象サービスを開けます。
+let start_time = reltime()
+call s:json_py()
+echo 'json_py:' . reltimestr(reltime(start_time))
 
-[miyakogi/coveralls_sample](https://github.com/miyakogi/coveralls_sample)
+let start_time = reltime()
+call s:send_data_raw()
+echo 'raw_channel:' . reltimestr(reltime(start_time))
 
-バッジのデザインは大差ありません。カバレッジが表示されて、カバレッジが低いと赤っぽい色になります。
+let start_time = reltime()
+call s:send_data_py()
+echo 'python:' . reltimestr(reltime(start_time))
 
-### リポジトリのページ
+let start_time = reltime()
+call s:send_data_sock()
+echo 'json_channel:' . reltimestr(reltime(start_time))
+```
 
-バッジから対象リポジトリの結果を開いたところです。（上：coveralls、下：codecov）
-どちらも全体のカバレッジはすぐわかるように大きく表示されています。
+`data.txt` には `This is sample data\n\n` が10万回、合計20万行入っています。
+Pythonの場合は Vim で読み込んだデータを python に渡す処理も入ってくるので、そこは別で計測しています。
 
-[f:id:h-miyako:20160206192853p:plain]
+結果はこうなりました。（単位は秒、Vim のバージョンは 7.4.1265 です）
 
-[f:id:h-miyako:20160206192906p:plain]
+|      | vim (json) | vim (raw) | python |
+|------|---------------|--------------|--------|
+| vim -> py | - | - |0.165894|
+| json化 | - |0.496177|0.300104|
+| データ送信 | 0.488828 |0.023818|0.087396|
+| 合計 | 0.488828 | 0.519995 | 0.553394 |
 
-Coverallsはビルド毎のカバレッジ変化が表示されているのですが、個別のファイルのカバレッジはパッと見ではわかりません。ここからさらにリンクをクリックしてページ遷移する必要があります。
+合計あまり変わらない・・・<s>Pythonよりは速くて「channelすごい！jsonすごい！」って記事になる予定だったのに・・・・</s>jsonのエンコードにすごい時間かかってますね・・・よく考えたら、一度Vim scriptになってるのでむしろよく頑張ってる方だと思います。
+「あれ、たしかpython標準のjsonモジュールって・・・」って[などの疑問](http://postd.cc/memory-use-and-speed-of-json-parsers/)を持ってはいけません。
 
-Codecovは最新のカバレッジしか表示されていませんが、個別のファイルのカバレッジも最初から表示されており、問題のあるファイルがすぐにわかります。この表示はツリー形式とリスト形式で切り替え可能です。また、ビルド毎のカバレッジの変化をグラフ表示する機能もあります（後述）。
-
-### テスト漏れ箇所の表示
-
-どちらのサービスも行ベースでテストされている/されていない箇所を表示する機能があります。
-むしろこの機能のためにカバレッジ取得サービスを使うようなものなので、ないと話になりません。
-
-[f:id:h-miyako:20160206193118p:plain]
-
-[f:id:h-miyako:20160206193129p:plain]
-
-テストされている行は緑、されていない行は赤くなっています。
-色に関しては好みの範囲だと思いますが、私はcodecovの方が違いがわかりやすくて好きです。
-
-ちなみに、個別のファイルの結果を表示させるまでのクリック数は、Githubのリポジトリから
-
-- coveralls
-    - バッジ→ ビルド番号か何かクリック→ ファイル
-- codecov
-    - バッジ→ ファイル
-
-となっていてcodecovの方がファイルへのアクセスはしやすくなっています。その上、ユーザーが少ないからなのか、codecovの方がページを開くのが速くて快適です(体感)。
-
-また、codecovは[Chrome, Firefox, Opera向けのブラウザ拡張機能](https://github.com/codecov/browser-extension#codecov-extension)が用意されています。この拡張をインストールすると、Githubでcodecovと連携しているリポジトリのファイルを開いた時にテストの状況が表示されるようになります。
-
-[f:id:h-miyako:20160206193336p:plain]
-
-邪魔な時は「Coverage xx.xx%」のところをクリックすれば消せます。
-Github上でカバレッジが確認できるのはポイント高いと思います。
-見た目もいい感じです。
-
-
-### その他の機能
-
-Codecovはslackなどへの通知機能もあるようです。Coverallsもあるのかもしれませんがよくわかりません。
-
-Codecovはリポジトリのページにビルド毎のカバレッジ変化が表示されていませんでしたが、カバレッジの変化をグラフ表示する機能があります。前述のサンプルリポジトリのグラフはこれです。
-
-![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master)
-
-バッジのようにMarkdownやHTMLで簡単に貼り付けることができます。上のグラフのMarkdownはこんな感じです。
-
-`![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master)`
-
-バッジやグラフのMarkdown表示などはここから取得できます。
-
-[f:id:h-miyako:20160206193425p:plain]
-
-<small>サイトのデザインは全体的にとてもオシャレな感じなのですが、なぜグラフだけこんなに残念な感じなのでしょうか。エクセルでももう少しマシなグラフを書いてくれそうです。しかも下部の会社名の所、見事にデザインが崩れています。改善を期待しています。。。</small>
-
-### まとめ
-
-というわけで、全体的にcoverallsが印象悪かったせいでcodecovの広告記事みたいになってしまいましたが、codecov良かったのでしばらく使うつもりです。
-
-Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にcodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・
-
-長文にお付き合いいただきありがとうございました。参考になれば幸いです。
+というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！

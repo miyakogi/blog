@@ -4,16 +4,23 @@ from __future__ import unicode_literals
 
 AUTHOR = 'miyakogi'
 SITENAME = 'Blank File'
-SITEURL = 'https://miyakogi.github.io/blog'
+SITEURL = ''
 
 PATH = 'content'
+# STATIC_PATHS = ['images']
 
 TIMEZONE = 'Asia/Tokyo'
 
 DEFAULT_LANG = 'ja'
 
-ARTICLE_URL = 'posts/{date:%Y}-{date:%m}-{date:%d}/{slug}.html'
-ARTICLE_SAVE_AS = 'posts/{date:%Y}-{date:%m}-{date:%d}/{slug}.html'
+ARTICLE_URL = 'posts_{date:%Y}-{date:%m}-{date:%d}_{slug}.html'
+ARTICLE_SAVE_AS = 'posts_{date:%Y}-{date:%m}-{date:%d}_{slug}.html'
+
+# Menu
+DISPLAY_CATEGORIES_ON_MENU = False
+
+# Summary
+SUMMARY_MAX_LENGTH = 20
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -41,8 +48,10 @@ DISPLAY_CATEGORIES_ON_SIDEBAR = True
 DISPLAY_RECENT_POSTS_ON_SIDEBAR = True
 
 # Theme
-THEME = 'theme/pelican-bootstrap3'
-BOOTSTRAP_THEME = ''
+THEME = 'theme/mybs'
+# http://getbootstrap.com/customize/?id=910fb5350e7add900d1d
+BOOTSTRAP_THEME = 'ja'
+BOOTSTRAP_NAVBAR_INVERSE = False
 PYGMENTS_STYLE = 'trac'
 
 # Social
@@ -55,7 +64,7 @@ ADDTHIS_PROFILE = 'ra-56b43892ef18a159'
 
 # Plugins
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['tag_cloud']
+PLUGINS = ['tag_cloud', 'bootstrap_table']
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

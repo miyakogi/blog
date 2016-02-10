@@ -2,7 +2,7 @@ Title: Vim に channel が実装されたので Markdown をプレビューす�
 Date: 2016-01-29 19:00
 Category: Vim
 Tags: Python, Vim
-slug: livemark
+slug: livemark1
 
 Vimにchannel機能が実装されました。
 
@@ -47,7 +47,11 @@ Vimで適当なmarkdownファイルを開き、`:LiveMark`を実行してくだ�
 
 また、Vim上のカーソル位置も取得していますので、長い文章でブラウザの画面に収まらない場合、カーソル位置が画面に収まるようにいい感じ（自称）にスクロールします。
 
-スタイルが何もないと寂しいので、[Honoka](http://honokak.osaka/) という日本語向けの Bootstrap テーマを同梱させていただきました((CDNがわからなかったのでコードを含めています。ライセンスはMITとの事なので大丈夫だとは思いますが、もし不都合ありましたらご一報ください。))。日本語でもきれいに表示されると思います。
+スタイルが何もないと寂しいので、[Honoka](http://honokak.osaka/) という日本語向けの Bootstrap テーマを同梱させていただきました[^honoka-cdn]。日本語でもきれいに表示されると思います。
+
+[^honoka-cdn]:
+    HonokaのCDNがわからなかったのでコードを含めています。
+    ライセンスはMITとのことなので大丈夫だとは思いますが、もし不都合ありましたらご一報ください。
 
 終了する時は`:LiveMarkDisable`です。何もしなくてもVimが終了した時にサーバープロセスは止まります。
 
