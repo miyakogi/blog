@@ -55,6 +55,10 @@ Vimで適当なmarkdownファイルを開き、`:LiveMark`を実行してくだ�
 
 終了する時は`:LiveMarkDisable`です。何もしなくてもVimが終了した時にサーバープロセスは止まります。
 
+#### 手抜き感の漂うスクリーンキャスト・・・
+
+![screen cast](images/livemark_sample.gif)
+
 ## 諸注意
 
 エラーなどでPythonのプロセスが残ってしまう場合があります。その時はプロセスを殺してください。
