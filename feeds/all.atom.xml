@@ -3,6 +3,8 @@
 &lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
 &lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;!-- more --&gt;
+
 &lt;p&gt;TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
 カバレッジを取得できるCIサービスだと coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったり...とあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか&lt;a href="https://codecov.io/"&gt;Codecov&lt;/a&gt;しか試してませんが。Codecovは&lt;a href="http://blog-ja.sideci.com/entry/2016/01/13/110000"&gt;SideCIさんのブログ記事&lt;/a&gt;で知りました。ありがとうございます。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;結論：&lt;a href="https://codecov.io/"&gt;Codecov&lt;/a&gt;いい感じ！おすすめですよ！&lt;/strong&gt;&lt;/p&gt;
@@ -80,6 +82,8 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
+&lt;!-- more --&gt;
+
 &lt;ul&gt;
 &lt;li&gt;channel をサポートしない vim では python を使うように修正&lt;ul&gt;
 &lt;li&gt;channelをサポートするvimでもpythonを使いたい場合は &lt;code&gt;let g:livemark_force_pysocket=1&lt;/code&gt; で使えます&lt;/li&gt;
@@ -252,6 +256,8 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
 &lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
 みんな大好きMarkdownのリアルタイムプレビューです。&lt;/p&gt;
+&lt;!-- more --&gt;
+
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;miyakogi/livemark.vim&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;channelを使ってみたかっただけなので、今のところデバッグ・エラー処理・設定などはやっつけです。
 お遊び以外では使わないでください。&lt;/p&gt;
