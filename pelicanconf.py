@@ -64,7 +64,7 @@ ADDTHIS_PROFILE = 'ra-56b43892ef18a159'
 
 # Plugins
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['tag_cloud', 'bootstrap_table']
+PLUGINS = ['tag_cloud', 'bootstrap_table', 'read_more']
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

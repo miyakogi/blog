@@ -9,6 +9,8 @@ slug: channel1
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。
 
+<!-- more -->
+
 - channel をサポートしない vim では python を使うように修正
     - channelをサポートするvimでもpythonを使いたい場合は `let g:livemark_force_pysocket=1` で使えます
 - マークダウンの変換及びプレビュー表示をするpythonを指定する設定追加

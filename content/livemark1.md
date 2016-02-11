@@ -13,6 +13,8 @@ Vimにchannel機能が実装されました。
 というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
 みんな大好きMarkdownのリアルタイムプレビューです。
 
+<!-- more -->
+
 [miyakogi/livemark.vim](https://github.com/miyakogi/livemark.vim)
 
 channelを使ってみたかっただけなので、今のところデバッグ・エラー処理・設定などはやっつけです。

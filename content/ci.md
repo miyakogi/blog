@@ -12,6 +12,8 @@ slug: ci1
 
 [![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master)](https://codecov.io/github/miyakogi/coveralls_sample?branch=master)
 
+<!-- more -->
+
 TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
 カバレッジを取得できるCIサービスだと coveralls を使っているプロジェクトが多いようですが、自分が試した時はなんか反応が鈍かったりgithubのリポジトリの更新が上手く反映されなかったり...とあまりいい印象がなかったので、他のサービスも試して比べてみました。他というか[Codecov](https://codecov.io/)しか試してませんが。Codecovは[SideCIさんのブログ記事](http://blog-ja.sideci.com/entry/2016/01/13/110000)で知りました。ありがとうございます。
 
