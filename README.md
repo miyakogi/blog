@@ -1,8 +1,7 @@
-Blog
-====
+[ブログ](https://miyakogi.github.io/blog/)
+==========================================
 
-[ブログ](https://miyakogi.github.io/blog)です。
+Python製の静的サイトジェネレータ、[Pelican](http://docs.getpelican.com/en/)を試しています。
 
-Pelicanの試験運用中です。
-
-今の所メインは[はてなブログ](http://h-miyako.hatenablog.com/)です。
+今のメインは[はてなブログ](http://h-miyako.hatenablog.com/)です。
+ここの内容ははてなブログに投稿したものとほぼ同じです。
