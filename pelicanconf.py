@@ -54,14 +54,6 @@ BOOTSTRAP_THEME = 'ja'
 BOOTSTRAP_NAVBAR_INVERSE = False
 PYGMENTS_STYLE = 'trac'
 
-# Social
-# GITHUB_USER = ''
-# GITHUB_REPO_COUNT = 3
-# GITHUB_SKIP_FORK = True
-TWITTER_USERNAME = 'miyakodev'
-TWITTER_WIDGET_ID = '695483665627766784'
-ADDTHIS_PROFILE = 'ra-56b43892ef18a159'
-
 # Plugins
 PLUGIN_PATHS = ['plugins']
 PLUGINS = ['tag_cloud', 'bootstrap_table', 'read_more']
