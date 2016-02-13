@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-06T17:00:00+09:00</updated><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/posts/2016-02-06/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/posts/2016-02-06/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-06T17:00:00+09:00</updated><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
 &lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
 &lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -26,7 +26,7 @@
 &lt;p&gt;実際には使う方のサービスだけ設定すればOKです。ってゆーかですね、coverallsはこれだけで済むということに気づくまで結構時間がかかりました。&lt;/p&gt;
 &lt;h4&gt;以下、しばらくcoverallsへの愚痴です&lt;/h4&gt;
 &lt;p&gt;下の画像はcoverallsのドキュメントのpythonの説明です。本当にこれだけです。やる気が感じられません。好みじゃないのでリンクは貼りません。対応言語は結構たくさんありました。Rubyとかはドキュメントも結構充実してました。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="coveralls python document" src="/images/coveralls_pydoc.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coveralls python document" src="https://miyakogi.github.io/blog/images/coveralls_pydoc.png" /&gt;&lt;/p&gt;
 &lt;p&gt;まずpypiにcoveralls用のパッケージが二つあります。coverallsとpython-coverallsです。よくわからないのでざっくり説明を見た結果、おそらく大差ありません。coverallsの方がユーザーが一桁くらい多そうでした。公式が一つだけ用意してそれだけドキュメントに書いておいてくれればいいのに・・・&lt;/p&gt;
 &lt;p&gt;また、coverallsの説明にはテストを走らせたあとに&lt;code&gt;coverage run&lt;/code&gt;を実行してカバレッジを計算すると説明があるのですが、&lt;code&gt;py.test&lt;/code&gt;を使った場合の説明がありません。私はpytestでテストを走らせてpytest-covというパッケージでテストと同時にカバレッジを取得していたので、追加でさらにcoverageを走らせるのか、スキップするテストの設定はどうするのか、カバレッジの計算から除外するモジュールの設定はどうするのか、などの情報がなくて困りました。実際にはpytest-covがcoverageを走らせているっぽいので特に何もしなくてよかったのですが。これは自分の知識不足が悪いのですが。。。情報少ない。。。そもそもトライするためのリポジトリをgithubに作っても、タイミングが悪かったのかgithubの更新が上手く取得できず、かなりストレスを感じました。&lt;/p&gt;
 &lt;h4&gt;一方、codecovは&lt;/h4&gt;
@@ -38,15 +38,15 @@
 &lt;h3&gt;リポジトリのページ&lt;/h3&gt;
 &lt;p&gt;バッジから対象リポジトリの結果を開いたところです。（上：coveralls、下：codecov）
 どちらも全体のカバレッジはすぐわかるように大きく表示されています。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="coveralls repository top" src="/images/coveralls_top.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov repository top" src="/images/codecov_top.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coveralls repository top" src="https://miyakogi.github.io/blog/images/coveralls_top.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov repository top" src="https://miyakogi.github.io/blog/images/codecov_top.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Coverallsはビルド毎のカバレッジ変化が表示されているのですが、個別のファイルのカバレッジはパッと見ではわかりません。ここからさらにリンクをクリックしてページ遷移する必要があります。&lt;/p&gt;
 &lt;p&gt;Codecovは最新のカバレッジしか表示されていませんが、個別のファイルのカバレッジも最初から表示されており、問題のあるファイルがすぐにわかります。この表示はツリー形式とリスト形式で切り替え可能です。また、ビルド毎のカバレッジの変化をグラフ表示する機能もあります（後述）。&lt;/p&gt;
 &lt;h3&gt;テスト漏れ箇所の表示&lt;/h3&gt;
 &lt;p&gt;どちらのサービスも行ベースでテストされている/されていない箇所を表示する機能があります。
 むしろこの機能のためにカバレッジ取得サービスを使うようなものなので、ないと話になりません。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="coveralls file view" src="/images/coveralls_file.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov file view" src="/images/codecov_file.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coveralls file view" src="https://miyakogi.github.io/blog/images/coveralls_file.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov file view" src="https://miyakogi.github.io/blog/images/codecov_file.png" /&gt;&lt;/p&gt;
 &lt;p&gt;テストされている行は緑、されていない行は赤くなっています。
 色に関しては好みの範囲だと思いますが、私はcodecovの方が違いがわかりやすくて好きです。&lt;/p&gt;
 &lt;p&gt;ちなみに、個別のファイルの結果を表示させるまでのクリック数は、Githubのリポジトリから&lt;/p&gt;
@@ -62,7 +62,7 @@
 &lt;/ul&gt;
 &lt;p&gt;となっていてcodecovの方がファイルへのアクセスはしやすくなっています。その上、ユーザーが少ないからなのか、codecovの方がページを開くのが速くて快適です(体感)。&lt;/p&gt;
 &lt;p&gt;また、codecovは&lt;a href="https://github.com/codecov/browser-extension#codecov-extension"&gt;Chrome, Firefox, Opera向けのブラウザ拡張機能&lt;/a&gt;が用意されています。この拡張をインストールすると、Githubでcodecovと連携しているリポジトリのファイルを開いた時にテストの状況が表示されるようになります。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov github extension" src="/images/codecov_github.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov github extension" src="https://miyakogi.github.io/blog/images/codecov_github.png" /&gt;&lt;/p&gt;
 &lt;p&gt;邪魔な時は「Coverage xx.xx%」のところをクリックすれば消せます。
 Github上でカバレッジが確認できるのはポイント高いと思います。
 見た目もいい感じです。&lt;/p&gt;
@@ -73,12 +73,12 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 &lt;p&gt;バッジのようにMarkdownやHTMLで簡単に貼り付けることができます。上のグラフのMarkdownはこんな感じです。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;バッジやグラフのMarkdown表示などはここから取得できます。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov graph code" src="/images/codecov_getgraph.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov graph code" src="https://miyakogi.github.io/blog/images/codecov_getgraph.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;small&gt;サイトのデザインは全体的にとてもオシャレな感じなのですが、なぜグラフだけこんなに残念な感じなのでしょうか。エクセルでももう少しマシなグラフを書いてくれそうです。しかも下部の会社名の所、見事にデザインが崩れています。改善を期待しています。。。&lt;/small&gt;&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;というわけで、全体的にcoverallsが印象悪かったせいでcodecovの広告記事みたいになってしまいましたが、codecov良かったのでしばらく使うつもりです。&lt;/p&gt;
 &lt;p&gt;Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にcodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・&lt;/p&gt;
-&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/posts/2016-02-06/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
@@ -107,7 +107,7 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 &lt;p&gt;とはいえ、まだ安定しているとは言いがたい状態なので、マークダウンのプレビューには &lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt; などを使うのがいいと思います。&lt;/p&gt;
 &lt;p&gt;今の実装だと変更がある度に画面全体を再描画していて大きいファイルのプレビューは厳しいので、差分だけ更新するような処理を実装中です。&lt;/p&gt;
 &lt;p&gt;そんな感じで地味に更新したりしてたのですが、&lt;a href="http://ftp.vim.org/vim/patches/7.4/7.4.1244"&gt;このパッチ&lt;/a&gt;でchannel関係の関数名が全部変わったので動かなくなりました（つらい&lt;/p&gt;
-&lt;p&gt;&lt;img alt="channel error" src="/images/channel_error.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="channel error" src="https://miyakogi.github.io/blog/images/channel_error.png" /&gt;&lt;/p&gt;
 &lt;p&gt;修正してもまた仕様変更あったら面倒だなぁ、と微妙にやる気が減退気味だったのと、pythonでデータ送ってもそんなにもたつきを感じなかったりして「もしかして Vim の channel より python の方が速い・・・？いや channel も json も C で書かれてるしそんなはずは・・・でも Vim だし何が起きるかわからん」という疑問が沸き起こったので測ってみました。&lt;/p&gt;
 &lt;p&gt;Livemark.vim では編集中のバッファの文字列を取得して json として送っているので、&lt;/p&gt;
 &lt;ol&gt;
@@ -251,7 +251,7 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;/table&gt;
 &lt;p&gt;合計あまり変わらない・・・&lt;s&gt;Pythonよりは速くて「channelすごい！jsonすごい！」って記事になる予定だったのに・・・・&lt;/s&gt;jsonのエンコードにすごい時間かかってますね・・・よく考えたら、一度Vim scriptになってるのでむしろよく頑張ってる方だと思います。
 「あれ、たしかpython標準のjsonモジュールって・・・」って&lt;a href="http://postd.cc/memory-use-and-speed-of-json-parsers/"&gt;などの疑問&lt;/a&gt;を持ってはいけません。&lt;/p&gt;
-&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/posts/2016-01-29/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
+&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm"&gt;Big Sky :: Vim にchannel(ソケット通信機能)が付いた。&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
 &lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
@@ -283,7 +283,7 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;p&gt;スタイルが何もないと寂しいので、&lt;a href="http://honokak.osaka/"&gt;Honoka&lt;/a&gt; という日本語向けの Bootstrap テーマを同梱させていただきました&lt;sup id="fnref:honoka-cdn"&gt;&lt;a class="footnote-ref" href="#fn:honoka-cdn" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。日本語でもきれいに表示されると思います。&lt;/p&gt;
 &lt;p&gt;終了する時は&lt;code&gt;:LiveMarkDisable&lt;/code&gt;です。何もしなくてもVimが終了した時にサーバープロセスは止まります。&lt;/p&gt;
 &lt;h4&gt;手抜き感の漂うスクリーンキャスト・・・&lt;/h4&gt;
-&lt;p&gt;&lt;img alt="screen cast" src="/images/livemark_sample.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="screen cast" src="https://miyakogi.github.io/blog/images/livemark_sample.gif" /&gt;&lt;/p&gt;
 &lt;h2&gt;諸注意&lt;/h2&gt;
 &lt;p&gt;エラーなどでPythonのプロセスが残ってしまう場合があります。その時はプロセスを殺してください。&lt;/p&gt;
 &lt;div class="footnote"&gt;

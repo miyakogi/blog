@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-06T10:00:00+09:00</updated><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/posts/2016-02-06/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/posts/2016-02-06/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-06T10:00:00+09:00</updated><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
@@ -28,7 +28,7 @@
 &lt;p&gt;とはいえ、まだ安定しているとは言いがたい状態なので、マークダウンのプレビューには &lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt; などを使うのがいいと思います。&lt;/p&gt;
 &lt;p&gt;今の実装だと変更がある度に画面全体を再描画していて大きいファイルのプレビューは厳しいので、差分だけ更新するような処理を実装中です。&lt;/p&gt;
 &lt;p&gt;そんな感じで地味に更新したりしてたのですが、&lt;a href="http://ftp.vim.org/vim/patches/7.4/7.4.1244"&gt;このパッチ&lt;/a&gt;でchannel関係の関数名が全部変わったので動かなくなりました（つらい&lt;/p&gt;
-&lt;p&gt;&lt;img alt="channel error" src="/images/channel_error.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="channel error" src="https://miyakogi.github.io/blog/images/channel_error.png" /&gt;&lt;/p&gt;
 &lt;p&gt;修正してもまた仕様変更あったら面倒だなぁ、と微妙にやる気が減退気味だったのと、pythonでデータ送ってもそんなにもたつきを感じなかったりして「もしかして Vim の channel より python の方が速い・・・？いや channel も json も C で書かれてるしそんなはずは・・・でも Vim だし何が起きるかわからん」という疑問が沸き起こったので測ってみました。&lt;/p&gt;
 &lt;p&gt;Livemark.vim では編集中のバッファの文字列を取得して json として送っているので、&lt;/p&gt;
 &lt;ol&gt;
@@ -172,7 +172,7 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;/table&gt;
 &lt;p&gt;合計あまり変わらない・・・&lt;s&gt;Pythonよりは速くて「channelすごい！jsonすごい！」って記事になる予定だったのに・・・・&lt;/s&gt;jsonのエンコードにすごい時間かかってますね・・・よく考えたら、一度Vim scriptになってるのでむしろよく頑張ってる方だと思います。
 「あれ、たしかpython標準のjsonモジュールって・・・」って&lt;a href="http://postd.cc/memory-use-and-speed-of-json-parsers/"&gt;などの疑問&lt;/a&gt;を持ってはいけません。&lt;/p&gt;
-&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/posts/2016-01-29/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/posts/2016-01-29/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
+&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm"&gt;Big Sky :: Vim にchannel(ソケット通信機能)が付いた。&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
 &lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
@@ -204,7 +204,7 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;p&gt;スタイルが何もないと寂しいので、&lt;a href="http://honokak.osaka/"&gt;Honoka&lt;/a&gt; という日本語向けの Bootstrap テーマを同梱させていただきました&lt;sup id="fnref:honoka-cdn"&gt;&lt;a class="footnote-ref" href="#fn:honoka-cdn" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。日本語でもきれいに表示されると思います。&lt;/p&gt;
 &lt;p&gt;終了する時は&lt;code&gt;:LiveMarkDisable&lt;/code&gt;です。何もしなくてもVimが終了した時にサーバープロセスは止まります。&lt;/p&gt;
 &lt;h4&gt;手抜き感の漂うスクリーンキャスト・・・&lt;/h4&gt;
-&lt;p&gt;&lt;img alt="screen cast" src="/images/livemark_sample.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="screen cast" src="https://miyakogi.github.io/blog/images/livemark_sample.gif" /&gt;&lt;/p&gt;
 &lt;h2&gt;諸注意&lt;/h2&gt;
 &lt;p&gt;エラーなどでPythonのプロセスが残ってしまう場合があります。その時はプロセスを殺してください。&lt;/p&gt;
 &lt;div class="footnote"&gt;
