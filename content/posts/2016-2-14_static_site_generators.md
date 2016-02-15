@@ -40,7 +40,7 @@ GitHub Pagesで公開する場合はghp-importを使って`ghp-import [directory
 
 今回検討した静的サイトジェネレータは以下の五つです。
 
-- [Pelican](http://docs.getpelican.com/en/3.6.3/) （[サンプル](https://miyakogi.github.io/blog/)）
+- [Pelican](http://docs.getpelican.com/) （[サンプル](https://miyakogi.github.io/blog/)）
 - [Cactus](https://github.com/koenbok/Cactus)
 - [Lektor](https://www.getlektor.com/)
 - [Nikola](https://www.getnikola.com/) （[サンプル](https://miyakogi.github.io/blog_nikola/)）
@@ -53,9 +53,9 @@ Hydeも気になりましたが、サイトのデザインが好みでなかっ�
 結論としてはとりあえずPelicanを使ってみることにしたので、その前提でお願いします。
 長いです。
 
-### Pelican
+## [Pelican](http://docs.getpelican.com/)
 
-[日本語ブログのサンプル](https://miyakogi.github.io/blog/) (テーマ：[pelican-bootstrap3](https://github.com/DandyDev/pelican-bootstrap3)をベースにフォントと文字サイズいじりました)
+[日本語ブログのサンプル](https://miyakogi.github.io/blog/) ([pelican-bootstrap3](https://github.com/DandyDev/pelican-bootstrap3)をベースにフォントと文字サイズいじりました)
 
 Python製静的サイトジェネレータの中では最も有名で、GitHubのスターも一番多いです。
 日本語でもPelicanでブログを作った記事はたくさんありました。
@@ -75,7 +75,7 @@ Python製静的サイトジェネレータの中では最も有名で、GitHub�
 テンプレートはJinja2なので、カスタマイズの敷居も低そうでした。
 また、プラグイン用のフックが色々用意されているので、欲しい機能があったら自分で追加するのも簡単そうでした。
 
-### [Cactus](https://github.com/koenbok/Cactus)
+## [Cactus](https://github.com/koenbok/Cactus)
 
 Djangoベースの静的サイトジェネレータです。
 スター数は2600くらいでかなり多い方です。
@@ -100,7 +100,7 @@ Markdown使いたかったら自分でビルドスクリプト書けというこ
 
 ということで、デザインはいい感じだったのですが手軽にブログが書ける感じではなかったので見送ります。
 
-### [Lektor](https://www.getlektor.com/)
+## [Lektor](https://www.getlektor.com/)
 
 昨年末に公開された新しい静的サイトジェネレータです。
 作者はFlaskやJinja2、clickなど有名なpythonパッケージを作っているArminさんです。
@@ -129,7 +129,7 @@ Issueは立っていたので、すぐサポートされると思います。
 WordPressのような感じで管理画面から記事を投稿したい人や、複数人で共同してサイトを作成する場合などはいいかもしれません。
 まだできたばかりなので、興味ある人は今から使ってテーマやプラグインを作ると第一人者になれますよ！
 
-### [Nikola](https://www.getnikola.com/)
+## [Nikola](https://www.getnikola.com/)
 
 [日本語ブログのサンプル](https://miyakogi.github.io/blog_nikola/)
 
@@ -179,7 +179,7 @@ TEASER_REGEXP = re.compile(r'<!--\s*(more)(:(.+))?\s*-->')
 サンプルを見ていただければわかりますが、デフォルトのbootstrapを使ったデザイン結構いい感じです。
 珍しいものでサイトを作りたい人にはいいかもしれません。
 
-### [Ark](http://mulholland.xyz/docs/ark/)
+## [Ark](http://mulholland.xyz/docs/ark/)
 
 [日本語ブログのサンプル](https://miyakogi.github.io/blog_ark/)
 
@@ -233,7 +233,7 @@ markdown = {
 ブログ用に使うのはまだちょっと厳しい感じでした。
 小さなプロジェクトのページくらいなら使えそうな気がします。
 
-### まとめ
+## まとめ
 
 結局Pelicanを使ってみることにしました。
 テーマが豊富なのは大きいです。
