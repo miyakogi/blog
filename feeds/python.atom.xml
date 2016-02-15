@@ -1,5 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-06T17:00:00+09:00</updated><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-15T15:00:00+09:00</updated><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215/static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215/static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
+ということでいくつか静的サイトジェネレータを調べてみたのでまとめておきます。&lt;/p&gt;
+&lt;p&gt;比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
+内容はこのブログの過去数回分です。
+同じテーマでも日本語だと雰囲気が違ったりするので、よかったら参考にしてください。&lt;/p&gt;
+&lt;!-- more --&gt;
+
+&lt;p&gt;ブログの移行を考えたきっかけは、はてなブログでgifファイルのアップロードができなかったからです。
+それ以外は特に不満はないのですが、せっかくなので勉強がてら静的サイトジェネレータを使ってみようかと。&lt;/p&gt;
+&lt;p&gt;私が静的サイトジェネレータに求める機能としては、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Markdownで書ける&lt;ul&gt;
+&lt;li&gt;バッククォート３つでのコードブロックも対応&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一からデザインするのは無理なのでそれなりのテーマがある&lt;/li&gt;
+&lt;li&gt;開発が続いている&lt;/li&gt;
+&lt;li&gt;画像も扱える&lt;ul&gt;
+&lt;li&gt;静的コンテンツへのリンクを開発環境と本番で変えられる&lt;/li&gt;
+&lt;li&gt;例えば、開発時は http://localhost:8000/、本番は https://user.github.io/page/ とか&lt;ul&gt;
+&lt;li&gt;本番環境でもドメインのルートに置けるなら気にならないと思います。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;トップに表示する記事の要約の範囲指定&lt;ul&gt;
+&lt;li&gt;はてなブログの「続きを読む」的なやつ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;です。
+あと、いざという時にコードを読んで対応できるように、自分の読めるPython製に絞って検討しました。
+なのでJekyllやHugo、Hexoは検討していません。&lt;/p&gt;
+&lt;p&gt;逆に重視しない機能は、運用（公開）の自動化や確認用のサーバーです。
+GitHub Pagesで公開する場合はghp-importを使って&lt;code&gt;ghp-import [directory]&lt;/code&gt;して&lt;code&gt;git push origin gh-pages&lt;/code&gt;するだけなので、特になくてもいいかと。
+サーバーも、ビルドするコマンドさえ提供されていれば&lt;a href="https://pypi.python.org/pypi/livereload"&gt;liveralod&lt;/a&gt;を使ったスクリプトを用意するので不要でした。&lt;/p&gt;
+&lt;p&gt;今回検討した静的サイトジェネレータは以下の五つです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://docs.getpelican.com/en/3.6.3/"&gt;Pelican&lt;/a&gt; （&lt;a href="https://miyakogi.github.io/blog/"&gt;サンプル&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/koenbok/Cactus"&gt;Cactus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.getlektor.com/"&gt;Lektor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.getnikola.com/"&gt;Nikola&lt;/a&gt; （&lt;a href="https://miyakogi.github.io/blog_nikola/"&gt;サンプル&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://mulholland.xyz/docs/ark/"&gt;Ark&lt;/a&gt; （&lt;a href="https://miyakogi.github.io/blog_ark/"&gt;サンプル&lt;/a&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;他にドキュメンテーションツールのSphinxやMkDocsでもhtmlを出力できますが、これらはブログ向けではないので候補から外しました。
+Hydeも気になりましたが、サイトのデザインが好みでなかったのと面倒になったのでパスしました。&lt;/p&gt;
+&lt;p&gt;以下、メモです。
+結論としてはとりあえずPelicanを使ってみることにしたので、その前提でお願いします。
+長いです。&lt;/p&gt;
+&lt;h3&gt;Pelican&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://miyakogi.github.io/blog/"&gt;日本語ブログのサンプル&lt;/a&gt; (テーマ：&lt;a href="https://github.com/DandyDev/pelican-bootstrap3"&gt;pelican-bootstrap3&lt;/a&gt;をベースにフォントと文字サイズいじりました)&lt;/p&gt;
+&lt;p&gt;Python製静的サイトジェネレータの中では最も有名で、GitHubのスターも一番多いです。
+日本語でもPelicanでブログを作った記事はたくさんありました。&lt;/p&gt;
+&lt;p&gt;テーマやプラグインが豊富でドキュメントも充実しているので、だいたいのことはなんとかなりそうです。
+テーマは&lt;a href="http://www.pelicanthemes.com/"&gt;Pelican themes&lt;/a&gt;にスクリーンショット付きでたくさん紹介されています。&lt;/p&gt;
+&lt;p&gt;使い方はすでにたくさん公開されているので割愛します。
+基本的には&lt;code&gt;pelican-quickstart&lt;/code&gt; -&amp;gt; &lt;code&gt;content&lt;/code&gt;以下に記事追加 -&amp;gt; &lt;code&gt;make html&lt;/code&gt; です。&lt;/p&gt;
+&lt;p&gt;画像は&lt;code&gt;content/images&lt;/code&gt;ディレクトリに入れておけば出力先にコピーされます。
+リンクする時は&lt;code&gt;{filename}/images/filename.png&lt;/code&gt;で、 &lt;code&gt;{filename}&lt;/code&gt;の部分はビルド時に設定した&lt;code&gt;SITE_URL&lt;/code&gt;で置き換えられます。
+開発用と本番用の設定ファイルが分離されているので、開発用（pelicanconf.py）では&lt;code&gt;SITE_URL=''&lt;/code&gt;にしておいて、本番用（publishconf.py）で&lt;code&gt;SITE_URL='https://user.github.com/page/'&lt;/code&gt;のようにしておけば、開発（&lt;code&gt;make html&lt;/code&gt;）と本番（&lt;code&gt;make publish&lt;/code&gt;）でURLを切り替えられます。&lt;/p&gt;
+&lt;p&gt;記事の要約はWord数で指定できるのですが、日本語だとwordカウントが微妙だったので自分で簡単なプラグインを書きました。&lt;/p&gt;
+&lt;p&gt;テンプレートはJinja2なので、カスタマイズの敷居も低そうでした。
+また、プラグイン用のフックが色々用意されているので、欲しい機能があったら自分で追加するのも簡単そうでした。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/koenbok/Cactus"&gt;Cactus&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Djangoベースの静的サイトジェネレータです。
+スター数は2600くらいでかなり多い方です。
+デザイナー向けを謳っていて、記事の公開など運用面でかなりサポートしてくれる感じですが、今回そういう機能は不要です。&lt;/p&gt;
+&lt;p&gt;インストールは普通に&lt;code&gt;pip install cactus&lt;/code&gt;でインストールされます。
+使い方は、サイトの新規作成が&lt;code&gt;cactus create path&lt;/code&gt;で、ビルドは&lt;code&gt;cactus build&lt;/code&gt;、閲覧用サーバーの起動は&lt;code&gt;cactus serve&lt;/code&gt;です。&lt;/p&gt;
+&lt;p&gt;ドキュメントは見つかりませんでした。
+GitHubのREADMEにかなり書かれているので、それで十分ということなのでしょうか？
+チュートリアルのビデオはありましたが、README以上の情報はありませんでした。&lt;/p&gt;
+&lt;p&gt;Django使うとなんか大げさな気がしてそれだけで少し敬遠してしまいました・・・
+あと &lt;code&gt;cactus serve&lt;/code&gt; でサーバーを立ち上げたらいきなりエラーになって印象悪かったです・・・
+設定ファイルがjsonなのも個人的には微妙でした。&lt;/p&gt;
+&lt;p&gt;デフォルトではブログというよりもポートフォリオサイトのようなものが作られます。
+ブログも作れるということでブログの例が&lt;a href="https://github.com/koenbok/CactusBlog/"&gt;公開されている&lt;/a&gt;のですが、これ記事も全部html（djangoテンプレート）で書かれています・・・
+Markdown使いたかったら自分でビルドスクリプト書けということでしょうか・・・
+一応プラグインサポートもあるのかな？
+誰も考えていないわけではなさそうです（&lt;a href="https://github.com/koenbok/Cactus/pull/96"&gt;First pass at Markdown-only blog posts&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;ということで、デザインはいい感じだったのですが手軽にブログが書ける感じではなかったので見送ります。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://www.getlektor.com/"&gt;Lektor&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;昨年末に公開された新しい静的サイトジェネレータです。
+作者はFlaskやJinja2、clickなど有名なpythonパッケージを作っているArminさんです。
+Flaskを作った方ということで、拡張性・柔軟性も強く意識しているようです。
+ドキュメントも充実しています。
+ただ、まだptyhon3で動かないみたいですね・・・これは厳しい・・・
+Issueは立っていたので、すぐサポートされると思います。&lt;/p&gt;
+&lt;p&gt;これは普通の静的サイトジェネレータとは毛色が異なります。
+記事を書いたり画像などのリソースを追加したり、コンテンツの管理は基本的に管理画面または&lt;a href="https://www.getlektor.com/downloads/"&gt;専用のアプリ&lt;/a&gt;から行うようです。
+ローカルでhtmlファイルを出力するという意味では静的サイトジェネレータなのですが、運用面ではWordPressなどのCMSに近い感じです。&lt;/p&gt;
+&lt;p&gt;コマンドラインから操作する場合は、まず&lt;code&gt;lektor quickstart&lt;/code&gt;でプロジェクトを作って、そこで&lt;code&gt;lektor server&lt;/code&gt;するとサーバーが立ち上がります。
+&lt;code&gt;http://localhost:5000&lt;/code&gt;にアクセスすると&lt;s&gt;寂しい感じの&lt;/s&gt;ページが表示されると思います。
+&lt;code&gt;http://localhost:5000/admin&lt;/code&gt;にアクセスすると管理画面が開いて、そこから記事の追加などが行えます。&lt;/p&gt;
+&lt;p&gt;記事本文はMarkdownで書けます。
+管理画面からプレビューもできます。
+記事のデータはテキストで保存されるのですが、&lt;code&gt;.lr&lt;/code&gt;という専用？のフォーマットです。
+直接テキストを編集するような使い方はあまり想定されていないのかもしれません。&lt;/p&gt;
+&lt;p&gt;公開されたばかりなので、テーマが少ないのは仕方ないと思います。
+テンプレートエンジンは当然Jinja2なので、自分で作るのも難しくはないと思います。&lt;/p&gt;
+&lt;p&gt;私はVimで記事を書きたかったので見送りました。
+WordPressのような感じで管理画面から記事を投稿したい人や、複数人で共同してサイトを作成する場合などはいいかもしれません。
+まだできたばかりなので、興味ある人は今から使ってテーマやプラグインを作ると第一人者になれますよ！&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://www.getnikola.com/"&gt;Nikola&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://miyakogi.github.io/blog_nikola/"&gt;日本語ブログのサンプル&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;普通の静的サイトジェネレータです。
+python-announce-listに頻繁に更新メールが送られてくるので、開発は活発だと思います。&lt;/p&gt;
+&lt;p&gt;Pelicanよりもマイナーなのでテーマや情報は少ないです。
+&lt;a href="https://getnikola.com/handbook.html"&gt;ドキュメント&lt;/a&gt;は非常に充実しているので、使う上で困ることはそんなになさそうです。
+機能は豊富だと思います。&lt;/p&gt;
+&lt;p&gt;デフォルト（デモ？）のサイトを作るのは&lt;code&gt;nikola init --demo [path]&lt;/code&gt;です。
+後は&lt;code&gt;nikola build&lt;/code&gt;とか&lt;code&gt;nikola serve&lt;/code&gt;でビルドしたり閲覧用のサーバーを起動したりできます。
+デフォルトのフォーマットはrstですが、設定ファイル(conf.py)に以下の行を追加することでmarkdownも使えます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;  &lt;span class="c1"&gt;# ここを追加&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.rst&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;nikola new_post&lt;/code&gt;で新しい記事が作れるのはいいですね。
+どの静的サイトジェネレータもタイトルや日付などのメタデータを入力する必要があったのですが、フォーマットを覚えてられないので他の記事からコピペして使うのが地味に面倒でした。
+（Pelicanはプラグインとかありそうですが、見つからなかったのでスクリプトを書きました。）&lt;/p&gt;
+&lt;p&gt;画像などの静的ファイルは&lt;code&gt;files&lt;/code&gt;ディレクトリに放り込めば出力先にコピーされます。
+困ったのはコンテンツへのリンクでした。
+設定ファイルの&lt;code&gt;SITE_URL&lt;/code&gt;でサイトのURLを指定するとそこを起点としたリンクが作成されるのですが、これを開発環境と本番環境で切り替える方法がわかりませんでした。
+組み込みのサーバ(&lt;code&gt;nikola serve&lt;/code&gt;)を立ち上げてローカルで確認する場合はローカルのリンクに変換されているようなので、これを使えばそんなに不便はないと思います。
+私は組み込みのサーバーを使わずにlivereloadでファイルの変更を検出して自動でビルド・ブラウザのリロードまでしたかったのですが、ちょっとその方法はわかりませんでした。&lt;/p&gt;
+&lt;p&gt;記事の要約は、区切りとなるコメントを挿入することで範囲を指定できます。
+Markdownの場合、デフォルトでは&lt;code&gt;&amp;lt;!-- TEASER_END --&amp;gt;&lt;/code&gt;というコメントまでが要約になります。
+はてなブログと同じ&lt;code&gt;&amp;lt;!-- more --&amp;gt;&lt;/code&gt;を使いたかったので、設定ファイルで以下のように設定しました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;INDEX_TEASERS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;span class="n"&gt;TEASER_REGEXP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r&amp;#39;&amp;lt;!--\s*(more)(:(.+))?\s*--&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;今回見送った理由は、上記の理由の他に、ビルドにかかる時間が他より長く感じたからです。
+長いと言っても数秒で終わるのですが、なんとなく不安を感じて。
+あと、なんかプロジェクトのロゴが残念な感じだったので。&lt;/p&gt;
+&lt;p&gt;サンプルを見ていただければわかりますが、デフォルトのbootstrapを使ったデザイン結構いい感じです。
+珍しいものでサイトを作りたい人にはいいかもしれません。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="http://mulholland.xyz/docs/ark/"&gt;Ark&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://miyakogi.github.io/blog_ark/"&gt;日本語ブログのサンプル&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;めっちゃマイナーです（githubのスター20個くらい）。
+つい最近pypiに登録されたばかりです。&lt;/p&gt;
+&lt;p&gt;実は静的サイトジェネレータでブログを作ろうかと思ったきっかけの一つはこれです。
+デフォルトのテーマがかっこいいんですよ。
+WordPressのtwentyfifteenがベースらしいのですが、WordPressはこんなにかっこいいテーマがすぐ使えるんですね、人気なの納得しました。&lt;/p&gt;
+&lt;p&gt;機能はシンプルです。
+新しいので情報はないに等しいと思うのですが、&lt;a href="http://mulholland.xyz/docs/ark/guide.html"&gt;ドキュメント&lt;/a&gt;が充実しているので意外と普通に使えました。
+むしろドキュメントが充実していて機能もシンプルなので、CactusやLektorよりとっつきやすかったです。&lt;/p&gt;
+&lt;p&gt;使い方は簡単で、&lt;code&gt;pip install ark&lt;/code&gt; でインストールして &lt;code&gt;ark init&lt;/code&gt; すると必要なファイルが用意されます。
+あとは &lt;code&gt;ark build&lt;/code&gt; すれば out ディレクトリに出力されます。
+とはいえ、いざとなったらソースを読む覚悟は必要です。
+今回、サイトのタイトルを設定する方法がわからなかったのでソース眺めましたが、設定ファイルに&lt;code&gt;title='タイトル'&lt;/code&gt;で設定出来ました。
+このあたりはテーマ（テンプレート）次第な気もしますが。&lt;/p&gt;
+&lt;p&gt;ブログ記事は &lt;code&gt;src/[posts]&lt;/code&gt; ディレクトリに置くだけです。
+新規記事の作成や既存記事の編集はコマンドも用意されていて、&lt;code&gt;ark edit posts filename&lt;/code&gt;で作成・編集できます。
+各記事はMarkdownで書けて、ファイルの最初にメタデータとしてタイトル、日付を書き、後は本文を書くだけです。
+メタデータには著者やタグなども書けます。
+コマンドから作成した時は時刻が入力されています。&lt;/p&gt;
+&lt;p&gt;Markdownの拡張はconfig.pyに以下の設定を追加する必要がありました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;extensions&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;fenced_code&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;codehilite&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;extra&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;画像などは&lt;code&gt;src&lt;/code&gt;以下のディレクトリに置けば出力時にコピーされます。
+ディレクトリも追加可能なので、&lt;code&gt;src/images&lt;/code&gt;などのディレクトリを作っておけば同じ構造で出力されます。
+リンクは&lt;code&gt;@root/&lt;/code&gt;で始めれば設定ファイル（config.py）で指定するサイトのルートURLに置き換えられます。
+ルートURLを開発用と本番用で切り替えるコマンドなどはないようですが、ルートURLを空（&lt;code&gt;root=""&lt;/code&gt;）にしておくと上記の&lt;code&gt;@root/&lt;/code&gt;の部分を相対リンクに変換してくれるので、特に問題なく使えました。&lt;/p&gt;
+&lt;p&gt;正直かなり惹かれました。
+作者の方は（これ用なのかわかりませんが）Markdownの方言？的なもの（&lt;a href="https://github.com/dmulholland/syntex"&gt;Syntex&lt;/a&gt;）やDjango/Jinja風のテンプレートエンジン（&lt;a href="https://github.com/dmulholland/ibis"&gt;Ibis&lt;/a&gt;）も作って公開しています。
+このジェネレータはそれらの形式もサポートしていますが、今回は興味なかったので内容は確認しませんでした。
+デフォルトでMarkdownやJinja2もサポートしているので実用上問題ありません。&lt;/p&gt;
+&lt;p&gt;採用しなかった理由は、さすがにマイナー過ぎて今後が心配なことと、記事の要約を出力する機能がみつからなかったことです。
+プラグインの機構はあるので拡張で作れそうですが、要約出力から作る必要がありそうで、ちょっとめんどくさそうでした。
+よく見たら記事のアーカイブもない？
+設定で出せるんでしょうか。
+タグ一覧は設定があったので出せると思います（未確認）。&lt;/p&gt;
+&lt;p&gt;ブログ用に使うのはまだちょっと厳しい感じでした。
+小さなプロジェクトのページくらいなら使えそうな気がします。&lt;/p&gt;
+&lt;h3&gt;まとめ&lt;/h3&gt;
+&lt;p&gt;結局Pelicanを使ってみることにしました。
+テーマが豊富なのは大きいです。
+せっかくなのでマイナーなものとか新しいものに挑戦したかったのですが、結局無難なところに落ち着いてしまって悲しい・・・
+Arkは何かのプロジェクトページで使うかもしれません。&lt;/p&gt;
+&lt;h3&gt;あとがき&lt;/h3&gt;
+&lt;p&gt;この記事書いてたらmattnさんがJekyll 3.0の記事を公開していました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/20160215110235.htm"&gt;Big Sky :: GitHub Pages が Jekyll 3.0 になり、ますますブログが書きやすくなった。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</summary><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
 &lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
 &lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;

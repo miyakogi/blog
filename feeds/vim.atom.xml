@@ -1,5 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-06T10:00:00+09:00</updated><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-14T13:14:00+09:00</updated><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;+channel&lt;/code&gt;なVimじゃなくても&lt;code&gt;+python&lt;/code&gt;なら動作するので、よければお試し下さい。
+安定したものがいい場合は&lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt;などをおすすめします。&lt;/p&gt;
+&lt;p&gt;オプションはGitHubの&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;README&lt;/a&gt;に一応全て書いてあります。
+まだバグがあるかもしれませんが、その時は&lt;a href="https://github.com/miyakogi/livemark.vim/issues"&gt;Issue&lt;/a&gt;に報告していただけると喜んで対応します。Issueを書くのが面倒でしたら、Twitterで&lt;a href="https://twitter.com/MiyakoDev"&gt;@MiyakoDev&lt;/a&gt;にメンションしていただいても大丈夫です。&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h3&gt;変更点&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://h-miyako.hatenablog.com/entry/2016/02/06/135203"&gt;先日の記事&lt;/a&gt;以降に追加した機能（オプション）は以下のとおりです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ユーザー指定のcss/jsを読み込む設定追加&lt;/li&gt;
+&lt;li&gt;シンタックスハイライトのテーマ指定追加&lt;/li&gt;
+&lt;li&gt;プレビュー画面のスクロール同期を止めるオプション追加&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ついでに、Pythonで書かれたプレビュー用のサーバー部分を&lt;a href="https://github.com/miyakogi/livemark"&gt;別リポジトリ&lt;/a&gt;に分離しました。
+まだ分離しただけに近い状態ですが、機能を整理してドキュメントやテストを追加して、Vim以外のエディタからも使えるような形にできたらいいなぁ、と思っています。&lt;/p&gt;
+&lt;h4&gt;CSS/JSファイルの読み込み&lt;/h4&gt;
+&lt;p&gt;デフォルトでは日本語向けBootstrapテーマの&lt;a href="http://honokak.osaka/"&gt;Honoka&lt;/a&gt;を読み込んでいます。
+それに伴い、CDNからjQueryもロードしています。&lt;/p&gt;
+&lt;p&gt;ちょっと使うには十分だと思いますが、自分のブログのテーマと同じデザインで使いたいなどの希望があるだろうと考え、CSSやJSを指定できるようにしました。
+パスの処理が雑なので、Windowsだと動かないかもしれません。&lt;/p&gt;
+&lt;p&gt;指定方法は、例えばCSSを追加してデフォルトのCSSを使わない場合は以下のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_css_files &lt;span class="p"&gt;=&lt;/span&gt; [expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;~/dotfiles/static/css/bootstrap.ja.min.css&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;]
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_no_default_css &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;複数のCSSファイルを指定したい場合はそれぞれリストに追加してください。
+リストに追加された順番で読み込みます。
+URLを指定すれば（たぶん）Web上のリソースを読み込むこともできます。
+その場合はURLを指定してください。
+例えば、&lt;code&gt;let g:livemark_css_files = ['https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js']&lt;/code&gt;のような感じです。&lt;/p&gt;
+&lt;p&gt;デフォルトのCSSを使用し、CSSを追加したいだけの場合は二行目は不要です。
+その場合、ブラウザ上での読み込み順は デフォルトのCSS -&amp;gt; 追加されたCSSの順になります。&lt;/p&gt;
+&lt;p&gt;JSについても同様です。各オプションの&lt;code&gt;css&lt;/code&gt;を&lt;code&gt;js&lt;/code&gt;に変更してください。&lt;/p&gt;
+&lt;h4&gt;シンタックスハイライトのテーマ設定&lt;/h4&gt;
+&lt;p&gt;シンタックスハイライトには&lt;a href="http://pygments.org/"&gt;pygments&lt;/a&gt;を使っています。
+デフォルトでは特に指定していないのでpygmentsのデフォルトテーマが使われますが、他にも色々なテーマがあるので変更できるようにしました。&lt;/p&gt;
+&lt;p&gt;変更するには以下の設定をvimrcに追加してください。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_highlight_theme &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;テーマ名&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用可能なテーマはインストールされているpygmentsに依存します。
+コマンドラインで確認するには、以下のコマンドを実行して下さい。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;python3 -c &lt;span class="s2"&gt;&amp;quot;import pygments.styles; print(pygments.styles.STYLE_MAP.keys())&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;表示されたキーが利用可能なテーマ名です。
+Livemarkのオプションで特定のpythonを指定している場合はpython3の部分をそちらに変えてください。&lt;/p&gt;
+&lt;h4&gt;スクロールの同期を止めるオプションの追加&lt;/h4&gt;
+&lt;p&gt;デフォルトではVimのカーソル位置に応じて画面をスクロールしています。
+具体的には、Vimのバッファに表示されている最初の行が画面の最上部に来るように調整しています。&lt;/p&gt;
+&lt;p&gt;とはいえ、MarkdownからHTMLに変更する時に行番号がずれてしまうので、一応頑張って調整していますが完璧ではありません。
+また、書いている時に動かない方がいい場合もあるかと思います。&lt;/p&gt;
+&lt;p&gt;ということで、以下のオプションでスクロールを停止できます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_disable_scroll &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;内部的な話&lt;/h3&gt;
+&lt;p&gt;内部的にはかなり大きな変更を行いました。&lt;/p&gt;
+&lt;p&gt;当初はカーソル移動やテキストの編集が行われるたびに全文をhtmlにパースし、プレビュー画面全部を書き換えるという力技で実装されていたのですが、さすがにこれだと大きなファイルの時に描画の遅れが深刻だったので修正しました。
+今は差分を検出して変更のあった部分だけを更新しています。
+個人的にはJSツラいのでJSではなくPythonで処理しました。&lt;/p&gt;
+&lt;p&gt;ちょうど今&lt;a href="https://github.com/miyakogi/wdom_py"&gt;wdom&lt;/a&gt;というPythonからブラウザ上のDOMを操作するライブラリを開発しているので、これを使ってHTMLからDOMにパースして変更箇所だけをブラウザ上で変更、という処理にしています。Livemark用のJSはスクロール用の関数を数行書いただけで、他はPythonで実装できました。変更がない時はHTMLへの変換も行わないので、カーソル移動はかなりスムーズになったと思います。&lt;/p&gt;
+&lt;p&gt;なお、このライブラリ（wdom）は絶賛開発途中です。
+Livemarkにバグがあっても「まぁ、そういう時もあるよね」という温かい心で接してください。&lt;/p&gt;
+&lt;p&gt;ちなみに、wdomで目指すところはほぼJSフリーでelectron/ブラウザを使ったGUIアプリの開発です。
+昨年からelectronが流行ってますけど、JSでデスクトップアプリ作りたい人だけじゃなくて、CSSフレームワーク（Bootstrapとか）のために渋々JS書いてる人も多いんじゃないの？というのが開発の動機です。
+&lt;s&gt;つまり既存のGUIライブラリは見た目が残念・・・&lt;/s&gt;
+今はLivemarkで色々使ってみて、必要な機能の確認とバグを洗い出している感じです。
+なのでまだドキュメントもありませんし、APIも変わる可能性があります。
+落ち着いたらPyPIに登録して &lt;strong&gt;「まだじゃわすくりぷとで消耗しているの？」&lt;/strong&gt; 的な煽りタイトルの記事を書きたいと思っています。
+ヘタれたらもっと穏便なタイトルにするので優しくしてください。&lt;/p&gt;
+&lt;p&gt;以上です。
+開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
