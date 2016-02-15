@@ -59,7 +59,7 @@ Vimで適当なmarkdownファイルを開き、`:LiveMark`を実行してくだ�
 
 #### 手抜き感の漂うスクリーンキャスト・・・
 
-![screen cast](images/livemark_sample.gif)
+![screen cast]({filename}/images/livemark_sample.gif)
 
 ## 諸注意
 

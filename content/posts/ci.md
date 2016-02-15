@@ -45,7 +45,7 @@ after_success:
 
 下の画像はcoverallsのドキュメントのpythonの説明です。本当にこれだけです。やる気が感じられません。好みじゃないのでリンクは貼りません。対応言語は結構たくさんありました。Rubyとかはドキュメントも結構充実してました。
 
-![coveralls python document](images/coveralls_pydoc.png)
+![coveralls python document]({filename}/images/coveralls_pydoc.png)
 
 まずpypiにcoveralls用のパッケージが二つあります。coverallsとpython-coverallsです。よくわからないのでざっくり説明を見た結果、おそらく大差ありません。coverallsの方がユーザーが一桁くらい多そうでした。公式が一つだけ用意してそれだけドキュメントに書いておいてくれればいいのに・・・
 
@@ -69,9 +69,9 @@ after_success:
 バッジから対象リポジトリの結果を開いたところです。（上：coveralls、下：codecov）
 どちらも全体のカバレッジはすぐわかるように大きく表示されています。
 
-![coveralls repository top](images/coveralls_top.png)
+![coveralls repository top]({filename}/images/coveralls_top.png)
 
-![codecov repository top](images/codecov_top.png)
+![codecov repository top]({filename}/images/codecov_top.png)
 
 Coverallsはビルド毎のカバレッジ変化が表示されているのですが、個別のファイルのカバレッジはパッと見ではわかりません。ここからさらにリンクをクリックしてページ遷移する必要があります。
 
@@ -82,9 +82,9 @@ Codecovは最新のカバレッジしか表示されていませんが、個別�
 どちらのサービスも行ベースでテストされている/されていない箇所を表示する機能があります。
 むしろこの機能のためにカバレッジ取得サービスを使うようなものなので、ないと話になりません。
 
-![coveralls file view](images/coveralls_file.png)
+![coveralls file view]({filename}/images/coveralls_file.png)
 
-![codecov file view](images/codecov_file.png)
+![codecov file view]({filename}/images/codecov_file.png)
 
 テストされている行は緑、されていない行は赤くなっています。
 色に関しては好みの範囲だと思いますが、私はcodecovの方が違いがわかりやすくて好きです。
@@ -100,7 +100,7 @@ Codecovは最新のカバレッジしか表示されていませんが、個別�
 
 また、codecovは[Chrome, Firefox, Opera向けのブラウザ拡張機能](https://github.com/codecov/browser-extension#codecov-extension)が用意されています。この拡張をインストールすると、Githubでcodecovと連携しているリポジトリのファイルを開いた時にテストの状況が表示されるようになります。
 
-![codecov github extension](images/codecov_github.png)
+![codecov github extension]({filename}/images/codecov_github.png)
 
 邪魔な時は「Coverage xx.xx%」のところをクリックすれば消せます。
 Github上でカバレッジが確認できるのはポイント高いと思います。
@@ -121,7 +121,7 @@ Codecovはリポジトリのページにビルド毎のカバレッジ変化が�
 
 バッジやグラフのMarkdown表示などはここから取得できます。
 
-![codecov graph code](images/codecov_getgraph.png)
+![codecov graph code]({filename}/images/codecov_getgraph.png)
 
 <small>サイトのデザインは全体的にとてもオシャレな感じなのですが、なぜグラフだけこんなに残念な感じなのでしょうか。エクセルでももう少しマシなグラフを書いてくれそうです。しかも下部の会社名の所、見事にデザインが崩れています。改善を期待しています。。。</small>
 

@@ -28,7 +28,7 @@ slug: channel1
 
 そんな感じで地味に更新したりしてたのですが、[このパッチ](http://ftp.vim.org/vim/patches/7.4/7.4.1244)でchannel関係の関数名が全部変わったので動かなくなりました（つらい
 
-![channel error](images/channel_error.png)
+![channel error]({filename}/images/channel_error.png)
 
 修正してもまた仕様変更あったら面倒だなぁ、と微妙にやる気が減退気味だったのと、pythonでデータ送ってもそんなにもたつきを感じなかったりして「もしかして Vim の channel より python の方が速い・・・？いや channel も json も C で書かれてるしそんなはずは・・・でも Vim だし何が起きるかわからん」という疑問が沸き起こったので測ってみました。
 

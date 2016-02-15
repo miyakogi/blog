@@ -7,14 +7,17 @@ SITENAME = 'Blank File'
 SITEURL = ''
 
 PATH = 'content'
-# STATIC_PATHS = ['images']
+STATIC_PATHS = ['images']
+ARTICLE_PATHS = ['posts']
 
 TIMEZONE = 'Asia/Tokyo'
 
 DEFAULT_LANG = 'ja'
 
-ARTICLE_URL = 'posts_{date:%Y}-{date:%m}-{date:%d}_{slug}.html'
-ARTICLE_SAVE_AS = 'posts_{date:%Y}-{date:%m}-{date:%d}_{slug}.html'
+ARTICLE_URL = '{date:%Y}{date:%m}{date:%d}/{slug}.html'
+ARTICLE_SAVE_AS = '{date:%Y}{date:%m}{date:%d}/{slug}.html'
+RELATIVE_URLS = False
+
 
 # Menu
 DISPLAY_CATEGORIES_ON_MENU = False
@@ -56,7 +59,8 @@ PYGMENTS_STYLE = 'trac'
 
 # Plugins
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['tag_cloud', 'bootstrap_table', 'read_more']
+PLUGINS = ['tag_cloud', 'bootstrap_table', 'hatena_read_more']
+# PLUGINS = []
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
