@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-15T15:00:00+09:00</updated><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215/static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215/static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
-ということでいくつか静的サイトジェネレータを調べてみたのでまとめておきます。&lt;/p&gt;
-&lt;p&gt;比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
+ということでいくつか静的サイトジェネレータを調べたのでまとめました。&lt;/p&gt;
+&lt;p&gt;ついでに比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
 内容はこのブログの過去数回分です。
 同じテーマでも日本語だと雰囲気が違ったりするので、よかったら参考にしてください。&lt;/p&gt;
 &lt;!-- more --&gt;
