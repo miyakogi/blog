@@ -1,5 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-14T13:14:00+09:00</updated><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-29T17:52:00+09:00</updated><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim-pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229/vim-pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
+dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。&lt;/p&gt;
+&lt;p&gt;この機能は入ったばかりなので、今後仕様の変更があるかもしれませんし、バグもあるかもしれませんし、（たぶん）機能追加もあると思います。
+記事の内容が古くなっているかもしれないので、日付とVimのバージョンをよく確認してください。&lt;/p&gt;
+&lt;p&gt;試す人は本体のデバッグに自分のVimを捧げる気持ちでいきましょう。
+バックアップ重要です。&lt;/p&gt;
+&lt;!-- more --&gt;
+
+&lt;h2&gt;メリット&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;プラグインマネージャが裏で色々頑張ってくれていることが理解できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;必要なもの&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;最新のVim&lt;/li&gt;
+&lt;li&gt;インストールするプラグイン&lt;/li&gt;
+&lt;li&gt;たくさんエラーが出てもいいVim環境&lt;/li&gt;
+&lt;li&gt;エラーやバグに負けない強い心&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;私は Kubuntu 15.10 で試しました。
+Vimのバージョンは7.4.1225くらいでした。&lt;/p&gt;
+&lt;h3&gt;情報源&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:help packages&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:help :loadplugin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:help 'packpath'&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;困ったら&lt;a href="https://github.com/vim/vim"&gt;ソースコード&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;とりあえずプラグインを入れてみる&lt;/h2&gt;
+&lt;p&gt;プラグインを入れるディレクトリは大別して二種類です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;~/.vim/pack/{好きな名前}/ever&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~/.vim/pack/{好きな名前}/opt&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基本的には&lt;code&gt;ever&lt;/code&gt;以下に自動的に読み込んでほしいプラグインを置いて、&lt;code&gt;opt&lt;/code&gt;以下に必要な時に読み込む（遅延読込する）プラグインを置く形です。
+すでにNeoBundleなどのプラグインマネージャを使っている場合はプラグインが一つのディレクトリにまとまっていると思いますので、その中身をまるっと&lt;code&gt;ever&lt;/code&gt;以下にコピーして&lt;code&gt;neobundle#begin()&lt;/code&gt;〜&lt;code&gt;neobundle#end()&lt;/code&gt;あたりを&lt;code&gt;if 0&lt;/code&gt;と&lt;code&gt;endif&lt;/code&gt;で囲めばすぐ試せます（微妙な仕様の違いがあるので、そのままだと大量のエラーを経験することになりますが）。&lt;/p&gt;
+&lt;p&gt;例えばplugin1とplugin2を&lt;code&gt;ever&lt;/code&gt;以下に置く場合は次のようなディレクトリ構成になります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;~/.vim
+├── pack
+│   ├── mypack
+│   │   ├── ever
+│   │   │   ├── plugin1
+│   │   │   │   ├── autoload
+│   │   │   │   ├── plugin
+│   │   │   │   └── README.md
+│   │   │   ├── plugin2
+│   │   │   │   ├── autoload
+│   │   │   │   ├── plugin
+│   │   │   │   └── readme.md
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;この状態でVimを起動すると、&lt;strong&gt;.vimrcなどを読み込んだ後に&lt;/strong&gt;自動的にplugin1とplugin2がruntimepathに追加されます。&lt;/p&gt;
+&lt;p&gt;太字部分重要です。
+つまりvimrcの中ではプラグインが定義するコマンドや関数は使えません。
+例えば&lt;code&gt;NoeBundle ~&lt;/code&gt;とかやっていた部分は全滅します。
+autoload関数も使えないので、設定で&lt;code&gt;call plugin#setup(...)&lt;/code&gt;などとしている部分も全滅です。
+また、プラグインもロードされていないので、例えば&lt;code&gt;if neobundle#is_installed('プラグイン名')&lt;/code&gt;などのかわりに単純に&lt;code&gt;if get(g:, 'loaded_プラグイン名')&lt;/code&gt;などと置き換える事もできません。
+値の設定（&lt;code&gt;let g:superplugin_default_option = 1&lt;/code&gt;など）は大丈夫です。&lt;/p&gt;
+&lt;p&gt;私はこれを回避するために、プラグインを使っている部分を別ファイルに分離してオートコマンドで&lt;code&gt;VimEnter&lt;/code&gt;時に読み込むようにしました。
+&lt;code&gt;~/.vim/after/plugin&lt;/code&gt;以下も試してみましたが、ここもパッケージのロードより先に読み込まれていました。
+最終的にはプラグインを使う設定を&lt;code&gt;~/.vim/config/plugins.vim&lt;/code&gt;に書いて、次のような設定をvimrcに追加しました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; filereadable&lt;span class="p"&gt;(&lt;/span&gt;expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;~/.vim/config/plugins.vim&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  autocmd myvimrc &lt;span class="nb"&gt;VimEnter&lt;/span&gt; * source &lt;span class="p"&gt;~&lt;/span&gt;&lt;span class="sr"&gt;/.vim/&lt;/span&gt;config/plugins.&lt;span class="k"&gt;vim&lt;/span&gt;
+&lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これで&lt;code&gt;plugins.vim&lt;/code&gt;の中ではプラグインが使えます。
+インストールの確認も&lt;code&gt;if get(g:, 'loaded_~')&lt;/code&gt;や&lt;code&gt;if exists(':PluginCommand')&lt;/code&gt;などでできます。
+&lt;code&gt;g:loaded_~&lt;/code&gt;を設定しないプラグインは、とりあえず&lt;code&gt;if match(&amp;amp;runtimepath, 'プラグイン名')&lt;/code&gt;で確認しています。&lt;/p&gt;
+&lt;p&gt;注意する点は、オプション値の設定（&lt;code&gt;let g:~~~ = ...&lt;/code&gt;と設定するタイプ）はvimrc内に書いたほうが安全ということです。
+読み込み時に設定値のチェックをしてそのまま使っているプラグインが結構あるようで、それらがロードされる前に値の設定を済ませる必要があるからです。&lt;/p&gt;
+&lt;h3&gt;読み込まれないプラグイン対策&lt;/h3&gt;
+&lt;p&gt;現在は&lt;code&gt;plugin&lt;/code&gt;ディレクトリがないプラグインは読み込まれない（runtimepathに追加されない）ようです。
+これはautoload関数だけを提供しているプラグイン（&lt;a href="https://github.com/kana/vim-textobj-user"&gt;textobj-user&lt;/a&gt;など）やカラースキーム（&lt;a href="https://github.com/altercation/vim-colors-solarized"&gt;solalized&lt;/a&gt;など）、スニペット集（&lt;a href="https://github.com/Shougo/neosnippet-snippets"&gt;neosnippet-snippets&lt;/a&gt;）などが該当し、読み込まれません。
+これが仕様として確定するのかわかりませんが、私はとりあえずの回避策として&lt;code&gt;mkdir plugin &amp;amp;&amp;amp; touch plugin/_.vim&lt;/code&gt;と適当にファイルを作って置きました。&lt;/p&gt;
+&lt;p&gt;また、&lt;code&gt;plugin&lt;/code&gt;直下に&lt;code&gt;*.vim&lt;/code&gt;ファイルがなく、さらにディレクトリがあるようなプラグインも読み込まれませんでした。
+仕様なのか微妙ですが、runtimepathには追加されているのでバグのような気がします。
+ありがたいことに&lt;a href="https://github.com/vim-jp/issues/issues/848"&gt;動作確認とIssue報告&lt;/a&gt;までしていただいたので、7.5のリリースまでに修正されるのではないかと。。。
+これも上記と同様に適当なファイル（&lt;code&gt;*.vim&lt;/code&gt;）をpluginディレクトリに置くことで読み込み可能です。&lt;/p&gt;
+&lt;h2&gt;遅延読み込み&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;opt&lt;/code&gt;以下のプラグインはそのままでは読み込まれません。
+&lt;code&gt;:loadplugin {プラグインのディレクトリ名}&lt;/code&gt;を実行して初めて有効になります。&lt;/p&gt;
+&lt;p&gt;私はとりあえずインサートモードで使うプラグインを&lt;code&gt;opt&lt;/code&gt;に置き、以下のような設定を行いました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; s:lazy_load_insert&lt;span class="p"&gt;()&lt;/span&gt; abort
+  loadplugin delimitMate
+  loadplugin &lt;span class="k"&gt;vim&lt;/span&gt;&lt;span class="p"&gt;-&lt;/span&gt;smartchr
+  loadplugin ...
+  ...
+&lt;span class="c"&gt;  &amp;quot; マッピングなどの設定があればする&lt;/span&gt;
+  &lt;span class="k"&gt;call&lt;/span&gt; s:init_delimitMate&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c"&gt;  &amp;quot; 二回目以降実行されないようにautocmdを削除&lt;/span&gt;
+  autocmd&lt;span class="p"&gt;!&lt;/span&gt; lazy_load_i
+&lt;span class="k"&gt;endfunction&lt;/span&gt;
+
+augroup lazy_load_i
+  autocmd&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="nb"&gt;InsertEnter&lt;/span&gt; * &lt;span class="k"&gt;call&lt;/span&gt; s:lazy_load_insert&lt;span class="p"&gt;()&lt;/span&gt;
+augroup END
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;NeoBundleはコマンド実行や関数呼び出しやマッピングをトリガにして遅延読み込みできますが、大変そうだったのでそこまでやっていません。
+起動時間に露骨に影響するようなプラグインはそもそも入れてないというのもありますが。
+（NERDTreeやsyntasticは読み込みに結構時間かかるので使っていません）&lt;/p&gt;
+&lt;h2&gt;起動時間&lt;/h2&gt;
+&lt;p&gt;みなさん気になると思います。
+ざっくり雑に測っただけですが、とりあえず遅延読み込みしないで全部読み込むような条件ではdein.vimと同じか少し速いくらい、NeoBundleより30~40%速い感じでした。
+ただ、上に書いたように読み込まれないプラグインがけっこうあって、気づいたものは対策しましたがまだ読み込まれていないものもありそうなので、実際にはdein.vimと同じくらいじゃないかと思います。&lt;/p&gt;
+&lt;p&gt;余談ですが、Vimの起動時間が気になる人は（もしやっていないなら）ファイルタイプの設定を自前で用意してデフォルトの&lt;code&gt;filetype.vim&lt;/code&gt;を読まないようにするといいと思います。
+デフォルトの設定だと人生で一度も使わないであろうファイルタイプの設定が大量にあるので。
+デフォルトの&lt;code&gt;filetype.vim&lt;/code&gt;は&lt;code&gt;share/vim/vim74/filetype.vim&lt;/code&gt;にあります。
+ここから必要そうな設定を拝借してvimrcで設定するなりして、&lt;code&gt;let g:did_loaded_filetypes=1&lt;/code&gt;しておけばデフォルトのファイルタイプ設定は読まれなくなります。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;NeoBundleがメンテナンスモードに入ると聞いてdein.vimへの移行を考えている方、どうせプラグイン周りの設定をいじるならついでに本体のパッケージ機能も試してみませんか？
+いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;+channel&lt;/code&gt;なVimじゃなくても&lt;code&gt;+python&lt;/code&gt;なら動作するので、よければお試し下さい。
 安定したものがいい場合は&lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt;などをおすすめします。&lt;/p&gt;
 &lt;p&gt;オプションはGitHubの&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;README&lt;/a&gt;に一応全て書いてあります。
