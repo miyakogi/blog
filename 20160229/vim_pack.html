@@ -213,7 +213,7 @@ augroup END
 <p>余談ですが、Vimの起動時間が気になる人は（もしやっていないなら）ファイルタイプの設定を自前で用意してデフォルトの<code>filetype.vim</code>を読まないようにするといいと思います。
 デフォルトの設定だと人生で一度も使わないであろうファイルタイプの設定が大量にあるので。
 デフォルトの<code>filetype.vim</code>は<code>share/vim/vim74/filetype.vim</code>にあります。
-ここから必要そうな設定を拝借してvimrcで設定するなりして、<code>let g:did_loaded_filetypes=1</code>しておけばデフォルトのファイルタイプ設定は読まれなくなります。</p>
+ここから必要そうな設定を拝借してvimrcで設定するなりして、<code>let g:did_load_filetypes=1</code>しておけばデフォルトのファイルタイプ設定は読まれなくなります。</p>
 <h2>まとめ</h2>
 <p>NeoBundleがメンテナンスモードに入ると聞いてdein.vimへの移行を考えている方、どうせプラグイン周りの設定をいじるならついでに本体のパッケージ機能も試してみませんか？
 いっしょに人柱してバグを探しましょう。</p>
@@ -301,6 +301,11 @@ augroup END
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/pelican.html">
                             pelican
                         </a>
@@ -308,11 +313,6 @@ augroup END
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/ci.html">
                             CI
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
                         </a>
                     </li>
                 </ul>

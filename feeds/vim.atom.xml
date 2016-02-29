@@ -112,7 +112,7 @@ augroup END
 &lt;p&gt;余談ですが、Vimの起動時間が気になる人は（もしやっていないなら）ファイルタイプの設定を自前で用意してデフォルトの&lt;code&gt;filetype.vim&lt;/code&gt;を読まないようにするといいと思います。
 デフォルトの設定だと人生で一度も使わないであろうファイルタイプの設定が大量にあるので。
 デフォルトの&lt;code&gt;filetype.vim&lt;/code&gt;は&lt;code&gt;share/vim/vim74/filetype.vim&lt;/code&gt;にあります。
-ここから必要そうな設定を拝借してvimrcで設定するなりして、&lt;code&gt;let g:did_loaded_filetypes=1&lt;/code&gt;しておけばデフォルトのファイルタイプ設定は読まれなくなります。&lt;/p&gt;
+ここから必要そうな設定を拝借してvimrcで設定するなりして、&lt;code&gt;let g:did_load_filetypes=1&lt;/code&gt;しておけばデフォルトのファイルタイプ設定は読まれなくなります。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;NeoBundleがメンテナンスモードに入ると聞いてdein.vimへの移行を考えている方、どうせプラグイン周りの設定をいじるならついでに本体のパッケージ機能も試してみませんか？
 いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
