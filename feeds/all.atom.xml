@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-29T17:52:00+09:00</updated><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229_vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229_vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-29T17:52:00+09:00</updated><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229/vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
 dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。&lt;/p&gt;
 &lt;p&gt;この機能は入ったばかりなので、今後仕様の変更があるかもしれませんし、バグもあるかもしれませんし、（たぶん）機能追加もあると思います。
 記事の内容が古くなっているかもしれないので、日付とVimのバージョンをよく確認してください。&lt;/p&gt;
@@ -116,7 +116,7 @@ augroup END
 ここから必要そうな設定を拝借してvimrcで設定するなりして、&lt;code&gt;let g:did_load_filetypes=1&lt;/code&gt;しておけばデフォルトのファイルタイプ設定は読まれなくなります。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;NeoBundleがメンテナンスモードに入ると聞いてdein.vimへの移行を考えている方、どうせプラグイン周りの設定をいじるならついでに本体のパッケージ機能も試してみませんか？
-いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215_static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215_static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
+いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215/static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215/static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
 ということでいくつか静的サイトジェネレータを調べたのでまとめました。&lt;/p&gt;
 &lt;p&gt;ついでに比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
 内容はこのブログの過去数回分です。
@@ -309,7 +309,7 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;h3&gt;あとがき&lt;/h3&gt;
 &lt;p&gt;この記事書いてたらmattnさんがJekyll 3.0の記事を公開していました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/20160215110235.htm"&gt;Big Sky :: GitHub Pages が Jekyll 3.0 になり、ますますブログが書きやすくなった。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</summary><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214_livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214_livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
+&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</summary><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;+channel&lt;/code&gt;なVimじゃなくても&lt;code&gt;+python&lt;/code&gt;なら動作するので、よければお試し下さい。
 安定したものがいい場合は&lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt;などをおすすめします。&lt;/p&gt;
 &lt;p&gt;オプションはGitHubの&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;README&lt;/a&gt;に一応全て書いてあります。
@@ -386,7 +386,7 @@ Livemarkにバグがあっても「まぁ、そういう時もあるよね」と
 落ち着いたらPyPIに登録して &lt;strong&gt;「まだじゃわすくりぷとで消耗しているの？」&lt;/strong&gt; 的な煽りタイトルの記事を書きたいと思っています。
 ヘタれたらもっと穏便なタイトルにするので優しくしてください。&lt;/p&gt;
 &lt;p&gt;以上です。
-開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206_ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206_ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
+開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
 &lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
 &lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -465,7 +465,7 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;というわけで、全体的にcoverallsが印象悪かったせいでcodecovの広告記事みたいになってしまいましたが、codecov良かったのでしばらく使うつもりです。&lt;/p&gt;
 &lt;p&gt;Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にcodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・&lt;/p&gt;
-&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206_channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206_channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
@@ -638,7 +638,7 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;/table&gt;
 &lt;p&gt;合計あまり変わらない・・・&lt;s&gt;Pythonよりは速くて「channelすごい！jsonすごい！」って記事になる予定だったのに・・・・&lt;/s&gt;jsonのエンコードにすごい時間かかってますね・・・よく考えたら、一度Vim scriptになってるのでむしろよく頑張ってる方だと思います。
 「あれ、たしかpython標準のjsonモジュールって・・・」って&lt;a href="http://postd.cc/memory-use-and-speed-of-json-parsers/"&gt;などの疑問&lt;/a&gt;を持ってはいけません。&lt;/p&gt;
-&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129_livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129_livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
+&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm"&gt;Big Sky :: Vim にchannel(ソケット通信機能)が付いた。&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
 &lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
