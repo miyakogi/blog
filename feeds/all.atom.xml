@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-29T17:52:00+09:00</updated><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229/vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-29T17:52:00+09:00</updated><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229_vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229_vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
 dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。&lt;/p&gt;
 &lt;p&gt;この機能は入ったばかりなので、今後仕様の変更があるかもしれませんし、バグもあるかもしれませんし、（たぶん）機能追加もあると思います。
 記事の内容が古くなっているかもしれないので、日付とVimのバージョンをよく確認してください。&lt;/p&gt;
@@ -7,6 +7,7 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
 バックアップ重要です。&lt;/p&gt;
 &lt;!-- more --&gt;
 
+&lt;p&gt;[2016/03/07: &lt;code&gt;:loadplugin&lt;/code&gt;が削除され&lt;code&gt;:packadd&lt;/code&gt;が追加されたので修正]&lt;/p&gt;
 &lt;h2&gt;メリット&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;プラグインマネージャが裏で色々頑張ってくれていることが理解できる&lt;/li&gt;
@@ -23,7 +24,7 @@ Vimのバージョンは7.4.1225くらいでした。&lt;/p&gt;
 &lt;h3&gt;情報源&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;:help packages&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;:help :loadplugin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:help :packadd&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;:help 'packpath'&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;困ったら&lt;a href="https://github.com/vim/vim"&gt;ソースコード&lt;/a&gt;&lt;/p&gt;
@@ -36,7 +37,7 @@ Vimのバージョンは7.4.1225くらいでした。&lt;/p&gt;
 &lt;p&gt;基本的には&lt;code&gt;ever&lt;/code&gt;以下に自動的に読み込んでほしいプラグインを置いて、&lt;code&gt;opt&lt;/code&gt;以下に必要な時に読み込む（遅延読込する）プラグインを置く形です。
 すでにNeoBundleなどのプラグインマネージャを使っている場合はプラグインが一つのディレクトリにまとまっていると思いますので、その中身をまるっと&lt;code&gt;ever&lt;/code&gt;以下にコピーして&lt;code&gt;neobundle#begin()&lt;/code&gt;〜&lt;code&gt;neobundle#end()&lt;/code&gt;あたりを&lt;code&gt;if 0&lt;/code&gt;と&lt;code&gt;endif&lt;/code&gt;で囲めばすぐ試せます（微妙な仕様の違いがあるので、そのままだと大量のエラーを経験することになりますが）。&lt;/p&gt;
 &lt;p&gt;例えばplugin1とplugin2を&lt;code&gt;ever&lt;/code&gt;以下に置く場合は次のようなディレクトリ構成になります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;~/.vim
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;~/.vim
 ├── pack
 │   ├── mypack
 │   │   ├── ever
@@ -61,7 +62,7 @@ autoload関数も使えないので、設定で&lt;code&gt;call plugin#setup(...
 &lt;p&gt;私はこれを回避するために、プラグインを使っている部分を別ファイルに分離してオートコマンドで&lt;code&gt;VimEnter&lt;/code&gt;時に読み込むようにしました。
 &lt;code&gt;~/.vim/after/plugin&lt;/code&gt;以下も試してみましたが、ここもパッケージのロードより先に読み込まれていました。
 最終的にはプラグインを使う設定を&lt;code&gt;~/.vim/config/plugins.vim&lt;/code&gt;に書いて、次のような設定をvimrcに追加しました。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; filereadable&lt;span class="p"&gt;(&lt;/span&gt;expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;~/.vim/config/plugins.vim&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; filereadable&lt;span class="p"&gt;(&lt;/span&gt;expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;~/.vim/config/plugins.vim&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
   autocmd myvimrc &lt;span class="nb"&gt;VimEnter&lt;/span&gt; * source &lt;span class="p"&gt;~&lt;/span&gt;&lt;span class="sr"&gt;/.vim/&lt;/span&gt;config/plugins.&lt;span class="k"&gt;vim&lt;/span&gt;
 &lt;span class="k"&gt;endif&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -82,9 +83,9 @@ autoload関数も使えないので、設定で&lt;code&gt;call plugin#setup(...
 これも上記と同様に適当なファイル（&lt;code&gt;*.vim&lt;/code&gt;）をpluginディレクトリに置くことで読み込み可能です。&lt;/p&gt;
 &lt;h2&gt;遅延読み込み&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;opt&lt;/code&gt;以下のプラグインはそのままでは読み込まれません。
-&lt;code&gt;:loadplugin {プラグインのディレクトリ名}&lt;/code&gt;を実行して初めて有効になります。&lt;/p&gt;
+&lt;code&gt;:packadd {プラグインのディレクトリ名}&lt;/code&gt;を実行して初めて有効になります。&lt;/p&gt;
 &lt;p&gt;私はとりあえずインサートモードで使うプラグインを&lt;code&gt;opt&lt;/code&gt;に置き、以下のような設定を行いました。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; s:lazy_load_insert&lt;span class="p"&gt;()&lt;/span&gt; abort
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; s:lazy_load_insert&lt;span class="p"&gt;()&lt;/span&gt; abort
   loadplugin delimitMate
   loadplugin &lt;span class="k"&gt;vim&lt;/span&gt;&lt;span class="p"&gt;-&lt;/span&gt;smartchr
   loadplugin ...
@@ -115,7 +116,7 @@ augroup END
 ここから必要そうな設定を拝借してvimrcで設定するなりして、&lt;code&gt;let g:did_load_filetypes=1&lt;/code&gt;しておけばデフォルトのファイルタイプ設定は読まれなくなります。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;NeoBundleがメンテナンスモードに入ると聞いてdein.vimへの移行を考えている方、どうせプラグイン周りの設定をいじるならついでに本体のパッケージ機能も試してみませんか？
-いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215/static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215/static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
+いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215_static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215_static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
 ということでいくつか静的サイトジェネレータを調べたのでまとめました。&lt;/p&gt;
 &lt;p&gt;ついでに比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
 内容はこのブログの過去数回分です。
@@ -228,7 +229,7 @@ python-announce-listに頻繁に更新メールが送られてくるので、開
 &lt;p&gt;デフォルト（デモ？）のサイトを作るのは&lt;code&gt;nikola init --demo [path]&lt;/code&gt;です。
 後は&lt;code&gt;nikola build&lt;/code&gt;とか&lt;code&gt;nikola serve&lt;/code&gt;でビルドしたり閲覧用のサーバーを起動したりできます。
 デフォルトのフォーマットはrstですが、設定ファイル(conf.py)に以下の行を追加することでmarkdownも使えます。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;  &lt;span class="c1"&gt;# ここを追加&lt;/span&gt;
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.rst&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;posts/*.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;posts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;post.tmpl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
@@ -248,7 +249,7 @@ python-announce-listに頻繁に更新メールが送られてくるので、開
 &lt;p&gt;記事の要約は、区切りとなるコメントを挿入することで範囲を指定できます。
 Markdownの場合、デフォルトでは&lt;code&gt;&amp;lt;!-- TEASER_END --&amp;gt;&lt;/code&gt;というコメントまでが要約になります。
 はてなブログと同じ&lt;code&gt;&amp;lt;!-- more --&amp;gt;&lt;/code&gt;を使いたかったので、設定ファイルで以下のように設定しました。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;INDEX_TEASERS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;INDEX_TEASERS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
 &lt;span class="n"&gt;TEASER_REGEXP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r&amp;#39;&amp;lt;!--\s*(more)(:(.+))?\s*--&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -279,7 +280,7 @@ WordPressのtwentyfifteenがベースらしいのですが、WordPressはこん�
 メタデータには著者やタグなども書けます。
 コマンドから作成した時は時刻が入力されています。&lt;/p&gt;
 &lt;p&gt;Markdownの拡張はconfig.pyに以下の設定を追加する必要がありました。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="s1"&gt;&amp;#39;extensions&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;fenced_code&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;codehilite&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;extra&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -308,7 +309,7 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;h3&gt;あとがき&lt;/h3&gt;
 &lt;p&gt;この記事書いてたらmattnさんがJekyll 3.0の記事を公開していました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/20160215110235.htm"&gt;Big Sky :: GitHub Pages が Jekyll 3.0 になり、ますますブログが書きやすくなった。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</summary><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
+&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</summary><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214_livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214_livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;+channel&lt;/code&gt;なVimじゃなくても&lt;code&gt;+python&lt;/code&gt;なら動作するので、よければお試し下さい。
 安定したものがいい場合は&lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt;などをおすすめします。&lt;/p&gt;
 &lt;p&gt;オプションはGitHubの&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;README&lt;/a&gt;に一応全て書いてあります。
@@ -330,7 +331,7 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;p&gt;ちょっと使うには十分だと思いますが、自分のブログのテーマと同じデザインで使いたいなどの希望があるだろうと考え、CSSやJSを指定できるようにしました。
 パスの処理が雑なので、Windowsだと動かないかもしれません。&lt;/p&gt;
 &lt;p&gt;指定方法は、例えばCSSを追加してデフォルトのCSSを使わない場合は以下のようになります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_css_files &lt;span class="p"&gt;=&lt;/span&gt; [expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;~/dotfiles/static/css/bootstrap.ja.min.css&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;]
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_css_files &lt;span class="p"&gt;=&lt;/span&gt; [expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;~/dotfiles/static/css/bootstrap.ja.min.css&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;]
 &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_no_default_css &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -347,13 +348,13 @@ URLを指定すれば（たぶん）Web上のリソースを読み込むこと�
 &lt;p&gt;シンタックスハイライトには&lt;a href="http://pygments.org/"&gt;pygments&lt;/a&gt;を使っています。
 デフォルトでは特に指定していないのでpygmentsのデフォルトテーマが使われますが、他にも色々なテーマがあるので変更できるようにしました。&lt;/p&gt;
 &lt;p&gt;変更するには以下の設定をvimrcに追加してください。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_highlight_theme &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;テーマ名&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_highlight_theme &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;テーマ名&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用可能なテーマはインストールされているpygmentsに依存します。
 コマンドラインで確認するには、以下のコマンドを実行して下さい。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;python3 -c &lt;span class="s2"&gt;&amp;quot;import pygments.styles; print(pygments.styles.STYLE_MAP.keys())&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 -c &lt;span class="s2"&gt;&amp;quot;import pygments.styles; print(pygments.styles.STYLE_MAP.keys())&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -365,7 +366,7 @@ Livemarkのオプションで特定のpythonを指定している場合はpython
 &lt;p&gt;とはいえ、MarkdownからHTMLに変更する時に行番号がずれてしまうので、一応頑張って調整していますが完璧ではありません。
 また、書いている時に動かない方がいい場合もあるかと思います。&lt;/p&gt;
 &lt;p&gt;ということで、以下のオプションでスクロールを停止できます。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_disable_scroll &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:livemark_disable_scroll &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -385,7 +386,7 @@ Livemarkにバグがあっても「まぁ、そういう時もあるよね」と
 落ち着いたらPyPIに登録して &lt;strong&gt;「まだじゃわすくりぷとで消耗しているの？」&lt;/strong&gt; 的な煽りタイトルの記事を書きたいと思っています。
 ヘタれたらもっと穏便なタイトルにするので優しくしてください。&lt;/p&gt;
 &lt;p&gt;以上です。
-開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
+開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206_ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206_ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
 &lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
 &lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -397,7 +398,7 @@ Livemarkにバグがあっても「まぁ、そういう時もあるよね」と
 &lt;h2&gt;利用方法&lt;/h2&gt;
 &lt;p&gt;どちらも公開リポジトリは無料です。プライベートリポジトリは有料プランになります。&lt;/p&gt;
 &lt;p&gt;公開リポジトリの使い方はどちらも大差ありません。Githubのアカウント連携で認証して、連携したいリポジトリを指定して、Travisとも連携してテスト後にそれぞれのサービス向けに用意されているコマンドを叩くだけです。Travis + Pythonの場合、&lt;code&gt;.travis.yml&lt;/code&gt;に以下のように設定します。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;install&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;install&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
   &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;pip install pytest pytest-cov&lt;/span&gt;
   &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;pip install coveralls codecov&lt;/span&gt;
 &lt;span class="l l-Scalar l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
@@ -464,7 +465,7 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;というわけで、全体的にcoverallsが印象悪かったせいでcodecovの広告記事みたいになってしまいましたが、codecov良かったのでしばらく使うつもりです。&lt;/p&gt;
 &lt;p&gt;Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にcodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・&lt;/p&gt;
-&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206_channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206_channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
@@ -502,7 +503,7 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 &lt;/ol&gt;
 &lt;p&gt;に分けて計測しました。また、Vimは一旦jsonに変換してから送る場合 (raw channel) とjsonへの変換も一気に行う場合 (json channel) の両方を測りました。&lt;/p&gt;
 &lt;p&gt;データを送りつけられるサーバーがボトルネックになると意味ないので、サーバーは Nim で書きました。 サーバーのコードはこんな感じです。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;nativesockets&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;nativesockets&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;net&lt;/span&gt;
 
 &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;newSocket&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -528,7 +529,7 @@ Github上でカバレッジが確認できるのはポイント高いと思い�
 
 
 &lt;p&gt;ベンチマークのコードはこんな感じ&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;scriptencoding&lt;/span&gt; utf&lt;span class="m"&gt;-8&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;scriptencoding&lt;/span&gt; utf&lt;span class="m"&gt;-8&lt;/span&gt;
 
 &lt;span class="k"&gt;let&lt;/span&gt; s:data &lt;span class="p"&gt;=&lt;/span&gt; readfile&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;data.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
@@ -637,7 +638,7 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;/table&gt;
 &lt;p&gt;合計あまり変わらない・・・&lt;s&gt;Pythonよりは速くて「channelすごい！jsonすごい！」って記事になる予定だったのに・・・・&lt;/s&gt;jsonのエンコードにすごい時間かかってますね・・・よく考えたら、一度Vim scriptになってるのでむしろよく頑張ってる方だと思います。
 「あれ、たしかpython標準のjsonモジュールって・・・」って&lt;a href="http://postd.cc/memory-use-and-speed-of-json-parsers/"&gt;などの疑問&lt;/a&gt;を持ってはいけません。&lt;/p&gt;
-&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
+&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129_livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129_livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm"&gt;Big Sky :: Vim にchannel(ソケット通信機能)が付いた。&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
 &lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
@@ -651,11 +652,11 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;p&gt;インストール方法は普通のvimプラグインと同じです。コピーするなりプラグインマネージャを使うなり、お好みの方法でインストールしてください。&lt;/p&gt;
 &lt;p&gt;NeoBundleをお使いの場合は &lt;code&gt;NeoBundle 'miyakogi/livemark.vim'&lt;/code&gt; です。&lt;/p&gt;
 &lt;p&gt;残念ながらVimはまだmarkdownの変換やwebサーバーなどの機能はないので、その辺りはPythonで処理しています。 以下のようにpythonのライブラリを別途インストールして下さい。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;pip3 install misaka pygments tornado
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip3 install misaka pygments tornado
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;a&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;a&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 

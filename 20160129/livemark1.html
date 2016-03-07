@@ -9,7 +9,7 @@
 
 
 
-<link rel="canonical" href="https://miyakogi.github.io/blog/20160129/livemark1.html">
+<link rel="canonical" href="https://miyakogi.github.io/blog/20160129_livemark1.html">
 
         <meta name="author" content="miyakogi" />
         <meta name="keywords" content="Python,Vim" />
@@ -18,7 +18,7 @@
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました"/>
-        <meta property="og:url" content="https://miyakogi.github.io/blog/20160129/livemark1.html"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20160129_livemark1.html"/>
         <meta property="og:description" content="Vimにchannel機能が実装されました。 Big Sky :: Vim にchannel(ソケット通信機能)が付いた。 昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。 というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。 みんな大好きMarkdownのリアルタイムプレビューです。"/>
         <meta property="article:published_time" content="2016-01-29" />
             <meta property="article:section" content="Vim" />
@@ -76,7 +76,7 @@ Blank File            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://miyakogi.github.io/blog/20160129/livemark1.html"
+                    <a href="https://miyakogi.github.io/blog/20160129_livemark1.html"
                        rel="bookmark"
                        title="Permalink to Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました">
                         Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました
@@ -117,11 +117,11 @@ Blank File            </a>
 <p>インストール方法は普通のvimプラグインと同じです。コピーするなりプラグインマネージャを使うなり、お好みの方法でインストールしてください。</p>
 <p>NeoBundleをお使いの場合は <code>NeoBundle 'miyakogi/livemark.vim'</code> です。</p>
 <p>残念ながらVimはまだmarkdownの変換やwebサーバーなどの機能はないので、その辺りはPythonで処理しています。 以下のようにpythonのライブラリを別途インストールして下さい。</p>
-<div class="highlight"><pre>pip3 install misaka pygments tornado
+<div class="highlight"><pre><span></span>pip3 install misaka pygments tornado
 </pre></div>
 
 
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">a</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Hello!&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -176,27 +176,27 @@ Blank File            </a>
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
+                        <a href="https://miyakogi.github.io/blog/20160229_vim_pack.html">
                             Vimのパッケージ機能を試してみました
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">
+                        <a href="https://miyakogi.github.io/blog/20160215_static_site_generators.html">
                             Python製の静的サイトジェネレータを色々試してみました
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160214/livemark_update.html">
+                        <a href="https://miyakogi.github.io/blog/20160214_livemark_update.html">
                             Livemark.vimを色々更新しました
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160206/ci1.html">
+                        <a href="https://miyakogi.github.io/blog/20160206_ci1.html">
                             カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160206/channel1.html">
+                        <a href="https://miyakogi.github.io/blog/20160206_channel1.html">
                             Vim の channel と json のパフォーマンス
                         </a>
                     </li>
@@ -221,13 +221,18 @@ Blank File            </a>
             <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
                         <a href="https://miyakogi.github.io/blog/tag/python.html">
                             python
                         </a>
                     </li>
-                    <li class="list-group-item tag-1">
-                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
-                            vim
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -238,11 +243,6 @@ Blank File            </a>
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/pelican.html">
                             pelican
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
-                            CI
                         </a>
                     </li>
                 </ul>
