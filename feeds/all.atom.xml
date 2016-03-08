@@ -1,5 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-02-29T17:52:00+09:00</updated><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229/vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-03-08T23:20:00+09:00</updated><entry><title>Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました</title><link href="https://miyakogi.github.io/blog/20160308/vimpack_py.html" rel="alternate"></link><updated>2016-03-08T23:20:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-03-08:blog/20160308/vimpack_py.html</id><summary type="html">&lt;p&gt;先日からVim本体のパッケージ機能を使い、プラグインマネージャは使わない生活をしています。
+とはいえプラグインのアップデートやヘルプの生成は手作業では面倒なので、そのあたりを処理してくれるPythonのスクリプトを書きました。&lt;/p&gt;
+&lt;p&gt;始めは&lt;a href="https://github.com/miyakogi/dotfiles"&gt;dotfileをgit管理&lt;/a&gt;（今まではhgで管理してbitbucketに置いてました）にしてプラグインをsubmoduleにすれば十分かと思ったのですが、やってみたら意外と面倒でした。
+Pythonで書いたのは、自分の場合VimがあるところならまずPythonもあるというのと、3.4で入った&lt;a href="http://docs.python.jp/3/library/pathlib.html"&gt;pathlib&lt;/a&gt;というパスをいい感じに扱えるライブラリを使ってみたかったからです。&lt;/p&gt;
+&lt;p&gt;この記事を書きながらログ周りやオプションを整備してリファクタリングもしましたが、あくまで自分用に書いたスクリプトなので機能は最低限です。
+gitにしか対応していませんが、パッケージ機能を試したい方はもし良ければお使いください。
+なお、Vimのパッケージ機能についてはヘルプや&lt;a href="http://h-miyako.hatenablog.com/entry/2016/02/29/211534"&gt;先日の記事&lt;/a&gt;をご参照ください。&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;機能&lt;/h2&gt;
+&lt;p&gt;インストール、アップデート、チェックの3つの機能があります。
+インストールするプラグインをJSON形式で記述して &lt;code&gt;~/.vim/pack/{好きな名前}/pack.json&lt;/code&gt; に置いておくと勝手に読み込みます。&lt;/p&gt;
+&lt;h2&gt;インストール&lt;/h2&gt;
+&lt;p&gt;インストールは不要です。
+標準ライブラリ以外の依存もありません。
+ファイル（&lt;a href="https://github.com/miyakogi/dotfiles/blob/master/vimpack.py"&gt;最新版&lt;/a&gt;または&lt;a href="https://github.com/miyakogi/dotfiles/blob/36fc432b5bee58b40f871ceb19c7e903fa483cd8/vimpack.py"&gt;今日のバージョン&lt;/a&gt;）を適当なところに保存して実行するだけです。
+実行権限をつけてパスの通った所に置いておけば手軽に実行できます。&lt;/p&gt;
+&lt;p&gt;実行にはPython3.5以上が必要です。
+もしかしたら3.4でも動くかもしれませんが未確認です。&lt;/p&gt;
+&lt;p&gt;なお、この記事の内容は今日のバージョンベースです。
+Vimの仕様変更や私の気分次第で最新版は記事の内容と異なる場合がありますのでご注意下さい。&lt;/p&gt;
+&lt;h2&gt;使い方&lt;/h2&gt;
+&lt;p&gt;実行は &lt;code&gt;python3 vimpack.py {コマンド} [設定ファイル名（デフォルトpack.json）]&lt;/code&gt; です。
+コマンドは必須で、設定ファイルの名前はオプションです。&lt;/p&gt;
+&lt;p&gt;インストールしたいリポジトリの情報を記入した &lt;code&gt;pack.json&lt;/code&gt; というファイルを &lt;code&gt;~/.vim/pack/{好きな名前}&lt;/code&gt; のディレクトリに置いておきます。
+この設定ファイルに書かれたリポジトリがそのディレクトリの下の&lt;code&gt;ever&lt;/code&gt;または&lt;code&gt;opt&lt;/code&gt;ディレクトリにcloneされます。
+以下のように複数のディレクトリに設定ファイルを置くこともできます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;~/.vim/pack
+├── 好きな名前1
+│   ├── pack.json
+│   ├── ever
+│   └── opt
+├── 好きな名前2
+│   ├── pack.json
+│   ├── ever
+│   └── opt
+└── 好きな名前3
+    ├── pack.json
+    ├── ever
+    └── opt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;設定ファイルのフォーマット&lt;/h3&gt;
+&lt;p&gt;現時点では次のようなフォーマットにしています。
+Vimの仕様変更や私の気分次第で変わるかもしれません。
+もし動かなかったら&lt;a href="https://github.com/miyakogi/dotfiles/blob/master/pack/remote/pack.json"&gt;私の設定ファイル&lt;/a&gt;を確認してください。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;ever&amp;#39;:&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;github.com&amp;#39;:&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;username1/plugin_repo&amp;#39;,&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;other_user/plugin_repo2&amp;#39;&lt;/span&gt;
+        &lt;span class="err"&gt;],&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
+    &lt;span class="err"&gt;&amp;#39;opt&amp;#39;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;github.com&amp;#39;:&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;another_user/plugin&amp;#39;,&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;another_user/somplugin&amp;#39;&lt;/span&gt;
+        &lt;span class="err"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;JSONなので末尾コンマ禁止です。エラーになります。
+苦情はPython標準ライブラリの&lt;a href="http://docs.python.jp/3/library/json.html"&gt;json&lt;/a&gt;モジュールにお願いします。&lt;/p&gt;
+&lt;p&gt;必ず読み込むプラグインは&lt;code&gt;ever&lt;/code&gt;以下に、遅延読み込みしたいものは&lt;code&gt;opt&lt;/code&gt;以下に記述します。
+それぞれのディレクトリに配下のリポジトリがクローンされます。
+リポジトリの指定は&lt;code&gt;{ホスト名: [リポジトリ1, リポジトリ2, ...]}&lt;/code&gt;という形のホスト名をキーとしたリストになります。&lt;/p&gt;
+&lt;p&gt;github以外からインストールする時はホスト名を追加して別に配列を持たせてください。
+名前の衝突は一切考慮していないので、万一衝突した場合は先にcloneされたほうが勝ちます。
+なお、一度Pythonの辞書オブジェクトに変換される都合上順番はランダムになります。&lt;/p&gt;
+&lt;h3&gt;インストール&lt;/h3&gt;
+&lt;p&gt;以下のコマンドを実行します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 vimpack.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;勝手に設定ファイルを探してきて、丁寧に一つずつcloneします。
+すでにディレクトリがある場合はcloneせずにスキップします。
+並列実行をしないのは面倒そうだった（特にログ出力）からです。
+全部まとめてインストールとかそう何度もしないと思うので、のんびりコーヒーでも飲みながら眺めていてください。&lt;/p&gt;
+&lt;p&gt;ちなみに、ログはカラー対応のターミナルだと色がつきます。
+ここはがんばりました。
+対応していない端末だと色がつかないだけでなく制御文字がそのまま表示されて残念な感じになります。
+これを機に色の出る端末に乗り換えましょう。&lt;/p&gt;
+&lt;p&gt;インストールされたプラグインに&lt;code&gt;plugin&lt;/code&gt;ディレクトリがなかった場合は作って&lt;code&gt;_.vim&lt;/code&gt;というダミーのファイルを作成します。
+気になる方はグローバルな&lt;code&gt;.gitignore&lt;/code&gt;に追加しておいてください。
+ついでに&lt;code&gt;doc&lt;/code&gt;ディレクトリの中身を&lt;code&gt;~/.vim/doc&lt;/code&gt;以下にリンクし、ヘルプ用のタグファイルを作成します。
+これらの処理は&lt;code&gt;--no-dummy&lt;/code&gt;や&lt;code&gt;--no-doc&lt;/code&gt;オプションをつけることでスキップできます。&lt;/p&gt;
+&lt;h3&gt;アップデート&lt;/h3&gt;
+&lt;p&gt;以下のコマンドを実行します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 vimpack.py update
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これを実行すると、&lt;code&gt;pack.json&lt;/code&gt;に記述されたリポジトリだけでなく、JSONのキーとして存在しているディレクトリ（&lt;code&gt;ever&lt;/code&gt;と&lt;code&gt;opt&lt;/code&gt;）のgitリポジトリを全てアップデート（&lt;code&gt;git pull&lt;/code&gt;）します。
+&lt;code&gt;git submodule update --init --recursive&lt;/code&gt;も実行しているので多分submoduleも更新できると思います。
+なお、設定ファイルに書かれていてもインストールされていないリポジトリは無視します。&lt;/p&gt;
+&lt;p&gt;インストールの場合と同様、ダミーファイルの作成とヘルプの更新も行います。
+同じくオプションでスキップ可能です。&lt;/p&gt;
+&lt;h3&gt;チェック&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 vimpack.py check
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;設定ファイルにないリポジトリや未インストールのリポジトリを確認して、もしあれば警告を出します。
+ついでにダミーファイルの作成とヘルプの更新を行います。
+git以外でプラグインを追加した時に便利かな、と思ってつくってみました。&lt;/p&gt;
+&lt;h3&gt;オプション&lt;/h3&gt;
+&lt;h4&gt;--help&lt;/h4&gt;
+&lt;p&gt;ヘルプを表示します。
+Pythonの&lt;a href="http://docs.python.jp/3/library/argparse.html"&gt;argparse&lt;/a&gt;が作ってくれるやつです。
+オプションの確認ができます。&lt;/p&gt;
+&lt;h4&gt;設定ファイル名&lt;/h4&gt;
+&lt;p&gt;デフォルトは&lt;code&gt;pack.json&lt;/code&gt;です。
+他の名前にしたい場合は &lt;code&gt;python vimpack.py check config.json&lt;/code&gt; などのように他のオプションの前に指定してください。
+フルパスを指定するとそのファイルだけを読み込みます。&lt;/p&gt;
+&lt;h4&gt;--no-dummy&lt;/h4&gt;
+&lt;p&gt;ダミーファイルの作成をスキップします。&lt;/p&gt;
+&lt;h4&gt;--no-doc&lt;/h4&gt;
+&lt;p&gt;ヘルプファイルへのシンボリックリンク作成をスキップします。&lt;/p&gt;
+&lt;h4&gt;--loglevel&lt;/h4&gt;
+&lt;p&gt;出力するログのレベルを設定できます。
+レベルは &lt;code&gt;debug&lt;/code&gt;, &lt;code&gt;info&lt;/code&gt;, &lt;code&gt;warn&lt;/code&gt;, &lt;code&gt;error&lt;/code&gt; などがあります。
+大文字小文字は関係ありません。&lt;/p&gt;
+&lt;p&gt;デフォルトは &lt;code&gt;info&lt;/code&gt; です。
+&lt;code&gt;debug&lt;/code&gt;が最も詳細（たくさん）なログを表示します。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;初めてpathlibをガッツリ使ってみました。
+少しクセがありますが、基本的に便利でいい感じでした。&lt;/p&gt;
+&lt;p&gt;もしvimpack.pyのバグに気づいたら、コメントでもリポジトリのissueでもいいので教えていただけるとすごく嬉しいです。
+機能追加は・・・しないと思いますので適当にいじってください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229/vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
 dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。&lt;/p&gt;
 &lt;p&gt;この機能は入ったばかりなので、今後仕様の変更があるかもしれませんし、バグもあるかもしれませんし、（たぶん）機能追加もあると思います。
 記事の内容が古くなっているかもしれないので、日付とVimのバージョンをよく確認してください。&lt;/p&gt;

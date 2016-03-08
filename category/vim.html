@@ -67,6 +67,20 @@ Blank File            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
+                <h2><a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました</a></h2>
+                <div class="summary"><p>先日からVim本体のパッケージ機能を使い、プラグインマネージャは使わない生活をしています。
+とはいえプラグインのアップデートやヘルプの生成は手作業では面倒なので、そのあたりを処理してくれるPythonのスクリプトを書きました。</p>
+<p>始めは<a href="https://github.com/miyakogi/dotfiles">dotfileをgit管理</a>（今まではhgで管理してbitbucketに置いてました）にしてプラグインをsubmoduleにすれば十分かと思ったのですが、やってみたら意外と面倒でした。
+Pythonで書いたのは、自分の場合VimがあるところならまずPythonもあるというのと、3.4で入った<a href="http://docs.python.jp/3/library/pathlib.html">pathlib</a>というパスをいい感じに扱えるライブラリを使ってみたかったからです。</p>
+<p>この記事を書きながらログ周りやオプションを整備してリファクタリングもしましたが、あくまで自分用に書いたスクリプトなので機能は最低限です。
+gitにしか対応していませんが、パッケージ機能を試したい方はもし良ければお使いください。
+なお、Vimのパッケージ機能についてはヘルプや<a href="http://h-miyako.hatenablog.com/entry/2016/02/29/211534">先日の記事</a>をご参照ください。</p>
+
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">Vimのパッケージ機能を試してみました</a></h2>
                 <div class="summary"><p>最近<a href="https://github.com/Shougo/dein.vim">dein.vim</a>がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています <em>[要出典]</em>。
 dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。</p>
@@ -131,6 +145,11 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
+                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
                             Vimのパッケージ機能を試してみました
                         </a>
@@ -171,13 +190,13 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
             <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
-                        <a href="https://miyakogi.github.io/blog/tag/python.html">
-                            python
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
-                            vim
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
