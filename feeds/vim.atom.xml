@@ -45,7 +45,7 @@ Vimの仕様変更や私の気分次第で最新版は記事の内容と異な�
 &lt;h3&gt;設定ファイルのフォーマット&lt;/h3&gt;
 &lt;p&gt;現時点では次のようなフォーマットにしています。
 Vimの仕様変更や私の気分次第で変わるかもしれません。
-もし動かなかったら&lt;a href="https://github.com/miyakogi/dotfiles/blob/master/pack/remote/pack.json"&gt;私の設定ファイル&lt;/a&gt;を確認してください。&lt;/p&gt;
+もし動かなかったら&lt;a href="https://github.com/miyakogi/dotfiles/blob/master/pack.json"&gt;私の設定ファイル&lt;/a&gt;を確認してください。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="err"&gt;&amp;#39;ever&amp;#39;:&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
         &lt;span class="err"&gt;&amp;#39;github.com&amp;#39;:&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;
