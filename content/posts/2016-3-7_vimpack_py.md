@@ -64,7 +64,7 @@ Vimの仕様変更や私の気分次第で最新版は記事の内容と異な�
 
 現時点では次のようなフォーマットにしています。
 Vimの仕様変更や私の気分次第で変わるかもしれません。
-もし動かなかったら[私の設定ファイル](https://github.com/miyakogi/dotfiles/blob/master/pack/remote/pack.json)を確認してください。
+もし動かなかったら[私の設定ファイル](https://github.com/miyakogi/dotfiles/blob/master/pack.json)を確認してください。
 
 ```json
 {
