@@ -112,6 +112,10 @@ gitにしか対応していませんが、パッケージ機能を試したい�
 なお、Vimのパッケージ機能についてはヘルプや<a href="http://h-miyako.hatenablog.com/entry/2016/02/29/211534">先日の記事</a>をご参照ください。</p>
 <!--more-->
 
+<h4>修正</h4>
+<ul>
+<li>デフォルトで読み込むパスが<code>ever</code>から<code>start</code>に変更されたので修正</li>
+</ul>
 <h2>機能</h2>
 <p>インストール、アップデート、チェックの3つの機能があります。
 インストールするプラグインをJSON形式で記述して <code>~/.vim/pack/{好きな名前}/pack.json</code> に置いておくと勝手に読み込みます。</p>
@@ -128,30 +132,31 @@ Vimの仕様変更や私の気分次第で最新版は記事の内容と異な�
 <p>実行は <code>python3 vimpack.py {コマンド} [設定ファイル名（デフォルトpack.json）]</code> です。
 コマンドは必須で、設定ファイルの名前はオプションです。</p>
 <p>インストールしたいリポジトリの情報を記入した <code>pack.json</code> というファイルを <code>~/.vim/pack/{好きな名前}</code> のディレクトリに置いておきます。
-この設定ファイルに書かれたリポジトリがそのディレクトリの下の<code>ever</code>または<code>opt</code>ディレクトリにcloneされます。
+この設定ファイルに書かれたリポジトリがそのディレクトリの下の<code>start</code>または<code>opt</code>ディレクトリにcloneされます。
 以下のように複数のディレクトリに設定ファイルを置くこともできます。</p>
 <div class="highlight"><pre><span></span>~/.vim/pack
 ├── 好きな名前1
 │   ├── pack.json
-│   ├── ever
-│   └── opt
+│   ├── opt
+│   └── start
 ├── 好きな名前2
 │   ├── pack.json
-│   ├── ever
-│   └── opt
+│   ├── opt
+│   └── start
 └── 好きな名前3
     ├── pack.json
-    ├── ever
-    └── opt
+    ├── opt
+    └── start
 </pre></div>
 
 
+<p>※注: Vim 7.4.1527以前のバージョンでは<code>start</code>ではなく<code>ever</code></p>
 <h3>設定ファイルのフォーマット</h3>
 <p>現時点では次のようなフォーマットにしています。
 Vimの仕様変更や私の気分次第で変わるかもしれません。
 もし動かなかったら<a href="https://github.com/miyakogi/dotfiles/blob/master/pack.json">私の設定ファイル</a>を確認してください。</p>
 <div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="err">&#39;ever&#39;:</span> <span class="err">{</span>
+    <span class="err">&#39;start&#39;:</span> <span class="err">{</span>
         <span class="err">&#39;github.com&#39;:</span> <span class="err">[</span>
             <span class="err">&#39;username1/plugin_repo&#39;,</span>
             <span class="err">&#39;other_user/plugin_repo2&#39;</span>
@@ -169,7 +174,7 @@ Vimの仕様変更や私の気分次第で変わるかもしれません。
 
 <p>JSONなので末尾コンマ禁止です。エラーになります。
 苦情はPython標準ライブラリの<a href="http://docs.python.jp/3/library/json.html">json</a>モジュールにお願いします。</p>
-<p>必ず読み込むプラグインは<code>ever</code>以下に、遅延読み込みしたいものは<code>opt</code>以下に記述します。
+<p>必ず読み込むプラグインは<code>start</code>以下に、遅延読み込みしたいものは<code>opt</code>以下に記述します。
 それぞれのディレクトリに配下のリポジトリがクローンされます。
 リポジトリの指定は<code>{ホスト名: [リポジトリ1, リポジトリ2, ...]}</code>という形のホスト名をキーとしたリストになります。</p>
 <p>github以外からインストールする時はホスト名を追加して別に配列を持たせてください。
@@ -199,7 +204,7 @@ Vimの仕様変更や私の気分次第で変わるかもしれません。
 </pre></div>
 
 
-<p>これを実行すると、<code>pack.json</code>に記述されたリポジトリだけでなく、JSONのキーとして存在しているディレクトリ（<code>ever</code>と<code>opt</code>）のgitリポジトリを全てアップデート（<code>git pull</code>）します。
+<p>これを実行すると、<code>pack.json</code>に記述されたリポジトリだけでなく、JSONのキーとして存在しているディレクトリ（<code>start</code>と<code>opt</code>）のgitリポジトリを全てアップデート（<code>git pull</code>）します。
 <code>git submodule update --init --recursive</code>も実行しているので多分submoduleも更新できると思います。
 なお、設定ファイルに書かれていてもインストールされていないリポジトリは無視します。</p>
 <p>インストールの場合と同様、ダミーファイルの作成とヘルプの更新も行います。
@@ -320,11 +325,6 @@ Pythonの<a href="http://docs.python.jp/3/library/argparse.html">argparse</a>が
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
-                            pelican
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/ci.html">
                             CI
                         </a>
@@ -332,6 +332,11 @@ Pythonの<a href="http://docs.python.jp/3/library/argparse.html">argparse</a>が
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
                             static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
                         </a>
                     </li>
                 </ul>
