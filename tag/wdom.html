@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>A - Blank File</title>
+    <title>wdom - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,22 +9,16 @@
 
 
 
-<link rel="canonical" href="https://miyakogi.github.io/blog/drafts/a.html">
 
-        <meta name="author" content="miyakogi" />
-        <meta name="keywords" content="vim,python,pelican" />
+    <meta name="author" content="miyakogi" />
+    <meta name="keywords" content="wdom" />
 
+    <!-- Open Graph tags -->
         <meta property="og:site_name" content="Blank File" />
-        <meta property="og:type" content="article"/>
-        <meta property="og:title" content="A"/>
-        <meta property="og:url" content="https://miyakogi.github.io/blog/drafts/a.html"/>
-        <meta property="og:description" content=""/>
-        <meta property="article:published_time" content="2016-02-13" />
-            <meta property="article:section" content="programming" />
-            <meta property="article:tag" content="vim" />
-            <meta property="article:tag" content="python" />
-            <meta property="article:tag" content="pelican" />
-            <meta property="article:author" content="miyakogi" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Blank File"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog"/>
+        <meta property="og:description" content="Blank File"/>
 
 
     <!-- Bootstrap -->
@@ -39,8 +33,6 @@
 
 
 
-        <link href="https://miyakogi.github.io/blog/feeds/programming.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Blank File programming ATOM Feed"/>
 
 </head>
 <body>
@@ -72,52 +64,22 @@ Blank File            </a>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="https://miyakogi.github.io/blog/drafts/a.html"
-                       rel="bookmark"
-                       title="Permalink to A">
-                        A
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-02-13T23:05:00+09:00"> Sat 13 February 2016</time>
-    </span>
+            <article>
+                <h2><a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介</a></h2>
+                <div class="summary"><p>WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。
+ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。</p>
+<p><a href="https://github.com/miyakogi/wdom">miyakogi/wdom: DOM manipulation library for python</a></p>
+<p>WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。
+ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。
+ちなみに、拙作<a href="https://github.com/miyakogi/livemark.vim">LiveMark.vim</a>もこれを使っています。</p>
+<p>まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。</p>
+<p>もしバグを発見したら<a href="https://github.com/miyakogi/wdom/issues">GitHubのIssue</a>に報告していただけると助かります。
+（できれば英語でお願いします（難しければタイトルだけでも））</p>
 
-
-
-
-
-<span class="label label-default">Tags</span>
-	<a href="https://miyakogi.github.io/blog/tag/vim.html">vim</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/python.html">python</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/pelican.html">pelican</a>
-    
-</footer><!-- /.post-info -->                    </div>
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">more ...</a>
                 </div>
-                
-            </div>
-            <!-- /.entry-content -->
-    <hr />
-    <!-- AddThis Button BEGIN -->
-    <div class="addthis_toolbox addthis_default_style">
-            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-            <a class="addthis_button_tweet"></a>
-            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-    </div>
-    <!-- AddThis Button END -->
-        </article>
-    </section>
+            </article>
+            <hr/>
 
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -137,26 +99,6 @@ Blank File            </a>
                     <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
                             Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
-                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
-                            Vimのパッケージ機能を試してみました
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">
-                            Python製の静的サイトジェネレータを色々試してみました
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160214/livemark_update.html">
-                            Livemark.vimを色々更新しました
                         </a>
                     </li>
                 </ul>
@@ -279,7 +221,5 @@ Blank File            </a>
     </script>
     <!-- End Google Analytics Code -->
 
-        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
 </body>
 </html>

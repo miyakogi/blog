@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介 - Blank File</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
+
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="python,wdom" />
+        <meta name="description" content="WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））" />
+
+        <meta property="og:site_name" content="Blank File" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20160406/wdom_intro.html"/>
+        <meta property="og:description" content="WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））"/>
+        <meta property="article:published_time" content="2016-04-06" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="python" />
+            <meta property="article:tag" content="wdom" />
+            <meta property="article:author" content="miyakogi" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
+
+
+
+        <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File Python ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
+Blank File            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html"
+                       rel="bookmark"
+                       title="Permalink to Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介">
+                        Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-04-06T20:00:00+09:00"> Wed 06 April 2016</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://miyakogi.github.io/blog/tag/python.html">python</a>
+        /
+	<a href="https://miyakogi.github.io/blog/tag/wdom.html">wdom</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。
+ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。</p>
+<p><a href="https://github.com/miyakogi/wdom">miyakogi/wdom: DOM manipulation library for python</a></p>
+<p>WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。
+ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。
+ちなみに、拙作<a href="https://github.com/miyakogi/livemark.vim">LiveMark.vim</a>もこれを使っています。</p>
+<p>まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。</p>
+<p>もしバグを発見したら<a href="https://github.com/miyakogi/wdom/issues">GitHubのIssue</a>に報告していただけると助かります。
+（できれば英語でお願いします（難しければタイトルだけでも））</p>
+<!--more-->
+
+<h2>動機</h2>
+<p>PythonのGUIライブラリだと標準ライブラリのTkInterやPyQt、wxPythonなどが有名で、私はPyQtを結構使っていましたが、以下の不満もありました。</p>
+<ul>
+<li>見た目が残念（他よりマシですが、今となっては・・・）<ul>
+<li>スタイルの変更は一応可能ですが面倒です</li>
+<li>いい感じのCSSを読み込んでクラス指定くらいで済ませたいです</li>
+</ul>
+</li>
+<li>インストールが大変<ul>
+<li><code>pip install PyQt</code>では今の所インストールできません</li>
+<li>anacondaなどで楽できるらしいですが好きじゃないです</li>
+</ul>
+</li>
+<li>配布可能なバイナリパッケージにするのもそれなりに面倒<ul>
+<li>だいぶ記憶が薄れてしまいましたが、いくつかはまった記憶があります<ul>
+<li>特にWindows・・・</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>情報が少ない<ul>
+<li>結局qtのリファレンスを読みながら使っていました</li>
+</ul>
+</li>
+<li>テストしにくい<ul>
+<li>UIが絡むテストも<a href="http://johnnado.com/pyqt-qtest-example/">できるらしい</a>ですが</li>
+</ul>
+</li>
+<li>ライセンスがGPL<ul>
+<li>自分が使う分には問題ありませんが、やっぱりもっとゆるいライセンスが気持ち的に安心です</li>
+</ul>
+</li>
+</ul>
+<h2>特徴</h2>
+<p>ということで、WDOMは上記の不満をそれなりに解消するために作りました。</p>
+<p>基本的には、PyQtでよく使う機能はDOMで実現できるでしょたぶん、という方針です。</p>
+<ul>
+<li>ブラウザ上に表示するので、巷に溢れるCSSフレームワークが利用可能<ul>
+<li>Bootstrap万歳</li>
+</ul>
+</li>
+<li>必須ライブラリはtornadoだけ、かつpure python実装なのでインストールはpipでOK</li>
+<li>配布可能なバイナリにするのも通常のpythonで書かれたパッケージと（だいたい）同じ方法でOK</li>
+<li>インターフェイスはDOM仕様に基づいているので、メソッド名や引数のとり方などは<a href="https://developer.mozilla.org/ja/docs/Web/API">MDN</a>などで確認可能<ul>
+<li><code>Element.appendChild(追加したい要素)</code> で追加とかする感じです<ul>
+<li>イベントの処理は<code>Element.addEventListener('click', 関数)</code>です</li>
+<li>実装済みの機能は<a href="https://github.com/miyakogi/wdom/wiki/Features">こちら</a>をご参照ください</li>
+</ul>
+</li>
+<li>JavaScriptでDOMを触ったことがあればなんとなくわかると思います</li>
+<li>JavaScriptを触ったことがなくても、今後触る機会があるかもしれないので、覚えたことは無駄になりにくいです</li>
+<li>まだブラウザに実装されていない最新のDOM仕様も一部実装しています<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/ChildNode">ChildNode</a>のbefore/afterや<a href="https://developer.mozilla.org/ja/docs/Web/API/ParentNode">ParentNode</a>のappend/prependなど</li>
+<li>Custom Elementsも一応実装しています</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="http://selenium-python.readthedocs.org/">Selenium</a>でUIのテストが可能<ul>
+<li>Seleniumもブラウザ上でテストを実行する汎用的なライブラリなので、覚えたことは無駄になりにくいです</li>
+<li>HTMLを出力して確認することもできます</li>
+</ul>
+</li>
+<li>ライセンスはMITです</li>
+</ul>
+<p>類似のプロジェクトでは<a href="https://github.com/zoofIO/flexx">flexx</a>や<a href="http://www.reahl.org/">Reahl</a>などがありましたが、これらはそれなりに学習コストが高そう＆Webフレームワークっぽかったので見送りました。</p>
+<h2>必要環境</h2>
+<p>Python3.5.1以上（つまり現在の最新版のみ）の対応です。
+aiohttpを使わなければ3.4.4でも動くかもしれません。
+あと、おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。</p>
+<p>ブラウザ上に表示するので、ブラウザが必要です。
+当然ですがIEとSafariはサポート対象外です。
+（とはいえ、ほとんどの機能は動作すると思います。）
+ブラウザはElectronやPyQtのブラウザなどでも（たぶん）大丈夫です。</p>
+<h2>インストール</h2>
+<p>普通にpipでインストールできます。</p>
+<p>PyPIに登録しようかと思ったのですが、まだ細かいバグがありそうだったので見送りました。
+近いうちに登録したいとは考えています。</p>
+<div class="highlight"><pre><span></span>pip install git+http://github.com/miyakogi/wdom
+</pre></div>
+
+
+<p>Webフレームワークの<a href="http://www.tornadoweb.org/en/stable/">tornado</a>に依存しているので一緒にインストールされます。
+オプションで<a href="http://aiohttp.readthedocs.org/en/stable/">aiohttp</a>を使うこともできます。
+こちらはネイティブでasyncioに対応していますし、C拡張で書かれているので（たぶん）パフォーマンス的にも優位だと思います。</p>
+<div class="highlight"><pre><span></span>pip install aiohttp
+</pre></div>
+
+
+<p>aiohttpがインストールされていれば勝手にそっちを使うので、特別な設定は必要ありません。</p>
+<h2>基本的な使い方</h2>
+<h3>とりあえず表示</h3>
+<p>とりあえず "Hello, WDOM" と表示するだけのプログラムは以下のようになります。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">wdom.misc</span> <span class="kn">import</span> <span class="n">install_asyncio</span> <span class="c1"># tornadoを使う時だけ必要です</span>
+<span class="kn">from</span> <span class="nn">wdom.server</span> <span class="kn">import</span> <span class="n">get_app</span><span class="p">,</span> <span class="n">start_server</span><span class="p">,</span> <span class="n">stop_server</span>
+<span class="kn">from</span> <span class="nn">wdom.document</span> <span class="kn">import</span> <span class="n">get_document</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">install_asyncio</span><span class="p">()</span> <span class="c1"># tornadoを使う時だけ必要です</span>
+
+    <span class="n">document</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>  <span class="c1"># documentオブジェクトを取得</span>
+    <span class="n">h1</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">)</span>  <span class="c1"># &#39;h1&#39; タグを作る</span>
+    <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="s1">&#39;Hello, WDOM&#39;</span>  <span class="c1"># &#39;h1&#39; タグの文字列を指定</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">h1</span><span class="p">)</span>  <span class="c1"># &#39;body&#39; タグに &#39;h1&#39; タグを挿入</span>
+
+    <span class="c1"># 以下はテンプレだと思って下さい</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">start_server</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8888</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>  <span class="c1"># webサーバのportを8888に指定</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">stop_server</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut1.py">サンプルコード</a></p>
+<p>このプログラムを実行して、ブラウザで<code>http://localhost:8888</code>にアクセスすると "Hello, WDOM" と表示されるはずです。</p>
+<p>重要な部分は <code>document = get_document()</code> 以下の4行です。
+ほぼJavaScriptでDOMを操作する時と同じになっています。
+要素の追加は<a href="https://developer.mozilla.org/ja/docs/Web/API/Node/appendChild">appendChild</a>や<a href="https://developer.mozilla.org/ja/docs/Web/API/Node/insertBefore">insertBefore</a>、<a href="https://developer.mozilla.org/ja/docs/Web/API/Node/replaceChild">replaceChild</a>などで行えます。
+<a href="https://developer.mozilla.org/ja/docs/Web/API/Node/removeChild">removeChild</a>で削除することも可能です。</p>
+<p>「<code>document.createElement</code> とか面倒」と感じると思いますが、ショートカットは用意してあるのでご安心下さい（後述します）。
+また、ここでは<code>appendChild</code>で要素を追加していますが、<a href="https://dom.spec.whatwg.org/">最新の仕様</a>に含まれている<code>append</code>や<code>after</code>、<code>remove</code>なども実装してあります。</p>
+<h3>イベント処理</h3>
+<h4>クリック時に文字列反転</h4>
+<p>イベント処理の追加は<code>addEventListener</code>です。
+<code>h1.textContent = ...</code> の次の行に以下のコードを追加してみてください。</p>
+<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">rev_text</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="c1"># h1の中身の文字列を反転</span>
+        <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">h1</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">rev_text</span><span class="p">)</span>  <span class="c1"># rev_textには括弧なしです！</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut2.py">サンプルコード</a></p>
+<p><code>h1</code>要素がクリックされた時に文字列が反転するはずです。</p>
+<p><code>addEventListener</code>の第一引数がイベントの種類、第二引数がそのイベントが発火した時に実行される処理になります。
+<a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener">JavaScriptの場合と同じ</a>です。
+今回はクリックされた時に<code>rev_text</code>関数を実行し、h1要素の中身の文字列を反転させています。
+<code>rev_text</code>関数には<code>Event</code>オブジェクトが渡されますが、今回は使っていません。</p>
+<h4>ユーザー入力の取得</h4>
+<p>ユーザーからの入力を取得したい場合は、<code>input</code>要素または<code>textarea</code>要素を使います。
+input要素に入力された文字列を、先ほどのh1要素に表示してみます。</p>
+<p>以下のように変更してください。</p>
+<div class="highlight"><pre><span></span>    <span class="n">document</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
+    <span class="n">h1</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">)</span>
+    <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="s1">&#39;Hello, WDOM&#39;</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">value</span>
+    <span class="nb">input</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">h1</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut3.py">サンプルコード</a></p>
+<p>文字列を入力すると "Hello, WDOM" と表示されていた部分が置き換えられるはずです。</p>
+<p><code>update</code>関数内でアクセスしている<code>event.target</code>は、イベントが発火したオブジェクトへの参照（この場合はinput要素）です。
+<a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLInputElement">input要素</a>は現在の入力値を<code>value</code>属性に保持しているので、それをh1要素の<code>textContent</code>に設定しています。</p>
+<p><code>event</code>オブジェクトもDOMの<a href="https://developer.mozilla.org/ja/docs/Web/API/Event">Event</a>オブジェクトと同じ構造をしているので、詳細は仕様を確認してください。
+（まだ<a href="https://github.com/miyakogi/wdom/wiki/Features#events">実装できていない部分</a>も多いですが・・・特にイベントの伝播制御は全く手付かずです・・・）</p>
+<h2>Pythonのクラスの利用</h2>
+<p>毎回<code>createElement</code>をするのはとてつもなく面倒ですし、documentへの参照が必要で不便極まりないので、クラスから直接要素を作れるようにしてあります。
+以下の機能は<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a>を参考にしました。</p>
+<p>例えば、先ほどのh1要素とinput要素を子要素に持つdiv要素を作る場合は以下のようにできます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">H1</span><span class="p">,</span> <span class="n">Input</span>
+
+<span class="k">class</span> <span class="nc">MyElement</span><span class="p">(</span><span class="n">Div</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h1</span> <span class="o">=</span> <span class="n">H1</span><span class="p">()</span>  <span class="c1"># h1要素を新しく作成</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="s1">&#39;Hello, WDOM&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">()</span>  <span class="c1"># input要素を新しく作成</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">value</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="o">...</span> <span class="c1"># 省略</span>
+
+    <span class="n">document</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">MyElement</span><span class="p">())</span>
+    <span class="o">...</span> <span class="c1"># 以下同じ</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut4.py">サンプルコード</a></p>
+<p><a href="https://github.com/miyakogi/wdom/blob/dev/wdom/tag.py">wdom.tagモジュール</a>には一般的なタグを表すクラスが一通り定義してあります。
+全てタグ名の一文字目が大文字で他は小文字というクラス名です。</p>
+<p>例えば<code>&lt;button&gt;</code>タグは<code>wdom.tag.Button</code>で<code>&lt;br&gt;</code>タグは<code>wdom.tag.Br</code>です。
+例外はありません。
+<code>textarea</code>も<code>wdom.tag.Textarea</code>です。</p>
+<p>上記の<code>MyElement</code>クラスのように、既存のクラスを継承して独自のクラスを作ることもできます。
+<code>MyElement</code>クラスは<code>Div</code>クラスを継承しているので、そのインスタンスはブラウザ上では<code>&lt;div&gt;</code>要素として表示されます。</p>
+<p><code>print(MyElement().html)</code>とすると実際のhtmlが取得できます。
+この場合、以下のようになっているはずです。</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">rimo_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">rimo_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;&lt;</span><span class="nt">h1</span> <span class="na">rimo_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;</span>Hello, WDOM<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p><code>rimo_id</code>は内部で使っている属性です。
+無視して下さい。
+テストなどで邪魔な場合は、<code>html_noid</code>を使うと<code>rimo_id</code>を除いたhtmlが取得できます。</p>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">MyElement</span><span class="p">()</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>
+<span class="c1"># -&gt; &lt;div&gt;&lt;input&gt;&lt;h1&gt;Hello, WDOM&lt;/h1&gt;&lt;/div&gt;</span>
+</pre></div>
+
+
+<h3>親要素に自動的に追加</h3>
+<p>毎回appendChildを呼び出すのも面倒なので、インスタンス生成時に<code>parent</code>引数で親要素を指定できるようにしてあります。</p>
+<p>先ほどの例は以下のように書き換えることができます。
+（要素の追加される順番が先ほどと違ってしまいますが）</p>
+<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h1</span> <span class="o">=</span> <span class="n">H1</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># h1要素を新しく作成して自分の子要素にする</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="s1">&#39;Hello, WDOM&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># input要素を新しく作成して自分の子要素にする</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut5.py">サンプルコード</a></p>
+<h3>子要素を自動的に追加</h3>
+<p>逆に、子要素をインスタンス作成時に追加することもできます。</p>
+<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># 子要素として&#39;Hello, WDOM&#39;を持つh1要素を新しく作成し、子要素に追加</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h1</span> <span class="o">=</span> <span class="n">H1</span><span class="p">(</span><span class="s1">&#39;Hello, WDOM&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># input要素を新しく作成して自分の子要素にする</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut6.py">サンプルコード</a></p>
+<p><code>H1('Hello, WDOM', parent=self)</code>としている部分では、第一引数が新しく作られる要素の子要素に追加されます。
+文字列は自動的に<a href="https://developer.mozilla.org/ja/docs/Web/API/Text">Textノード</a>（<code>wdom.node.Text</code>）に変換されます。
+<code>H1(H2(), P(), ...)</code>として複数の要素を追加することも可能です。</p>
+<h3>属性値を設定</h3>
+<p>インスタンス化する時に属性値を設定することもできます。</p>
+<div class="highlight"><pre><span></span><span class="nb">input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;checkbox&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>  <span class="c1"># &lt;input type=&quot;checkbox&quot;&gt;</span>
+
+<span class="c1"># JavaScript同様、以下のようにして設定することも可能です</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">()</span>
+<span class="nb">input</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;checkbox&#39;</span><span class="p">)</span>
+<span class="c1"># または input.type = &#39;checkbox&#39;</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut7.py">サンプルコード</a></p>
+<p><code>class</code>属性はpythonの予約語とかぶっているので、<code>class_</code>と末尾にアンダースコアをつけてください。</p>
+<div class="highlight"><pre><span></span><span class="n">h1</span> <span class="o">=</span> <span class="n">H1</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h1</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>  <span class="c1"># &lt;h1 class=&quot;title&quot;&gt;&lt;/h1&gt;</span>
+
+<span class="c1"># 以下と同じです</span>
+<span class="n">h1</span> <span class="o">=</span> <span class="n">H1</span><span class="p">()</span>
+<span class="n">h1</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+<span class="c1"># または h1.classList.add(&#39;title&#39;)</span>
+<span class="c1"># classList は複数追加可能です</span>
+<span class="c1"># h1.classList.add(&#39;title&#39;, &#39;heading&#39;, ...)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut8.py">サンプルコード</a></p>
+<h3>デフォルトのクラス属性を設定</h3>
+<p>よく使うタグとクラス属性の値をまとめて定義しておくことも可能です。</p>
+<p>例えばbootstrapのボタンはクラスに<code>class="btn"</code>と指定する必要がありますが、これをデフォルトで定義されている(pythonの)クラスを作ることができます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Button</span>
+
+<span class="k">class</span> <span class="nc">MyButton</span><span class="p">(</span><span class="n">Button</span><span class="p">):</span>
+    <span class="n">class_</span> <span class="o">=</span> <span class="s1">&#39;btn&#39;</span>
+    <span class="o">...</span> <span class="c1"># 省略</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">MyButton</span><span class="p">()</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>
+<span class="c1"># &lt;button class=&quot;btn&quot;&gt;&lt;/button&gt;</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut9.py">サンプルコード</a></p>
+<p>クラス変数の<code>class_</code>に指定したクラスが自動的に設定されます。
+これは以下のように定義した場合とほぼ同じです。</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyButton</span><span class="p">(</span><span class="n">Button</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;btn&#39;</span><span class="p">)</span>
+        <span class="o">...</span>
+</pre></div>
+
+
+<p>違いは、インスタンスから削除できないという点と、クラス変数として定義したclass属性はsubclassに継承されるという点です。</p>
+<p>前者は以下のような操作ができないことを意味します。</p>
+<div class="highlight"><pre><span></span><span class="n">btn</span> <span class="o">=</span> <span class="n">MyButton</span><span class="p">()</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">classList</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;btn&#39;</span><span class="p">)</span>  <span class="c1"># classListから&#39;btn&#39;クラスを削除しようとしても</span>
+<span class="k">print</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>  <span class="c1"># &lt;button class=&quot;btn&quot;&gt;&lt;/button&gt;  # 削除されない</span>
+</pre></div>
+
+
+<p>後者の継承されるという点は文字通りですが、継承されたクラスで<code>class_</code>と指定しても置き換えられず、追加されます。
+例えば<code>DefaultButton</code>というクラスを作り、<code>class="btn btn-default"</code>というクラス属性を持たせたい場合は、</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="n">DefaultButton</span>(<span class="n">MyButton</span>):
+    <span class="n">class_</span> = <span class="s">&#39;btn-default&#39;</span>
+</pre></div>
+
+
+<p>とするだけでクラス属性を追加することができます。</p>
+<div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DefaultButton</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>  <span class="c1"># &lt;button class=&quot;btn btn-default&quot;&gt;&lt;/button&gt;</span>
+</pre></div>
+
+
+<h3>class定義のショートカット</h3>
+<p>クラス属性が違うだけの(Pythonの)クラスを<code>class</code>文でいくつも定義するのは面倒なので、簡単に定義するための<code>wdom.tag.NewTagClass</code>という関数を用意しました。</p>
+<p>この関数を使うことで、先ほどの<code>MyButton</code>や<code>DefaultButton</code>は次のように定義することができます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Button</span><span class="p">,</span> <span class="n">NewTagClass</span>
+
+<span class="n">MyButton</span> <span class="o">=</span> <span class="n">NewTagClass</span><span class="p">(</span><span class="s1">&#39;MyButton&#39;</span><span class="p">,</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;btn&#39;</span><span class="p">)</span>
+<span class="n">DefaultButton</span> <span class="o">=</span> <span class="n">NewTagClass</span><span class="p">(</span><span class="s1">&#39;DefaultButton&#39;</span><span class="p">,</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="n">MyButton</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;btn-default&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut10.py">サンプルコード</a></p>
+<p><code>NewTagClass</code>の第一引数は新しく作るクラスの名前、第二引数はタグ、第三引数は継承するクラス、第四引数以降の名前付き引数はクラス変数になります。
+第三引数はタプルで複数のクラスを指定することも可能です。</p>
+<p>これらの機能はDOM仕様ではなく独自仕様ですが、JavaScriptとPythonの違い、利便性等を考慮して実装しました。
+独自仕様なので今後変更される可能性もあります。
+ご注意ください。
+（クラス変数の<code>class_</code>は<code>classes</code>にしてリストでクラスを指定する形にしたい気持ちもあります）</p>
+<h2>HTMLでの記述</h2>
+<p>構造を上記のような<code>appendChild</code>などだけで作っていくのは大変なので、HTMLで記述してパースできるようにしてあります。
+JavaScriptと同様、<code>innerHTML</code>でHTML文字列を設定するだけです。</p>
+<p>例えば大きなリストを作る時は以下のようにすることができます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Ul</span>
+<span class="n">ul</span> <span class="o">=</span> <span class="n">Ul</span><span class="p">()</span>
+<span class="n">ul</span><span class="o">.</span><span class="n">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;li&gt;...&lt;/li&gt;</span>
+<span class="s1">&lt;li&gt;...&lt;/li&gt;</span>
+<span class="s1">&lt;li&gt;...&lt;/li&gt;</span>
+<span class="s1">&lt;li&gt;...&lt;/li&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut11.py">サンプルコード</a></p>
+<p><code>innerHTML</code>は既存の子要素を全て削除して置き換えるのでご注意ください。</p>
+<p>各子要素にはリスト風オブジェクトの<code>ul.childNodes</code>経由でアクセス可能です。
+<code>ul.firstChild</code>や<code>ul.lastChild</code>などで最初・最後の子要素にもアクセスできます。
+これもJavaScript（というかDOMの仕様）と同じです。
+（上の例だと改行だけのTextノードも作られてしまうのですが、一応Chromeでの動作と同じです。）</p>
+<p>また、<code>insertAdjacentHTML(position, html)</code>メソッドでもHTMLをパースできます。
+このメソッドは既存の子要素は削除せず、<code>position</code>で指定した位置に要素を挿入します。
+詳細は<a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML">element.insertAdjacentHTML - Web API インターフェイス | MDN</a>などをご参照ください。</p>
+<p>なお<code>outerHTML</code>は未実装です・・・</p>
+<h2>スタイルシートの適用</h2>
+<p>デフォルトの表示は寂しいので、スタイルシートを適用しましょう。
+見栄えは重要です。</p>
+<h3>Web上のリソース読み込み</h3>
+<p>例としてBootstrapを使ってみます。</p>
+<p>Bootstrapの場合はcssとjavascript二つ（bootstrapとjquery）が必要なので、それぞれ<code>&lt;head&gt;</code>要素と<code>&lt;body&gt;</code>要素に追加します。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Link</span><span class="p">,</span> <span class="n">Script</span><span class="p">,</span> <span class="n">Button</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
+<span class="c1"># &lt;head&gt;内にbootstrap.min.cssを読み込むlinkタグを追加</span>
+<span class="n">document</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">Link</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;stylesheet&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&#39;</span><span class="p">))</span>
+
+<span class="c1"># &lt;body&gt;にjqueryとbootstrap.min.js追加</span>
+<span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">Script</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s1">&#39;https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js&#39;</span><span class="p">))</span>
+<span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">Script</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s1">&#39;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js&#39;</span><span class="p">))</span>
+
+<span class="c1"># ボタン追加</span>
+<span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s1">&#39;btn&#39;</span><span class="p">))</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut12.py">サンプルコード</a></p>
+<p>CSSとJSは頻繁に使われると思うので、以下のショートカットも用意してあります。
+（メソッド名は今後変更される可能性があります）</p>
+<div class="highlight"><pre><span></span><span class="n">document</span><span class="o">.</span><span class="n">add_cssfile</span><span class="p">(</span><span class="s1">&#39;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&#39;</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_jsfile</span><span class="p">(</span><span class="s1">&#39;https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js&#39;</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_jsfile</span><span class="p">(</span><span class="s1">&#39;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut13.py">サンプルコード</a></p>
+<h3>ローカルのファイル読み込み</h3>
+<p>独自に作ったcssファイルなどを読み込むことも可能です。</p>
+<p>例えば以下のようなディレクトリ構成で、<code>app.py</code>から<code>static/css/app.css</code>を読み込む場合を考えます。</p>
+<div class="highlight"><pre><span></span>.
+├── static
+│   └── css
+│       └── app.css
+├── app.py
+├── module1.py
+├── ...
+...
+</pre></div>
+
+
+<p><code>app.py</code>で次のように指定します。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="n">static_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s1">&#39;static&#39;</span><span class="p">)</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_cssfile</span><span class="p">(</span><span class="s1">&#39;/static/css/app.css&#39;</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">add_static_path</span><span class="p">(</span><span class="s1">&#39;static&#39;</span><span class="p">,</span> <span class="n">static_dir</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut14.py">サンプルコード</a></p>
+<p><code>app.add_static_path()</code>の第一引数は、静的ファイルへアクセスする時のprefixになります。
+指定したディレクトリ以下のファイルに<code>http://localhost:8888/{prefix}/{ファイル名}</code>でアクセスできるようになります。
+上記の例では<code>http://localhost:8888/static/css/app.css</code>とアクセスするとapp.cssが表示されるはずです。</p>
+<p>prefixとディレクトリ名は異なっていても大丈夫です。
+例えば<code>add_static_path('my_static', static_dir)</code>とすることもでき、この場合は<code>document.add_cssfile('/my_static/css/app.css')</code>とすることで<code>app.css</code>を読み込むことができます。
+ブラウザで<code>http://localhost:8888/my_static/css/app.css</code>にアクセスすると、実際のcssファイルが表示されることが確認できるはずです。</p>
+<p>cssやjsファイルに限らず、画像やhtmlなどの静的ファイルでも何でも利用可能です。</p>
+<p>なお、prefixはurlに使える値なら何でも構いませんが、<code>_static</code>というprefixだけはライブラリ側で使っているので他の名前を使ってください。</p>
+<h2>DOMの便利な新機能</h2>
+<p>まだブラウザに実装されていない機能もいくつか実装しているので紹介します。</p>
+<h3>ParentNode/ChildNode インターフェイスの各メソッド</h3>
+<p><code>appendChild</code>は単一の要素しか追加できませんが、<code>append</code>というメソッドでは複数の要素をまとめて追加できます。
+さらに、文字列も自動的にTextノードに変換されます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Ul</span><span class="p">,</span> <span class="n">Li</span>
+<span class="n">ul</span> <span class="o">=</span> <span class="n">Ul</span><span class="p">()</span>
+<span class="n">li1</span> <span class="o">=</span> <span class="n">Li</span><span class="p">()</span>
+<span class="n">li2</span> <span class="o">=</span> <span class="n">Li</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">ul</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">li1</span><span class="p">)</span>
+<span class="n">ul</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">li2</span><span class="p">)</span>
+<span class="o">...</span>
+
+<span class="c1"># appendを使うと</span>
+<span class="n">ul</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">li1</span><span class="p">,</span> <span class="n">li2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="c1"># と一度で終わる</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut15.py">サンプルコード</a></p>
+<p>同様に、先頭にまとめて追加する<code>prepend</code>や、前後に追加する<code>after</code>や<code>before</code>も利用可能です。</p>
+<p>内部的には、<code>appendChild</code>などは毎回通信を行ってブラウザ上の表示を更新しているのに対し、<code>append</code>などでは一度に表示を更新しているので、パフォーマンス的にも有利です。</p>
+<ul>
+<li>参考<table class="table">
+<thead>
+<tr>
+<th>- [ParentNode - Web API インターフェイス</th>
+<th>MDN](https://developer.mozilla.org/ja/docs/Web/API/ParentNode)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- [ChildNode - Web API インターフェイス</td>
+<td>MDN](https://developer.mozilla.org/ja/docs/Web/API/ChildNode)</td>
+</tr>
+<tr>
+<td>- [ParentNode</td>
+<td>DOM Standard](https://dom.spec.whatwg.org/#interface-parentnode)</td>
+</tr>
+<tr>
+<td>- [NonDocumentTypeChildNode</td>
+<td>DOM Standard](https://dom.spec.whatwg.org/#nondocumenttypechildnode)</td>
+</tr>
+<tr>
+<td>- [ChildNode</td>
+<td>DOM Standard](https://dom.spec.whatwg.org/#interface-childnode)</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3>Custom Element</h3>
+<p>独自タグも限定的・実験的ですがサポートしています。
+ブラウザ上では特に何もせず、<code>innerHTML</code>などでhtmlをパースした時に作られるPythonのクラスを指定できるだけですが。。。</p>
+<p>WebComponentsの仕様自体が流動的なので、今後変更される可能性はあります。</p>
+<h4>独自タグの定義</h4>
+<p>先ほど作った<code>MyElement</code>クラスは<code>div</code>タグとして表示されていましたが、独自の<code>&lt;my-element&gt;</code>タグとして定義してみます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Div</span>
+
+<span class="k">class</span> <span class="nc">MyElement</span><span class="p">(</span><span class="n">Div</span><span class="p">):</span>
+    <span class="c1"># 独自タグを&#39;my-element&#39;と指定</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;my-element&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="o">...</span> <span class="c1"># 省略</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut16.py">サンプルコード</a></p>
+<p>違いはクラス変数として<code>tag = 'my-element'</code>と設定していることだけです。
+先ほどと同様に<code>Div</code>クラスを継承していますが、特に意味はありません。
+<code>Span</code>などでも大丈夫です。</p>
+<p>これをCustom Tagとして登録します。</p>
+<div class="highlight"><pre><span></span><span class="n">document</span><span class="o">.</span><span class="n">defaultView</span><span class="o">.</span><span class="n">customElements</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span> <span class="n">MyElement</span><span class="p">)</span>
+</pre></div>
+
+
+<p>以前のCustom Elementの仕様では<code>docuemnt.registerElement</code>というメソッドが使われていましたが、<a href="http://w3c.github.io/webcomponents/spec/custom/">最新の仕様</a>では<code>window.customElements.define</code>というメソッドを使うようになっていたので、wdomもそちらに合わせました。
+<code>document.defaultView</code>はブラウザ上での<code>window</code>オブジェクトに相当します。
+（現状のWDOMではほとんど空のオブジェクトになっていますが・・・）</p>
+<p>これで<code>my-element</code>という独自タグが登録できたので、以下のように使うことができます。</p>
+<div class="highlight"><pre><span></span><span class="c1"># body要素の末尾に &lt;my-element&gt;&lt;/my-element&gt; を挿入</span>
+<span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">insertAdjacentHTML</span><span class="p">(</span><span class="s1">&#39;beforeend&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;my-element&gt;&lt;/my-element&gt;&#39;</span><span class="p">)</span>
+<span class="c1"># または、createElementで新規作成</span>
+<span class="n">my_element</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h4>既存タグの拡張</h4>
+<p><code>is</code>属性を使った既存タグの拡張にも対応しています。
+前述したbootstrapのbutton要素の<code>MyButton</code>や<code>DefaultButton</code>を定義してみます。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Div</span>
+
+<span class="k">class</span> <span class="nc">MyButton</span><span class="p">(</span><span class="n">Button</span><span class="p">):</span>
+    <span class="c1"># tag = &#39;button&#39;</span>
+    <span class="n">class_</span> <span class="o">=</span> <span class="s1">&#39;btn&#39;</span>
+    <span class="n">is_</span> <span class="o">=</span> <span class="s1">&#39;my-button&#39;</span>  <span class="c1"># tag ではなく is_ に名前を指定</span>
+
+<span class="k">class</span> <span class="nc">DefaultButton</span><span class="p">(</span><span class="n">MyButton</span><span class="p">):</span>
+    <span class="n">class_</span> <span class="o">=</span> <span class="s1">&#39;btn-default&#39;</span>
+    <span class="n">is_</span> <span class="o">=</span> <span class="s1">&#39;default-button&#39;</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">defaultView</span><span class="o">.</span><span class="n">customElements</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="s1">&#39;my-button&#39;</span><span class="p">,</span> <span class="n">MyButton</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;extends&#39;</span><span class="p">:</span> <span class="s1">&#39;button&#39;</span><span class="p">})</span>
+<span class="n">document</span><span class="o">.</span><span class="n">defaultView</span><span class="o">.</span><span class="n">customElements</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="s1">&#39;default-button&#39;</span><span class="p">,</span> <span class="n">DefaultButton</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;extends&#39;</span><span class="p">:</span> <span class="s1">&#39;button&#39;</span><span class="p">})</span>
+
+<span class="n">div</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+<span class="n">div</span><span class="o">.</span><span class="n">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&lt;button is=&quot;my-button&quot;&gt;&lt;/button&gt;&lt;button is=&quot;default-button&quot;&gt;&lt;/button&gt;&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">firstChild</span><span class="p">,</span> <span class="n">MyButton</span><span class="p">))</span>  <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">lastChild</span><span class="p">,</span> <span class="n">DefaultButton</span><span class="p">))</span>  <span class="c1"># True</span>
+</pre></div>
+
+
+<p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut17.py">サンプルコード</a></p>
+<p>(Pythonの)クラス定義時にクラス変数の<code>is_</code>（最後にアンダースコア）で名前を指定します。
+tagは拡張したいタグ（今回は継承元の<code>Button</code>クラスで定義されているので指定不要）です。</p>
+<p>定義したクラスを登録する時に、<code>define</code>の第一引数に名前（<code>is_</code>の値）を指定し、第三引数に辞書で<code>{'extends': 'button'}</code>と拡張したい元のタグ名を指定します。</p>
+<p>このように登録することで、<code>&lt;button is="my-button"&gt;</code>などのhtmlから<code>MyButton</code>クラスのインスタンスが作られるようになります。</p>
+<p>（タグとisの指定がわかりにくく、いかにも混乱しそうですが、今の所こういう仕様なのでそれに合わせています）</p>
+<h4>Custom Elementを使う上での注意</h4>
+<p>できるだけ早い段階で独自タグを定義するようにしてください。
+定義前にインスタンスを作ってしまうと、異なるクラスのインスタンスが作られてしまいます。
+一応<code>customElements.define</code>で登録された時に無理やりクラスは置き換えていますが、<code>__init__</code>は呼ばれません。
+特に、<code>is</code>を使った既存タグの拡張は、インスタンスを作った後に<code>setAttribute('is', '...')</code>などとしても（現時点では）クラスは変更されないので注意してください。</p>
+<p>今後<a href="http://www.html5rocks.com/ja/tutorials/webcomponents/customelements/#lifecycle">ライフサイクルコールバックメソッド</a>に相当する機能は作りたいと考えていますが、事前に登録を済ませておいたほうが安全なのは変わらないと思います。</p>
+<h2>おわりに</h2>
+<p>長くなってしまいましたが、お読みいただきありがとうございました。</p>
+<p>説明が必要な独自機能を中心に書いたので、あまりDOMで規定されている機能については触れませんでしたが、基本的な機能は実装されています。
+DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Features">こちら</a>をご参照ください。
+他にも開発に便利な機能が少しあったりするのですが、それは別記事で紹介したいと思います。</p>
+<p>当面はCustom Elementの実装と正式なドキュメントの整備をすすめていきたいと考えています。
+あと、個別のHTML要素のクラスも<code>HTML〇〇Element</code>の形で（主要なものは）実装したいですね。
+イベント関係も、ドラッグ＆ドロップとかはまだ実装できていないので実装しないと・・・</p>
+<p>もちろんバグが見つかればできるだけ早く修正します。
+もう少し落ち着いたらPyPIに登録します。</p>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/miyakogi"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/MiyakoDev"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
+                            Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
+                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
+                            Vimのパッケージ機能を試してみました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">
+                            Python製の静的サイトジェネレータを色々試してみました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160214/livemark_update.html">
+                            Livemark.vimを色々更新しました
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/python.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Python
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Vim
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-0">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 miyakogi
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-59101475-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
+</body>
+</html>
