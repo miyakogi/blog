@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介 - Blank File</title>
+    <title>PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介 - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,13 +13,13 @@
 
         <meta name="author" content="miyakogi" />
         <meta name="keywords" content="python,wdom" />
-        <meta name="description" content="WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））" />
+        <meta name="description" content="WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介"/>
+        <meta property="og:title" content="PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介"/>
         <meta property="og:url" content="https://miyakogi.github.io/blog/20160406/wdom_intro.html"/>
-        <meta property="og:description" content="WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））"/>
+        <meta property="og:description" content="WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））"/>
         <meta property="article:published_time" content="2016-04-06" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="python" />
@@ -78,8 +78,8 @@ Blank File            </a>
                 <h1>
                     <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html"
                        rel="bookmark"
-                       title="Permalink to Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介">
-                        Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介
+                       title="Permalink to PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介">
+                        PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
                     </a>
                 </h1>
             </header>
@@ -103,10 +103,10 @@ Blank File            </a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。
+                <p>WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。
 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。</p>
 <p><a href="https://github.com/miyakogi/wdom">miyakogi/wdom: DOM manipulation library for python</a></p>
-<p>WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。
+<p>WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。
 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。
 ちなみに、拙作<a href="https://github.com/miyakogi/livemark.vim">LiveMark.vim</a>もこれを使っています。</p>
 <p>まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。</p>
@@ -149,7 +149,8 @@ Blank File            </a>
 </ul>
 <h2>特徴</h2>
 <p>ということで、WDOMは上記の不満をそれなりに解消するために作りました。</p>
-<p>基本的には、PyQtでよく使う機能はDOMで実現できるでしょたぶん、という方針です。</p>
+<p>ブラウザ上に表示するので各種CSSライブラリなどはそのまま使えますし、メソッド名などもDOMと同じなので学習コスト低め（調べたことが無駄になりにくい）です。
+基本的には、PyQtでよく使う機能はDOMで実現できるでしょたぶん、という方針です。</p>
 <ul>
 <li>ブラウザ上に表示するので、巷に溢れるCSSフレームワークが利用可能<ul>
 <li>Bootstrap万歳</li>
@@ -182,12 +183,13 @@ Blank File            </a>
 <p>類似のプロジェクトでは<a href="https://github.com/zoofIO/flexx">flexx</a>や<a href="http://www.reahl.org/">Reahl</a>などがありましたが、これらはそれなりに学習コストが高そう＆Webフレームワークっぽかったので見送りました。</p>
 <h2>必要環境</h2>
 <p>Python3.5.1以上（つまり現在の最新版のみ）の対応です。
-aiohttpを使わなければ3.4.4でも動くかもしれません。
+オプションのaiohttpを使わなければ3.4.4でも動くかもしれません。
 あと、おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。</p>
-<p>ブラウザ上に表示するので、ブラウザが必要です。
-当然ですがIEとSafariはサポート対象外です。
-（とはいえ、ほとんどの機能は動作すると思います。）
-ブラウザはElectronやPyQtのブラウザなどでも（たぶん）大丈夫です。</p>
+<p>ブラウザ上に表示するのでブラウザが必要です。
+逆に言えば、Pythonが動作してブラウザがある環境であれば動作します。
+当然ですがIEはサポート対象外です。
+とはいえ、ほとんどの機能は動作すると思います。
+ブラウザはElectronやPyQtのブラウザなどでも大丈夫です（たぶん）。</p>
 <h2>インストール</h2>
 <p>普通にpipでインストールできます。</p>
 <p>PyPIに登録しようかと思ったのですが、まだ細かいバグがありそうだったので見送りました。
@@ -205,7 +207,6 @@ aiohttpを使わなければ3.4.4でも動くかもしれません。
 
 <p>aiohttpがインストールされていれば勝手にそっちを使うので、特別な設定は必要ありません。</p>
 <h2>基本的な使い方</h2>
-<h3>とりあえず表示</h3>
 <p>とりあえず "Hello, WDOM" と表示するだけのプログラムは以下のようになります。</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">wdom.misc</span> <span class="kn">import</span> <span class="n">install_asyncio</span> <span class="c1"># tornadoを使う時だけ必要です</span>
@@ -239,10 +240,161 @@ aiohttpを使わなければ3.4.4でも動くかもしれません。
 <a href="https://developer.mozilla.org/ja/docs/Web/API/Node/removeChild">removeChild</a>で削除することも可能です。</p>
 <p>「<code>document.createElement</code> とか面倒」と感じると思いますが、ショートカットは用意してあるのでご安心下さい（後述します）。
 また、ここでは<code>appendChild</code>で要素を追加していますが、<a href="https://dom.spec.whatwg.org/">最新の仕様</a>に含まれている<code>append</code>や<code>after</code>、<code>remove</code>なども実装してあります。</p>
-<h3>イベント処理</h3>
+<h2>DOMについて</h2>
+<p>WDOMで扱うUI部品はすべてブラウザ上のタグ（要素）に相当します。
+WDOMの各要素はブラウザ上のタグと一対一の関係を持っています。</p>
+<p>例えば、上の例で作った<code>h1</code>要素（<code>docuemnt.createElement('h1')</code>で作られたインスタンス）はブラウザ上のh1タグ、すなわち<code>&lt;h1&gt;&lt;/h1&gt;</code>というHTMLの要素になります。
+WDOMのUI部品はHTMLで表現することができ、実際にブラウザ上で表示されるHTMLは<code>html</code>属性で取得することができます。
+先ほどの<code>h1</code>要素であれば<code>print(h1.html)</code>とすることで実際のHTMLを確認できます。</p>
+<p>これらの要素はDOMで規定されている各種メソッドも備えているので、JavaScriptでDOMを扱う時と同じように要素の追加・削除などを行うことができます。</p>
+<p>この節では基本的なDOM操作について説明します。
+ブラウザ上のJavaScriptとほとんど同じなので、そちらをご存じの方は読み飛ばしてください。
+WDOMに実装済みの機能の一覧は<a href="https://github.com/miyakogi/wdom/wiki/Features">こちら</a>をご参照下さい。
+正式なドキュメント（APIリファレンス）はまだ用意出来ていません、申し訳ありません。</p>
+<h3>要素の作成</h3>
+<p>WDOMで要素を新規に作成する方法は、大別して以下の三種類の方法があります。</p>
+<ul>
+<li><code>docuemnt.createElement</code> メソッドでタグ名を指定して作成</li>
+<li>各要素の<code>innerHTML</code>や<code>insertAdjacentHTML</code>でHTMLから作成</li>
+<li><code>wdom.tag</code>モジュールで定義されている各クラスから作成</li>
+</ul>
+<p>作成された要素は、<code>document</code>をルートとするDOMツリーに追加されるまでは表示されません。
+ただし、<code>innerHTML</code>や<code>insertAdjacentHTML</code>では作成と同時にその要素の子要素として追加されます。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Document/createElement">document.createElement  MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/innerHTML">element.innerHTML MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML">element.insertAdjacentHTML MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>要素の追加</h3>
+<p><code>appendChild</code>や<code>insertBefore</code>メソッドで要素をDOMツリーに追加することができます。</p>
+<p><code>親要素.appendChild(追加する要素)</code>では、親要素の最後の子要素として<code>追加する要素</code>が追加されます。</p>
+<p><code>親要素.insertBefore(追加する要素, 追加したい位置の要素)</code>では、<code>追加したい位置の要素</code>の直前に<code>追加する要素</code>が挿入されます。
+<code>追加したい位置の要素</code>は親要素の直接の子要素でなくてはなりません。</p>
+<p>追加された要素がすでに別の親要素を持っていた場合、その親要素からは自動的に取り除かれます。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/appendChild">Node.appendChild MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/insertBefore">Node.insertBefore MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>要素の削除</h3>
+<p><code>removeChild</code>メソッドで特定の子要素を削除することができます。</p>
+<p><code>親要素.removeChild(子要素)</code>とすることで、子要素は親要素から取り除かれます。
+この時、取り除かれる子要素は親要素の直接の子要素でなくてはなりません。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/removeChild">Node.removeChild MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>要素の入れ替え</h3>
+<p><code>replaceChild</code>メソッドで要素子要素を入れ替えることができます。</p>
+<p><code>親要素.replaceChild(挿入する要素, 取り除く要素)</code>とすることで、<code>取り除く要素</code>が<code>挿入する要素</code>と置き換えられます。
+この時、<code>取り除く要素</code>は親要素の直接の子要素でなくてはなりません。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/replaceChild">Node.replaceChild MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>親要素へのアクセス</h3>
+<p>ある要素の親要素には<code>要素.parentNode</code>属性でアクセスできます。
+要素がまだDOMツリーに追加されておらず、親要素が存在しない場合は<code>None</code>を返します。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/parentNode">Node.parentNode MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>子要素へのアクセス</h3>
+<p>ある要素の子要素には<code>要素.childNodes</code>属性でアクセスできます。</p>
+<p><code>childNodes</code>属性で返されるオブジェクトはリスト風の<strong>Live Object</strong>です。
+Pythonのリスト同様、<code>for child in 要素.childNodes:</code>という形でループを介してアクセスしたり、<code>childNodes[i]</code>という形でインデックスアクセスしたり、<code>if child in parent.childNodes:</code>などの形で特定の要素が含まれているか確認することができます。</p>
+<p>ただし、通常のリストとは異なり、直接要素を追加したり削除したりすることはできません。
+また、<strong>Live Object</strong>なので、親要素の変更が常時反映されます。
+そのため、以下のようなコードは無限ループになってしまいます。</p>
+<div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">docuemnt</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">docuemnt</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span>
+<span class="n">child_nodes</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">childNodes</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">child_nodes</span><span class="p">:</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>先頭の子要素、あるいは末尾の子要素には<code>要素.firstChild</code>や<code>要素.lastChild</code>でアクセスすることもできます。
+子要素が存在しない場合、これらは<code>None</code>を返します。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/childNodes">Node.childNodes MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/firstChild">Node.firstChild MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/lastChild">Node.lastChild MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>隣接ノードへのアクセス</h3>
+<p>隣接するノードには<code>nextSibling</code>や<code>previousSibling</code>でアクセスできます。
+親要素を持たない場合、または要素が先頭・末尾にあって該当する要素が存在しない場合は<code>None</code>を返します。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/nextSibling">Node.nextSibling MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/previousSibling">Node.previousSibling MDN</a></li>
+</ul>
+</li>
+</ul>
+<h3>属性値へのアクセス</h3>
+<p>各要素にはHTML同様に属性値を設定することができます。
+HTMLの<code>&lt;a href="http://......./"&gt;リンク&lt;/a&gt;</code>における<code>href=""</code>に相当する部分です。</p>
+<p><code>getAttribute('属性名')</code>で取得、<code>setAttribute('属性名', '値')</code>で設定、<code>removeAttribute('属性名')</code>で削除できます。
+存在しない属性に対して<code>getAttribute</code>を行うと<code>None</code>が返されます。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Attr">Attr MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/getAttribute">element.getAttribute MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/setAttribute">element.setAttribute MDN</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttribute">Element.removeAttribute() MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/NamedNodeMap">NamedNodeMap MDN</a></li>
+</ul>
+</li>
+</ul>
+<h4>使用例</h4>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">docuemnt</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="s1">&#39;リンク&#39;</span>
+<span class="n">a</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">html</span><span class="p">)</span> <span class="c1"># &lt;a href=&quot;/&quot;&gt;リンク&lt;/a&gt;`</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">))</span> <span class="c1"># &#39;/&#39;</span>
+<span class="n">a</span><span class="o">.</span><span class="n">removeAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">))</span> <span class="c1"># None</span>
+</pre></div>
+
+
+<p>各要素に設定されている属性の一覧は<code>要素.attributes</code>で取得することができます。
+この時返されるオブジェクトは<code>{'属性名': Attrノード, ...}</code>の辞書風オブジェクト（NamedNodeMap）です。</p>
+<h4>特殊な属性値</h4>
+<p>一部の属性値は、要素の属性として直接アクセスすることができます。</p>
+<p>例えば<code>id</code>属性は<code>要素.id</code>で取得したり<code>要素.id = 'some_id'</code>で設定することができます。
+<code>id</code>属性が設定されていない状態で<code>要素.id</code>を取得すると空文字列が返ります。
+返り値の型は属性によって異なり、例えば<code>hidden</code>属性は<code>True</code>または<code>False</code>を返しますし、<code>style</code>属性は<code>CSSStyleDeclaration</code>のインスタンスを返します。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement">HTMLElement</a><ul>
+<li>WDOMではまだ全ての属性値が実装できてはいません</li>
+<li>実際の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Features">こちら</a>の<code>interface Element</code>以下をご参照ください</li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/id">element.id</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style">element.style</a></li>
+</ul>
+</li>
+</ul>
+<h3>イベント</h3>
+<p>イベント処理の追加には<code>addEventListener</code>メソッドを使用します。
+実際に動かしたほうがわかりやすいと思うので、最初のサンプルコードをベースに説明します。</p>
 <h4>クリック時に文字列反転</h4>
-<p>イベント処理の追加は<code>addEventListener</code>です。
-<code>h1.textContent = ...</code> の次の行に以下のコードを追加してみてください。</p>
+<p>上記のサンプルコードで、<code>h1.textContent = ...</code> の次の行に以下のコードを追加してみてください。</p>
 <div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">rev_text</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
         <span class="c1"># h1の中身の文字列を反転</span>
         <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="n">h1</span><span class="o">.</span><span class="n">textContent</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -252,10 +404,16 @@ aiohttpを使わなければ3.4.4でも動くかもしれません。
 
 <p><a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut2.py">サンプルコード</a></p>
 <p><code>h1</code>要素がクリックされた時に文字列が反転するはずです。</p>
-<p><code>addEventListener</code>の第一引数がイベントの種類、第二引数がそのイベントが発火した時に実行される処理になります。
+<p><code>addEventListener</code>の第一引数が反応するイベントの種類（文字列）、第二引数がそのイベントが発火した時に実行される処理（関数、イベントリスナー）になります。
 <a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener">JavaScriptの場合と同じ</a>です。
 今回はクリックされた時に<code>rev_text</code>関数を実行し、h1要素の中身の文字列を反転させています。
 <code>rev_text</code>関数には<code>Event</code>オブジェクトが渡されますが、今回は使っていません。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener">EventTarget.addEventListener MDN</a></li>
+</ul>
+</li>
+</ul>
 <h4>ユーザー入力の取得</h4>
 <p>ユーザーからの入力を取得したい場合は、<code>input</code>要素または<code>textarea</code>要素を使います。
 input要素に入力された文字列を、先ほどのh1要素に表示してみます。</p>
@@ -278,6 +436,22 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 <a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLInputElement">input要素</a>は現在の入力値を<code>value</code>属性に保持しているので、それをh1要素の<code>textContent</code>に設定しています。</p>
 <p><code>event</code>オブジェクトもDOMの<a href="https://developer.mozilla.org/ja/docs/Web/API/Event">Event</a>オブジェクトと同じ構造をしているので、詳細は仕様を確認してください。
 （まだ<a href="https://github.com/miyakogi/wdom/wiki/Features#events">実装できていない部分</a>も多いですが・・・特にイベントの伝播制御は全く手付かずです・・・）</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Event">event MDN</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Events">Event reference MDN</a></li>
+</ul>
+</li>
+</ul>
+<h4>イベントリスナーの削除</h4>
+<p>登録したイベントリスナーを削除する場合は<code>removeEventListener</code>を使います。</p>
+<p><code>addEventListener</code>同様、<code>removeEventListener(イベントの種類, イベントリスナー)</code>の形で呼び出し、イベントの種類とイベントリスナーの両方が一致した時にそのイベントリスナーが取り除かれます。</p>
+<ul>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/removeEventListener">EventTarget.removeEventListener MDN</a></li>
+</ul>
+</li>
+</ul>
 <h2>Pythonのクラスの利用</h2>
 <p>毎回<code>createElement</code>をするのはとてつもなく面倒ですし、documentへの参照が必要で不便極まりないので、クラスから直接要素を作れるようにしてあります。
 以下の機能は<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a>を参考にしました。</p>
@@ -470,7 +644,7 @@ JavaScriptと同様、<code>innerHTML</code>でHTML文字列を設定するだ�
 （上の例だと改行だけのTextノードも作られてしまうのですが、一応Chromeでの動作と同じです。）</p>
 <p>また、<code>insertAdjacentHTML(position, html)</code>メソッドでもHTMLをパースできます。
 このメソッドは既存の子要素は削除せず、<code>position</code>で指定した位置に要素を挿入します。
-詳細は<a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML">element.insertAdjacentHTML - Web API インターフェイス | MDN</a>などをご参照ください。</p>
+詳細は<a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML">element.insertAdjacentHTML MDN</a>などをご参照ください。</p>
 <p>なお<code>outerHTML</code>は未実装です・・・</p>
 <h2>スタイルシートの適用</h2>
 <p>デフォルトの表示は寂しいので、スタイルシートを適用しましょう。
@@ -561,32 +735,14 @@ JavaScriptと同様、<code>innerHTML</code>でHTML文字列を設定するだ�
 <p>同様に、先頭にまとめて追加する<code>prepend</code>や、前後に追加する<code>after</code>や<code>before</code>も利用可能です。</p>
 <p>内部的には、<code>appendChild</code>などは毎回通信を行ってブラウザ上の表示を更新しているのに対し、<code>append</code>などでは一度に表示を更新しているので、パフォーマンス的にも有利です。</p>
 <ul>
-<li>参考<table class="table">
-<thead>
-<tr>
-<th>- [ParentNode - Web API インターフェイス</th>
-<th>MDN](https://developer.mozilla.org/ja/docs/Web/API/ParentNode)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- [ChildNode - Web API インターフェイス</td>
-<td>MDN](https://developer.mozilla.org/ja/docs/Web/API/ChildNode)</td>
-</tr>
-<tr>
-<td>- [ParentNode</td>
-<td>DOM Standard](https://dom.spec.whatwg.org/#interface-parentnode)</td>
-</tr>
-<tr>
-<td>- [NonDocumentTypeChildNode</td>
-<td>DOM Standard](https://dom.spec.whatwg.org/#nondocumenttypechildnode)</td>
-</tr>
-<tr>
-<td>- [ChildNode</td>
-<td>DOM Standard](https://dom.spec.whatwg.org/#interface-childnode)</td>
-</tr>
-</tbody>
-</table>
+<li>参考<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/ParentNode">ParentNode MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/NonDocumentTypeChildNode">NonDocumentTypeChildNode MDN</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/ChildNode">ChildNode MDN</a></li>
+<li><a href="https://dom.spec.whatwg.org/#interface-parentnode">ParentNode DOM Standard</a></li>
+<li><a href="https://dom.spec.whatwg.org/#nondocumenttypechildnode">NonDocumentTypeChildNode DOM Standard</a></li>
+<li><a href="https://dom.spec.whatwg.org/#interface-childnode">ChildNode DOM Standard</a></li>
+</ul>
 </li>
 </ul>
 <h3>Custom Element</h3>
@@ -701,7 +857,7 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
-                            Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介
+                            PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
                         </a>
                     </li>
                     <li class="list-group-item">
@@ -755,11 +911,6 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
-                            wdom
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
                             static site generator
                         </a>
@@ -767,6 +918,11 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/ci.html">
                             CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

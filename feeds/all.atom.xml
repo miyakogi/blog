@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-04-06T20:00:00+09:00</updated><entry><title>Pythonでブラウザ上のDOMを操作するライブラリ、WDOMの紹介</title><link href="https://miyakogi.github.io/blog/20160406/wdom_intro.html" rel="alternate"></link><updated>2016-04-06T20:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-06:blog/20160406/wdom_intro.html</id><summary type="html">&lt;p&gt;WDOMというPythonからブラウザ上のDOMを操作するライブラリを作っています。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-04-06T20:00:00+09:00</updated><entry><title>PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介</title><link href="https://miyakogi.github.io/blog/20160406/wdom_intro.html" rel="alternate"></link><updated>2016-04-06T20:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-06:blog/20160406/wdom_intro.html</id><summary type="html">&lt;p&gt;WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。
 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom"&gt;miyakogi/wdom: DOM manipulation library for python&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;WDOMのターゲットは、ブラウザベースのデスクトップGUIアプリです。
+&lt;p&gt;WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。
 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。
 ちなみに、拙作&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;LiveMark.vim&lt;/a&gt;もこれを使っています。&lt;/p&gt;
 &lt;p&gt;まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。&lt;/p&gt;
@@ -45,7 +45,8 @@
 &lt;/ul&gt;
 &lt;h2&gt;特徴&lt;/h2&gt;
 &lt;p&gt;ということで、WDOMは上記の不満をそれなりに解消するために作りました。&lt;/p&gt;
-&lt;p&gt;基本的には、PyQtでよく使う機能はDOMで実現できるでしょたぶん、という方針です。&lt;/p&gt;
+&lt;p&gt;ブラウザ上に表示するので各種CSSライブラリなどはそのまま使えますし、メソッド名などもDOMと同じなので学習コスト低め（調べたことが無駄になりにくい）です。
+基本的には、PyQtでよく使う機能はDOMで実現できるでしょたぶん、という方針です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ブラウザ上に表示するので、巷に溢れるCSSフレームワークが利用可能&lt;ul&gt;
 &lt;li&gt;Bootstrap万歳&lt;/li&gt;
@@ -78,12 +79,13 @@
 &lt;p&gt;類似のプロジェクトでは&lt;a href="https://github.com/zoofIO/flexx"&gt;flexx&lt;/a&gt;や&lt;a href="http://www.reahl.org/"&gt;Reahl&lt;/a&gt;などがありましたが、これらはそれなりに学習コストが高そう＆Webフレームワークっぽかったので見送りました。&lt;/p&gt;
 &lt;h2&gt;必要環境&lt;/h2&gt;
 &lt;p&gt;Python3.5.1以上（つまり現在の最新版のみ）の対応です。
-aiohttpを使わなければ3.4.4でも動くかもしれません。
+オプションのaiohttpを使わなければ3.4.4でも動くかもしれません。
 あと、おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。&lt;/p&gt;
-&lt;p&gt;ブラウザ上に表示するので、ブラウザが必要です。
-当然ですがIEとSafariはサポート対象外です。
-（とはいえ、ほとんどの機能は動作すると思います。）
-ブラウザはElectronやPyQtのブラウザなどでも（たぶん）大丈夫です。&lt;/p&gt;
+&lt;p&gt;ブラウザ上に表示するのでブラウザが必要です。
+逆に言えば、Pythonが動作してブラウザがある環境であれば動作します。
+当然ですがIEはサポート対象外です。
+とはいえ、ほとんどの機能は動作すると思います。
+ブラウザはElectronやPyQtのブラウザなどでも大丈夫です（たぶん）。&lt;/p&gt;
 &lt;h2&gt;インストール&lt;/h2&gt;
 &lt;p&gt;普通にpipでインストールできます。&lt;/p&gt;
 &lt;p&gt;PyPIに登録しようかと思ったのですが、まだ細かいバグがありそうだったので見送りました。
@@ -101,7 +103,6 @@ aiohttpを使わなければ3.4.4でも動くかもしれません。
 
 &lt;p&gt;aiohttpがインストールされていれば勝手にそっちを使うので、特別な設定は必要ありません。&lt;/p&gt;
 &lt;h2&gt;基本的な使い方&lt;/h2&gt;
-&lt;h3&gt;とりあえず表示&lt;/h3&gt;
 &lt;p&gt;とりあえず "Hello, WDOM" と表示するだけのプログラムは以下のようになります。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt; &lt;span class="c1"&gt;# tornadoを使う時だけ必要です&lt;/span&gt;
@@ -135,10 +136,161 @@ aiohttpを使わなければ3.4.4でも動くかもしれません。
 &lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/removeChild"&gt;removeChild&lt;/a&gt;で削除することも可能です。&lt;/p&gt;
 &lt;p&gt;「&lt;code&gt;document.createElement&lt;/code&gt; とか面倒」と感じると思いますが、ショートカットは用意してあるのでご安心下さい（後述します）。
 また、ここでは&lt;code&gt;appendChild&lt;/code&gt;で要素を追加していますが、&lt;a href="https://dom.spec.whatwg.org/"&gt;最新の仕様&lt;/a&gt;に含まれている&lt;code&gt;append&lt;/code&gt;や&lt;code&gt;after&lt;/code&gt;、&lt;code&gt;remove&lt;/code&gt;なども実装してあります。&lt;/p&gt;
-&lt;h3&gt;イベント処理&lt;/h3&gt;
+&lt;h2&gt;DOMについて&lt;/h2&gt;
+&lt;p&gt;WDOMで扱うUI部品はすべてブラウザ上のタグ（要素）に相当します。
+WDOMの各要素はブラウザ上のタグと一対一の関係を持っています。&lt;/p&gt;
+&lt;p&gt;例えば、上の例で作った&lt;code&gt;h1&lt;/code&gt;要素（&lt;code&gt;docuemnt.createElement('h1')&lt;/code&gt;で作られたインスタンス）はブラウザ上のh1タグ、すなわち&lt;code&gt;&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;&lt;/code&gt;というHTMLの要素になります。
+WDOMのUI部品はHTMLで表現することができ、実際にブラウザ上で表示されるHTMLは&lt;code&gt;html&lt;/code&gt;属性で取得することができます。
+先ほどの&lt;code&gt;h1&lt;/code&gt;要素であれば&lt;code&gt;print(h1.html)&lt;/code&gt;とすることで実際のHTMLを確認できます。&lt;/p&gt;
+&lt;p&gt;これらの要素はDOMで規定されている各種メソッドも備えているので、JavaScriptでDOMを扱う時と同じように要素の追加・削除などを行うことができます。&lt;/p&gt;
+&lt;p&gt;この節では基本的なDOM操作について説明します。
+ブラウザ上のJavaScriptとほとんど同じなので、そちらをご存じの方は読み飛ばしてください。
+WDOMに実装済みの機能の一覧は&lt;a href="https://github.com/miyakogi/wdom/wiki/Features"&gt;こちら&lt;/a&gt;をご参照下さい。
+正式なドキュメント（APIリファレンス）はまだ用意出来ていません、申し訳ありません。&lt;/p&gt;
+&lt;h3&gt;要素の作成&lt;/h3&gt;
+&lt;p&gt;WDOMで要素を新規に作成する方法は、大別して以下の三種類の方法があります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;docuemnt.createElement&lt;/code&gt; メソッドでタグ名を指定して作成&lt;/li&gt;
+&lt;li&gt;各要素の&lt;code&gt;innerHTML&lt;/code&gt;や&lt;code&gt;insertAdjacentHTML&lt;/code&gt;でHTMLから作成&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wdom.tag&lt;/code&gt;モジュールで定義されている各クラスから作成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;作成された要素は、&lt;code&gt;document&lt;/code&gt;をルートとするDOMツリーに追加されるまでは表示されません。
+ただし、&lt;code&gt;innerHTML&lt;/code&gt;や&lt;code&gt;insertAdjacentHTML&lt;/code&gt;では作成と同時にその要素の子要素として追加されます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Document/createElement"&gt;document.createElement  MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/innerHTML"&gt;element.innerHTML MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML"&gt;element.insertAdjacentHTML MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;要素の追加&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;appendChild&lt;/code&gt;や&lt;code&gt;insertBefore&lt;/code&gt;メソッドで要素をDOMツリーに追加することができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;親要素.appendChild(追加する要素)&lt;/code&gt;では、親要素の最後の子要素として&lt;code&gt;追加する要素&lt;/code&gt;が追加されます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;親要素.insertBefore(追加する要素, 追加したい位置の要素)&lt;/code&gt;では、&lt;code&gt;追加したい位置の要素&lt;/code&gt;の直前に&lt;code&gt;追加する要素&lt;/code&gt;が挿入されます。
+&lt;code&gt;追加したい位置の要素&lt;/code&gt;は親要素の直接の子要素でなくてはなりません。&lt;/p&gt;
+&lt;p&gt;追加された要素がすでに別の親要素を持っていた場合、その親要素からは自動的に取り除かれます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/appendChild"&gt;Node.appendChild MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/insertBefore"&gt;Node.insertBefore MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;要素の削除&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;removeChild&lt;/code&gt;メソッドで特定の子要素を削除することができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;親要素.removeChild(子要素)&lt;/code&gt;とすることで、子要素は親要素から取り除かれます。
+この時、取り除かれる子要素は親要素の直接の子要素でなくてはなりません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/removeChild"&gt;Node.removeChild MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;要素の入れ替え&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;replaceChild&lt;/code&gt;メソッドで要素子要素を入れ替えることができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;親要素.replaceChild(挿入する要素, 取り除く要素)&lt;/code&gt;とすることで、&lt;code&gt;取り除く要素&lt;/code&gt;が&lt;code&gt;挿入する要素&lt;/code&gt;と置き換えられます。
+この時、&lt;code&gt;取り除く要素&lt;/code&gt;は親要素の直接の子要素でなくてはなりません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/replaceChild"&gt;Node.replaceChild MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;親要素へのアクセス&lt;/h3&gt;
+&lt;p&gt;ある要素の親要素には&lt;code&gt;要素.parentNode&lt;/code&gt;属性でアクセスできます。
+要素がまだDOMツリーに追加されておらず、親要素が存在しない場合は&lt;code&gt;None&lt;/code&gt;を返します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/parentNode"&gt;Node.parentNode MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;子要素へのアクセス&lt;/h3&gt;
+&lt;p&gt;ある要素の子要素には&lt;code&gt;要素.childNodes&lt;/code&gt;属性でアクセスできます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;childNodes&lt;/code&gt;属性で返されるオブジェクトはリスト風の&lt;strong&gt;Live Object&lt;/strong&gt;です。
+Pythonのリスト同様、&lt;code&gt;for child in 要素.childNodes:&lt;/code&gt;という形でループを介してアクセスしたり、&lt;code&gt;childNodes[i]&lt;/code&gt;という形でインデックスアクセスしたり、&lt;code&gt;if child in parent.childNodes:&lt;/code&gt;などの形で特定の要素が含まれているか確認することができます。&lt;/p&gt;
+&lt;p&gt;ただし、通常のリストとは異なり、直接要素を追加したり削除したりすることはできません。
+また、&lt;strong&gt;Live Object&lt;/strong&gt;なので、親要素の変更が常時反映されます。
+そのため、以下のようなコードは無限ループになってしまいます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;docuemnt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;div&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;docuemnt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;child_nodes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;childNodes&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;child_nodes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;先頭の子要素、あるいは末尾の子要素には&lt;code&gt;要素.firstChild&lt;/code&gt;や&lt;code&gt;要素.lastChild&lt;/code&gt;でアクセスすることもできます。
+子要素が存在しない場合、これらは&lt;code&gt;None&lt;/code&gt;を返します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/childNodes"&gt;Node.childNodes MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/firstChild"&gt;Node.firstChild MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/lastChild"&gt;Node.lastChild MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;隣接ノードへのアクセス&lt;/h3&gt;
+&lt;p&gt;隣接するノードには&lt;code&gt;nextSibling&lt;/code&gt;や&lt;code&gt;previousSibling&lt;/code&gt;でアクセスできます。
+親要素を持たない場合、または要素が先頭・末尾にあって該当する要素が存在しない場合は&lt;code&gt;None&lt;/code&gt;を返します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/nextSibling"&gt;Node.nextSibling MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Node/previousSibling"&gt;Node.previousSibling MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;属性値へのアクセス&lt;/h3&gt;
+&lt;p&gt;各要素にはHTML同様に属性値を設定することができます。
+HTMLの&lt;code&gt;&amp;lt;a href="http://......./"&amp;gt;リンク&amp;lt;/a&amp;gt;&lt;/code&gt;における&lt;code&gt;href=""&lt;/code&gt;に相当する部分です。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;getAttribute('属性名')&lt;/code&gt;で取得、&lt;code&gt;setAttribute('属性名', '値')&lt;/code&gt;で設定、&lt;code&gt;removeAttribute('属性名')&lt;/code&gt;で削除できます。
+存在しない属性に対して&lt;code&gt;getAttribute&lt;/code&gt;を行うと&lt;code&gt;None&lt;/code&gt;が返されます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Attr"&gt;Attr MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/getAttribute"&gt;element.getAttribute MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/setAttribute"&gt;element.setAttribute MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttribute"&gt;Element.removeAttribute() MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/NamedNodeMap"&gt;NamedNodeMap MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;使用例&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;docuemnt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;リンク&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;href&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# &amp;lt;a href=&amp;quot;/&amp;quot;&amp;gt;リンク&amp;lt;/a&amp;gt;`&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;href&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# &amp;#39;/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;removeAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;href&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;href&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# None&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;各要素に設定されている属性の一覧は&lt;code&gt;要素.attributes&lt;/code&gt;で取得することができます。
+この時返されるオブジェクトは&lt;code&gt;{'属性名': Attrノード, ...}&lt;/code&gt;の辞書風オブジェクト（NamedNodeMap）です。&lt;/p&gt;
+&lt;h4&gt;特殊な属性値&lt;/h4&gt;
+&lt;p&gt;一部の属性値は、要素の属性として直接アクセスすることができます。&lt;/p&gt;
+&lt;p&gt;例えば&lt;code&gt;id&lt;/code&gt;属性は&lt;code&gt;要素.id&lt;/code&gt;で取得したり&lt;code&gt;要素.id = 'some_id'&lt;/code&gt;で設定することができます。
+&lt;code&gt;id&lt;/code&gt;属性が設定されていない状態で&lt;code&gt;要素.id&lt;/code&gt;を取得すると空文字列が返ります。
+返り値の型は属性によって異なり、例えば&lt;code&gt;hidden&lt;/code&gt;属性は&lt;code&gt;True&lt;/code&gt;または&lt;code&gt;False&lt;/code&gt;を返しますし、&lt;code&gt;style&lt;/code&gt;属性は&lt;code&gt;CSSStyleDeclaration&lt;/code&gt;のインスタンスを返します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement"&gt;HTMLElement&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;WDOMではまだ全ての属性値が実装できてはいません&lt;/li&gt;
+&lt;li&gt;実際の実装状況は&lt;a href="https://github.com/miyakogi/wdom/wiki/Features"&gt;こちら&lt;/a&gt;の&lt;code&gt;interface Element&lt;/code&gt;以下をご参照ください&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/id"&gt;element.id&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style"&gt;element.style&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;イベント&lt;/h3&gt;
+&lt;p&gt;イベント処理の追加には&lt;code&gt;addEventListener&lt;/code&gt;メソッドを使用します。
+実際に動かしたほうがわかりやすいと思うので、最初のサンプルコードをベースに説明します。&lt;/p&gt;
 &lt;h4&gt;クリック時に文字列反転&lt;/h4&gt;
-&lt;p&gt;イベント処理の追加は&lt;code&gt;addEventListener&lt;/code&gt;です。
-&lt;code&gt;h1.textContent = ...&lt;/code&gt; の次の行に以下のコードを追加してみてください。&lt;/p&gt;
+&lt;p&gt;上記のサンプルコードで、&lt;code&gt;h1.textContent = ...&lt;/code&gt; の次の行に以下のコードを追加してみてください。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rev_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="c1"&gt;# h1の中身の文字列を反転&lt;/span&gt;
         &lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt;&lt;span class="p"&gt;[::&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
@@ -148,10 +300,16 @@ aiohttpを使わなければ3.4.4でも動くかもしれません。
 
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut2.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;h1&lt;/code&gt;要素がクリックされた時に文字列が反転するはずです。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;addEventListener&lt;/code&gt;の第一引数がイベントの種類、第二引数がそのイベントが発火した時に実行される処理になります。
+&lt;p&gt;&lt;code&gt;addEventListener&lt;/code&gt;の第一引数が反応するイベントの種類（文字列）、第二引数がそのイベントが発火した時に実行される処理（関数、イベントリスナー）になります。
 &lt;a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener"&gt;JavaScriptの場合と同じ&lt;/a&gt;です。
 今回はクリックされた時に&lt;code&gt;rev_text&lt;/code&gt;関数を実行し、h1要素の中身の文字列を反転させています。
 &lt;code&gt;rev_text&lt;/code&gt;関数には&lt;code&gt;Event&lt;/code&gt;オブジェクトが渡されますが、今回は使っていません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener"&gt;EventTarget.addEventListener MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4&gt;ユーザー入力の取得&lt;/h4&gt;
 &lt;p&gt;ユーザーからの入力を取得したい場合は、&lt;code&gt;input&lt;/code&gt;要素または&lt;code&gt;textarea&lt;/code&gt;要素を使います。
 input要素に入力された文字列を、先ほどのh1要素に表示してみます。&lt;/p&gt;
@@ -174,6 +332,22 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 &lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLInputElement"&gt;input要素&lt;/a&gt;は現在の入力値を&lt;code&gt;value&lt;/code&gt;属性に保持しているので、それをh1要素の&lt;code&gt;textContent&lt;/code&gt;に設定しています。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;event&lt;/code&gt;オブジェクトもDOMの&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Event"&gt;Event&lt;/a&gt;オブジェクトと同じ構造をしているので、詳細は仕様を確認してください。
 （まだ&lt;a href="https://github.com/miyakogi/wdom/wiki/Features#events"&gt;実装できていない部分&lt;/a&gt;も多いですが・・・特にイベントの伝播制御は全く手付かずです・・・）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Event"&gt;event MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/Events"&gt;Event reference MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;イベントリスナーの削除&lt;/h4&gt;
+&lt;p&gt;登録したイベントリスナーを削除する場合は&lt;code&gt;removeEventListener&lt;/code&gt;を使います。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;addEventListener&lt;/code&gt;同様、&lt;code&gt;removeEventListener(イベントの種類, イベントリスナー)&lt;/code&gt;の形で呼び出し、イベントの種類とイベントリスナーの両方が一致した時にそのイベントリスナーが取り除かれます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/removeEventListener"&gt;EventTarget.removeEventListener MDN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;Pythonのクラスの利用&lt;/h2&gt;
 &lt;p&gt;毎回&lt;code&gt;createElement&lt;/code&gt;をするのはとてつもなく面倒ですし、documentへの参照が必要で不便極まりないので、クラスから直接要素を作れるようにしてあります。
 以下の機能は&lt;a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/"&gt;BeautifulSoup&lt;/a&gt;を参考にしました。&lt;/p&gt;
@@ -366,7 +540,7 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 （上の例だと改行だけのTextノードも作られてしまうのですが、一応Chromeでの動作と同じです。）&lt;/p&gt;
 &lt;p&gt;また、&lt;code&gt;insertAdjacentHTML(position, html)&lt;/code&gt;メソッドでもHTMLをパースできます。
 このメソッドは既存の子要素は削除せず、&lt;code&gt;position&lt;/code&gt;で指定した位置に要素を挿入します。
-詳細は&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML"&gt;element.insertAdjacentHTML - Web API インターフェイス | MDN&lt;/a&gt;などをご参照ください。&lt;/p&gt;
+詳細は&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML"&gt;element.insertAdjacentHTML MDN&lt;/a&gt;などをご参照ください。&lt;/p&gt;
 &lt;p&gt;なお&lt;code&gt;outerHTML&lt;/code&gt;は未実装です・・・&lt;/p&gt;
 &lt;h2&gt;スタイルシートの適用&lt;/h2&gt;
 &lt;p&gt;デフォルトの表示は寂しいので、スタイルシートを適用しましょう。
@@ -457,32 +631,14 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 &lt;p&gt;同様に、先頭にまとめて追加する&lt;code&gt;prepend&lt;/code&gt;や、前後に追加する&lt;code&gt;after&lt;/code&gt;や&lt;code&gt;before&lt;/code&gt;も利用可能です。&lt;/p&gt;
 &lt;p&gt;内部的には、&lt;code&gt;appendChild&lt;/code&gt;などは毎回通信を行ってブラウザ上の表示を更新しているのに対し、&lt;code&gt;append&lt;/code&gt;などでは一度に表示を更新しているので、パフォーマンス的にも有利です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;参考&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;- [ParentNode - Web API インターフェイス&lt;/th&gt;
-&lt;th&gt;MDN](https://developer.mozilla.org/ja/docs/Web/API/ParentNode)&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;- [ChildNode - Web API インターフェイス&lt;/td&gt;
-&lt;td&gt;MDN](https://developer.mozilla.org/ja/docs/Web/API/ChildNode)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;- [ParentNode&lt;/td&gt;
-&lt;td&gt;DOM Standard](https://dom.spec.whatwg.org/#interface-parentnode)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;- [NonDocumentTypeChildNode&lt;/td&gt;
-&lt;td&gt;DOM Standard](https://dom.spec.whatwg.org/#nondocumenttypechildnode)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;- [ChildNode&lt;/td&gt;
-&lt;td&gt;DOM Standard](https://dom.spec.whatwg.org/#interface-childnode)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/ParentNode"&gt;ParentNode MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/NonDocumentTypeChildNode"&gt;NonDocumentTypeChildNode MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/ChildNode"&gt;ChildNode MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://dom.spec.whatwg.org/#interface-parentnode"&gt;ParentNode DOM Standard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://dom.spec.whatwg.org/#nondocumenttypechildnode"&gt;NonDocumentTypeChildNode DOM Standard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://dom.spec.whatwg.org/#interface-childnode"&gt;ChildNode DOM Standard&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;Custom Element&lt;/h3&gt;
