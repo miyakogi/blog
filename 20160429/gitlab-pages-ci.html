@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>GitLabでドキュメントのビルドとホスティング - Blank File</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
+
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="gitlab mkdocs ci" />
+        <meta name="description" content="完全に思いつきで、GitLabでドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。 GitLabはGitHubみたいなサービスです。 （というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？） （そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・） GitHubでも似たようなことはできますが、 Travis CI（などのCIサービス）を使ってgh-pagesブランチにプッシュする Read the Docsを使ってそっちでビルド＆表示 などいずれにしろ別サービスとの連携が必要になってしまいます。 ローカルでhtmlを作って自分でpushすることもできますが、それは何か少し負けた気がするので却下です。 GitLabはCIもGitLab上で回せるので、 リポジトリに変更をpush ビルドしてHTML（静的ページ）生成 ページをホスティング まで一つのサービスで完結できました。 GitLabのアカウントはGitHubの認証で簡単に作れるので、例えば英語ドキュメントの翻訳プロジェクトなどでは使ってみるのもありではないでしょうか。 ということで簡単に手順を紹介します。 ちなみに、思いついてからGitLabのアカウントを作るような状態でしたが、一時間足らずでリポジトリを作ってページを表示するまでできました。 試しに作ったリポジトリ: https://gitlab.com/miyakogi/test-doc 出力されたページ: https://miyakogi.gitlab.io/test-doc/index.html" />
+
+        <meta property="og:site_name" content="Blank File" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="GitLabでドキュメントのビルドとホスティング"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html"/>
+        <meta property="og:description" content="完全に思いつきで、GitLabでドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。 GitLabはGitHubみたいなサービスです。 （というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？） （そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・） GitHubでも似たようなことはできますが、 Travis CI（などのCIサービス）を使ってgh-pagesブランチにプッシュする Read the Docsを使ってそっちでビルド＆表示 などいずれにしろ別サービスとの連携が必要になってしまいます。 ローカルでhtmlを作って自分でpushすることもできますが、それは何か少し負けた気がするので却下です。 GitLabはCIもGitLab上で回せるので、 リポジトリに変更をpush ビルドしてHTML（静的ページ）生成 ページをホスティング まで一つのサービスで完結できました。 GitLabのアカウントはGitHubの認証で簡単に作れるので、例えば英語ドキュメントの翻訳プロジェクトなどでは使ってみるのもありではないでしょうか。 ということで簡単に手順を紹介します。 ちなみに、思いついてからGitLabのアカウントを作るような状態でしたが、一時間足らずでリポジトリを作ってページを表示するまでできました。 試しに作ったリポジトリ: https://gitlab.com/miyakogi/test-doc 出力されたページ: https://miyakogi.gitlab.io/test-doc/index.html"/>
+        <meta property="article:published_time" content="2016-04-29" />
+            <meta property="article:section" content="GitLab CI" />
+            <meta property="article:tag" content="gitlab mkdocs ci" />
+            <meta property="article:author" content="miyakogi" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
+
+
+
+        <link href="https://miyakogi.github.io/blog/feeds/gitlab-ci.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File GitLab CI ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
+Blank File            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html"
+                       rel="bookmark"
+                       title="Permalink to GitLabでドキュメントのビルドとホスティング">
+                        GitLabでドキュメントのビルドとホスティング
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-04-29T23:08:00+09:00"> Fri 29 April 2016</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">gitlab mkdocs ci</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>完全に思いつきで、<a href="https://gitlab.com/">GitLab</a>でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。</p>
+<p>GitLabはGitHubみたいなサービスです。
+（というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？）
+（そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・）</p>
+<p>GitHubでも似たようなことはできますが、</p>
+<ul>
+<li>Travis CI（などのCIサービス）を使ってgh-pagesブランチにプッシュする</li>
+<li>Read the Docsを使ってそっちでビルド＆表示</li>
+</ul>
+<p>などいずれにしろ別サービスとの連携が必要になってしまいます。
+ローカルでhtmlを作って自分でpushすることもできますが、それは何か少し負けた気がするので却下です。</p>
+<p>GitLabはCIもGitLab上で回せるので、</p>
+<ul>
+<li>リポジトリに変更をpush</li>
+<li>ビルドしてHTML（静的ページ）生成</li>
+<li>ページをホスティング</li>
+</ul>
+<p>まで一つのサービスで完結できました。</p>
+<p>GitLabのアカウントはGitHubの認証で簡単に作れるので、例えば英語ドキュメントの翻訳プロジェクトなどでは使ってみるのもありではないでしょうか。</p>
+<p>ということで簡単に手順を紹介します。</p>
+<p>ちなみに、思いついてからGitLabのアカウントを作るような状態でしたが、一時間足らずでリポジトリを作ってページを表示するまでできました。</p>
+<ul>
+<li>試しに作ったリポジトリ: <a href="https://gitlab.com/miyakogi/test-doc">https://gitlab.com/miyakogi/test-doc</a></li>
+<li>出力されたページ: <a href="https://miyakogi.gitlab.io/test-doc/index.html">https://miyakogi.gitlab.io/test-doc/index.html</a></li>
+</ul>
+<!--more-->
+
+<h2>リポジトリの作成</h2>
+<p>ログインして「New Project」または右上の「＋」ボタンを押せば作れます。
+適当にプロジェクト名などを入力するだけです。</p>
+<p>プロジェクトが作られたらローカルにcloneしておきます。</p>
+<h2>ドキュメントの用意</h2>
+<p>今回は試しに<a href="http://www.mkdocs.org/">MkDocs</a>を使いましたが、sphinxなどもコマンドが変わるだけで同じように使えると思います。
+MkDocsはsphinxのようなドキュメントがmarkdownで書けるものです。</p>
+<p><a href="http://doc.gitlab.com/ee/pages/README.html#example-projects">GitLabのドキュメント</a>にはJekyllや生HTML、HugoやHexoなどの例が紹介されているので、普通の静的サイトジェネレータはだいたい使えるのだと思います。
+まぁHTML置くだけですからね・・・
+（とはいえPythonの例が一つもないとはどういうことなんですかね・・・）</p>
+<p>インストールは<code>pip install mkdocs</code>です。
+<code>mkdocs new gitlab-test</code>でプロジェクトを作ったのですが、<code>gitlab-test</code>ディレクトリ以下に作られてしまったので<code>mv gitlab-test/* ./</code>でリポジトリのルートにファイルを全部移動させました。
+このあたりはGitLabは関係ないので好みでいいと思います。</p>
+<p>そして<code>index.md</code>を適当に編集し、<code>mkdocs build</code>でビルドすると<code>site</code>ディレクトリ以下にhtmlなどが作られます。
+ローカルで確認する場合は<code>mkdocs serve</code>でhttpサーバ（tornadoっぽい）が立ち上がるので<code>http://localhost:8000/</code>にブラウザでアクセスすると表示されます。</p>
+<p>ドキュメントが作れることを確認したら、いよいよGitLabの方の設定に入ります。</p>
+<h2>GitLab CIの設定</h2>
+<p>リポジトリのルートに<code>.gitlab-ci.yml</code>というyaml形式の設定ファイルを作り、<code>git add .gitlag-ci.yml</code>してコミット＆プッシュすればサーバー上で実行されます。
+設定ファイルは以下のようにした所うまくいきました。</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.5</span>
+
+<span class="l l-Scalar l-Scalar-Plain">pages</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">stage</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">deploy</span>
+  <span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install mkdocs</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mkdocs build -d public</span>
+  <span class="l l-Scalar l-Scalar-Plain">artifacts</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">paths</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">public</span>
+  <span class="l l-Scalar l-Scalar-Plain">only</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+</pre></div>
+
+
+<p><code>image</code>では使用するdockerのイメージを指定するようです。
+始め「デフォルトでもpipくらい使えるだろ〜」とimageを指定しなかった所、pipがなくてエラーになりました。
+デフォルトでは<code>ruby: 2.1</code>のイメージが使われるようです。
+apt-getでインストールすればよかったのかもしれませんが、今後使うかもしれないPythonのイメージを指定してみました。</p>
+<p><code>pages</code>というのがジョブの名前です。
+静的ページをホストする時は<code>pages</code>という名前にする必要があるようです。
+<code>stage: deploy</code>はなくてもいいかも？</p>
+<p><code>script:</code>以下が実際に実行されるコマンドです。
+MkDocsをインストールした後にビルドしているだけですが、ここで出力先を<code>public</code>というディレクトリに指定しています。
+その後に<code>artifacts: paths:</code>でパスを指定しているのでディレクトリ名は何でもいいのかと思ったのですが、デフォルトの<code>site</code>に出力して<code>paths</code>に<code>site</code>を指定してもダメでした。
+ここが唯一のハマりポイントでした。
+というわけで出力先は<code>public</code>に。</p>
+<p>これをプッシュするとすぐにサーバー上でビルドが実行されます。
+同一サービス上で実行されるので、GitHub + Travis CIよりやはり実行開始は早いです。
+あと、<code>.gitlab-ci.yml</code>の記述がおかしいとすぐにエラーを表示してくれます。</p>
+<p>プッシュ直後はこんな感じです。</p>
+<p><img alt="GitLab Top" src="https://miyakogi.github.io/blog/images/gitlab1.png" /></p>
+<p>無事にビルドできれば、<code>https://ユーザー名.gitlab.io/プロジェクト名</code>にアクセスすることでページが表示されるはずです。</p>
+<h2>感想</h2>
+<p>実際に使ってみてよかった点は、CIも静的ページのホスティングも単一サービスで完結しているので設定が楽、ということに尽きると思います。
+思いついてから一時間足らずで完了しましたからね。
+この記事書くほうが時間かかってます。
+あと、無料でプライベートリポジトリも使えますし。</p>
+<p>一方で不満だった点は、サーバーのレスポンスが（GitHubと比較して）遅い感じがするところでしょうか。
+これはサーバーの立地や時間帯（日本時間金曜22時頃 = ヨーロッパの金曜昼 = アメリカ東海岸で金曜朝）のせいかもしれません。
+レスポンスが悪い上にファイル一覧のUIに慣れていないので、普通の開発プロジェクトでソースコードを閲覧するのはちょっと厳しいという印象でした。</p>
+<p>逆に、ファイルをあちこち移動しない翻訳プロジェクトなどでは候補としてありかもしれません。
+MarkdownファイルをWeb上から編集して、そのままコミット→ビルドというのもできました。
+もちろんコミット権限が必要ですが、権限がなくてもそのままMerge Requestが出せるのではないでしょうか（未確認）</p>
+<p>本質的ではないのですが、いくらGitLab上でコミットしても（当然）GitHubに草が生えないのはモチベーション的に問題な気がします。
+これ実はすごく深刻な問題だと思うので、GitLabさんは下克上したかったらなんとかした方がいいと思います（無茶振り）。</p>
+<p>以上、あまりGitLabの情報を見かけなかったので思いつき＆勢いで記事にしてみました。
+参考になれば幸いです。</p>
+<ul>
+<li>参考<ul>
+<li><a href="http://doc.gitlab.com/ee/pages/README.html">GitLab Documentation</a></li>
+<li><a href="https://gitlab.com/pages/jekyll">Jekyllの参考ページ</a></li>
+</ul>
+</li>
+</ul>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/miyakogi"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/MiyakoDev"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
+                            GitLabでドキュメントのビルドとホスティング
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
+                            PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
+                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
+                            Vimのパッケージ機能を試してみました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">
+                            Python製の静的サイトジェネレータを色々試してみました
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/gitlab-ci.html">
+                            <i class="fa fa-folder-open fa-lg"></i> GitLab CI
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/python.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Python
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Vim
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-0">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 miyakogi
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-59101475-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
+</body>
+</html>

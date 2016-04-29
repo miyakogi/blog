@@ -64,6 +64,38 @@ Blank File            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
+                <h2><a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">GitLabでドキュメントのビルドとホスティング</a></h2>
+                <div class="summary"><p>完全に思いつきで、<a href="https://gitlab.com/">GitLab</a>でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。</p>
+<p>GitLabはGitHubみたいなサービスです。
+（というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？）
+（そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・）</p>
+<p>GitHubでも似たようなことはできますが、</p>
+<ul>
+<li>Travis CI（などのCIサービス）を使ってgh-pagesブランチにプッシュする</li>
+<li>Read the Docsを使ってそっちでビルド＆表示</li>
+</ul>
+<p>などいずれにしろ別サービスとの連携が必要になってしまいます。
+ローカルでhtmlを作って自分でpushすることもできますが、それは何か少し負けた気がするので却下です。</p>
+<p>GitLabはCIもGitLab上で回せるので、</p>
+<ul>
+<li>リポジトリに変更をpush</li>
+<li>ビルドしてHTML（静的ページ）生成</li>
+<li>ページをホスティング</li>
+</ul>
+<p>まで一つのサービスで完結できました。</p>
+<p>GitLabのアカウントはGitHubの認証で簡単に作れるので、例えば英語ドキュメントの翻訳プロジェクトなどでは使ってみるのもありではないでしょうか。</p>
+<p>ということで簡単に手順を紹介します。</p>
+<p>ちなみに、思いついてからGitLabのアカウントを作るような状態でしたが、一時間足らずでリポジトリを作ってページを表示するまでできました。</p>
+<ul>
+<li>試しに作ったリポジトリ: <a href="https://gitlab.com/miyakogi/test-doc">https://gitlab.com/miyakogi/test-doc</a></li>
+<li>出力されたページ: <a href="https://miyakogi.gitlab.io/test-doc/index.html">https://miyakogi.gitlab.io/test-doc/index.html</a></li>
+</ul>
+
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介</a></h2>
                 <div class="summary"><p>WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。
 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。</p>
@@ -181,6 +213,11 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
+                            GitLabでドキュメントのビルドとホスティング
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
                             PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
                         </a>
@@ -200,16 +237,16 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                             Python製の静的サイトジェネレータを色々試してみました
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160214/livemark_update.html">
-                            Livemark.vimを色々更新しました
-                        </a>
-                    </li>
                 </ul>
             </li>
 
             <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
                 <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/gitlab-ci.html">
+                            <i class="fa fa-folder-open fa-lg"></i> GitLab CI
+                        </a>
+                    </li>
                     <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/category/python.html">
                             <i class="fa fa-folder-open fa-lg"></i> Python
@@ -236,8 +273,8 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -253,6 +290,11 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/pelican.html">
                             pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
                         </a>
                     </li>
                 </ul>

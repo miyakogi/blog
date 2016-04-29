@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/gitlab-ci.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-04-29T23:08:00+09:00</updated><entry><title>GitLabでドキュメントのビルドとホスティング</title><link href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html" rel="alternate"></link><updated>2016-04-29T23:08:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-29:blog/20160429/gitlab-pages-ci.html</id><summary type="html">&lt;p&gt;完全に思いつきで、&lt;a href="https://gitlab.com/"&gt;GitLab&lt;/a&gt;でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。&lt;/p&gt;
+&lt;p&gt;GitLabはGitHubみたいなサービスです。
+（というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？）
+（そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・）&lt;/p&gt;
+&lt;p&gt;GitHubでも似たようなことはできますが、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Travis CI（などのCIサービス）を使ってgh-pagesブランチにプッシュする&lt;/li&gt;
+&lt;li&gt;Read the Docsを使ってそっちでビルド＆表示&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などいずれにしろ別サービスとの連携が必要になってしまいます。
+ローカルでhtmlを作って自分でpushすることもできますが、それは何か少し負けた気がするので却下です。&lt;/p&gt;
+&lt;p&gt;GitLabはCIもGitLab上で回せるので、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;リポジトリに変更をpush&lt;/li&gt;
+&lt;li&gt;ビルドしてHTML（静的ページ）生成&lt;/li&gt;
+&lt;li&gt;ページをホスティング&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;まで一つのサービスで完結できました。&lt;/p&gt;
+&lt;p&gt;GitLabのアカウントはGitHubの認証で簡単に作れるので、例えば英語ドキュメントの翻訳プロジェクトなどでは使ってみるのもありではないでしょうか。&lt;/p&gt;
+&lt;p&gt;ということで簡単に手順を紹介します。&lt;/p&gt;
+&lt;p&gt;ちなみに、思いついてからGitLabのアカウントを作るような状態でしたが、一時間足らずでリポジトリを作ってページを表示するまでできました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;試しに作ったリポジトリ: &lt;a href="https://gitlab.com/miyakogi/test-doc"&gt;https://gitlab.com/miyakogi/test-doc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;出力されたページ: &lt;a href="https://miyakogi.gitlab.io/test-doc/index.html"&gt;https://miyakogi.gitlab.io/test-doc/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;リポジトリの作成&lt;/h2&gt;
+&lt;p&gt;ログインして「New Project」または右上の「＋」ボタンを押せば作れます。
+適当にプロジェクト名などを入力するだけです。&lt;/p&gt;
+&lt;p&gt;プロジェクトが作られたらローカルにcloneしておきます。&lt;/p&gt;
+&lt;h2&gt;ドキュメントの用意&lt;/h2&gt;
+&lt;p&gt;今回は試しに&lt;a href="http://www.mkdocs.org/"&gt;MkDocs&lt;/a&gt;を使いましたが、sphinxなどもコマンドが変わるだけで同じように使えると思います。
+MkDocsはsphinxのようなドキュメントがmarkdownで書けるものです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://doc.gitlab.com/ee/pages/README.html#example-projects"&gt;GitLabのドキュメント&lt;/a&gt;にはJekyllや生HTML、HugoやHexoなどの例が紹介されているので、普通の静的サイトジェネレータはだいたい使えるのだと思います。
+まぁHTML置くだけですからね・・・
+（とはいえPythonの例が一つもないとはどういうことなんですかね・・・）&lt;/p&gt;
+&lt;p&gt;インストールは&lt;code&gt;pip install mkdocs&lt;/code&gt;です。
+&lt;code&gt;mkdocs new gitlab-test&lt;/code&gt;でプロジェクトを作ったのですが、&lt;code&gt;gitlab-test&lt;/code&gt;ディレクトリ以下に作られてしまったので&lt;code&gt;mv gitlab-test/* ./&lt;/code&gt;でリポジトリのルートにファイルを全部移動させました。
+このあたりはGitLabは関係ないので好みでいいと思います。&lt;/p&gt;
+&lt;p&gt;そして&lt;code&gt;index.md&lt;/code&gt;を適当に編集し、&lt;code&gt;mkdocs build&lt;/code&gt;でビルドすると&lt;code&gt;site&lt;/code&gt;ディレクトリ以下にhtmlなどが作られます。
+ローカルで確認する場合は&lt;code&gt;mkdocs serve&lt;/code&gt;でhttpサーバ（tornadoっぽい）が立ち上がるので&lt;code&gt;http://localhost:8000/&lt;/code&gt;にブラウザでアクセスすると表示されます。&lt;/p&gt;
+&lt;p&gt;ドキュメントが作れることを確認したら、いよいよGitLabの方の設定に入ります。&lt;/p&gt;
+&lt;h2&gt;GitLab CIの設定&lt;/h2&gt;
+&lt;p&gt;リポジトリのルートに&lt;code&gt;.gitlab-ci.yml&lt;/code&gt;というyaml形式の設定ファイルを作り、&lt;code&gt;git add .gitlag-ci.yml&lt;/code&gt;してコミット＆プッシュすればサーバー上で実行されます。
+設定ファイルは以下のようにした所うまくいきました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;python&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;3.5&lt;/span&gt;
+
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;pages&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;stage&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;deploy&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;pip install mkdocs&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mkdocs build -d public&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;artifacts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;paths&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;public&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;only&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;image&lt;/code&gt;では使用するdockerのイメージを指定するようです。
+始め「デフォルトでもpipくらい使えるだろ〜」とimageを指定しなかった所、pipがなくてエラーになりました。
+デフォルトでは&lt;code&gt;ruby: 2.1&lt;/code&gt;のイメージが使われるようです。
+apt-getでインストールすればよかったのかもしれませんが、今後使うかもしれないPythonのイメージを指定してみました。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pages&lt;/code&gt;というのがジョブの名前です。
+静的ページをホストする時は&lt;code&gt;pages&lt;/code&gt;という名前にする必要があるようです。
+&lt;code&gt;stage: deploy&lt;/code&gt;はなくてもいいかも？&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;script:&lt;/code&gt;以下が実際に実行されるコマンドです。
+MkDocsをインストールした後にビルドしているだけですが、ここで出力先を&lt;code&gt;public&lt;/code&gt;というディレクトリに指定しています。
+その後に&lt;code&gt;artifacts: paths:&lt;/code&gt;でパスを指定しているのでディレクトリ名は何でもいいのかと思ったのですが、デフォルトの&lt;code&gt;site&lt;/code&gt;に出力して&lt;code&gt;paths&lt;/code&gt;に&lt;code&gt;site&lt;/code&gt;を指定してもダメでした。
+ここが唯一のハマりポイントでした。
+というわけで出力先は&lt;code&gt;public&lt;/code&gt;に。&lt;/p&gt;
+&lt;p&gt;これをプッシュするとすぐにサーバー上でビルドが実行されます。
+同一サービス上で実行されるので、GitHub + Travis CIよりやはり実行開始は早いです。
+あと、&lt;code&gt;.gitlab-ci.yml&lt;/code&gt;の記述がおかしいとすぐにエラーを表示してくれます。&lt;/p&gt;
+&lt;p&gt;プッシュ直後はこんな感じです。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="GitLab Top" src="https://miyakogi.github.io/blog/images/gitlab1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;無事にビルドできれば、&lt;code&gt;https://ユーザー名.gitlab.io/プロジェクト名&lt;/code&gt;にアクセスすることでページが表示されるはずです。&lt;/p&gt;
+&lt;h2&gt;感想&lt;/h2&gt;
+&lt;p&gt;実際に使ってみてよかった点は、CIも静的ページのホスティングも単一サービスで完結しているので設定が楽、ということに尽きると思います。
+思いついてから一時間足らずで完了しましたからね。
+この記事書くほうが時間かかってます。
+あと、無料でプライベートリポジトリも使えますし。&lt;/p&gt;
+&lt;p&gt;一方で不満だった点は、サーバーのレスポンスが（GitHubと比較して）遅い感じがするところでしょうか。
+これはサーバーの立地や時間帯（日本時間金曜22時頃 = ヨーロッパの金曜昼 = アメリカ東海岸で金曜朝）のせいかもしれません。
+レスポンスが悪い上にファイル一覧のUIに慣れていないので、普通の開発プロジェクトでソースコードを閲覧するのはちょっと厳しいという印象でした。&lt;/p&gt;
+&lt;p&gt;逆に、ファイルをあちこち移動しない翻訳プロジェクトなどでは候補としてありかもしれません。
+MarkdownファイルをWeb上から編集して、そのままコミット→ビルドというのもできました。
+もちろんコミット権限が必要ですが、権限がなくてもそのままMerge Requestが出せるのではないでしょうか（未確認）&lt;/p&gt;
+&lt;p&gt;本質的ではないのですが、いくらGitLab上でコミットしても（当然）GitHubに草が生えないのはモチベーション的に問題な気がします。
+これ実はすごく深刻な問題だと思うので、GitLabさんは下克上したかったらなんとかした方がいいと思います（無茶振り）。&lt;/p&gt;
+&lt;p&gt;以上、あまりGitLabの情報を見かけなかったので思いつき＆勢いで記事にしてみました。
+参考になれば幸いです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://doc.gitlab.com/ee/pages/README.html"&gt;GitLab Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://gitlab.com/pages/jekyll"&gt;Jekyllの参考ページ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="gitlab mkdocs ci"></category></entry></feed>

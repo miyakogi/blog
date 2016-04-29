@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>WDOMの開発者向け機能の紹介 - Blank File</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="https://miyakogi.github.io/blog/drafts/wdom2.html">
+
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="python wdom" />
+        <meta name="description" content="先日紹介したWDOMの開発者向け機能の紹介です。 主に起動オプションについて紹介します。 基本的にな機能は前回の記事をご参照ください。 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じ＆話題にならなくて悲しかったので、今回は視覚に訴える感じを目指して書きます。 テーマ機能 CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒ですよね。 そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。 利用可能なフレームワークは画像付きでwikiに記載しています。 （スクリーンショットは ..." />
+
+        <meta property="og:site_name" content="Blank File" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="WDOMの開発者向け機能の紹介"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/drafts/wdom2.html"/>
+        <meta property="og:description" content="先日紹介したWDOMの開発者向け機能の紹介です。 主に起動オプションについて紹介します。 基本的にな機能は前回の記事をご参照ください。 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じ＆話題にならなくて悲しかったので、今回は視覚に訴える感じを目指して書きます。 テーマ機能 CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒ですよね。 そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。 利用可能なフレームワークは画像付きでwikiに記載しています。 （スクリーンショットは ..."/>
+        <meta property="article:published_time" content="2016-04-27" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="python wdom" />
+            <meta property="article:author" content="miyakogi" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
+
+
+
+        <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File Python ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
+Blank File            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://miyakogi.github.io/blog/drafts/wdom2.html"
+                       rel="bookmark"
+                       title="Permalink to WDOMの開発者向け機能の紹介">
+                        WDOMの開発者向け機能の紹介
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-04-27T10:22:00+09:00"> Wed 27 April 2016</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://miyakogi.github.io/blog/tag/python-wdom.html">python wdom</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>先日紹介したWDOMの開発者向け機能の紹介です。
+主に起動オプションについて紹介します。</p>
+<p>基本的にな機能は前回の記事をご参照ください。</p>
+<p>前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
+前回はテキストオンリーで寂しい感じ＆話題にならなくて悲しかったので、今回は視覚に訴える感じを目指して書きます。</p>
+<h2>テーマ機能</h2>
+<p>CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒ですよね。
+そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。
+利用可能なフレームワークは画像付きで<a href="https://github.com/miyakogi/wdom/wiki/ScreenShots">wiki</a>に記載しています。
+（スクリーンショットは<a href="http://selenium-python.readthedocs.io/">その道のプロ</a>にお願いして一枚一枚心を込めて撮ってもらいました）</p>
+<p>ただし、完全には各フレームワークの違いを隠蔽できていない（特にフォーム部品やGrid関係）ので、最終的にはフレームワークを決めて微調整をする必要があると思います。
+また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません・・・</p>
+<p>数は今のところ20個ちょっとあります。
+他にもよさそうなフレームワークをご存じでしたらぜひ教えてください。
+ツイッターで <a href="https://twitter.com/MiyakoDev">@miyakoDev</a> 宛にメンションしていただくか、<a href="https://github.com/miyakogi/wdom/issues">issue</a>登録していただければできるだけ対応します。
+もちろん既存のものを参考にpythonモジュールを書いていただいてPRを送っていただくのも大歓迎です。</p>
+<p>ただし、ライセンスが明記されていない、あるいはGPL等の制限のあるライセンスでCDNからファイルが取得できないフレームワークは残念ながらお断りさせていただきます。
+また、あるのかわかりませんが、GPLライセンスのフレームワークでCDNから取得する場合も、最悪の場合クラス名を指定しただけでGPLの制限を受けることもないとは言い切れないので、お断りするかもしれません。
+（気にしすぎだとは思いますが、わざわざリスクを犯したくないのでご理解ください）
+もしこのようなフレームワークの要望があれば、別リポジトリを用意することを検討します。</p>
+<h3>使い方</h3>
+<p>大きく分けてふた通りあります。</p>
+<p>一つは<code>from wdom.themes.フレームワーク名 import Button</code>などとしてモジュールから明示的にimportする方法、もうひとつは<code>from.wdom.themes import Button</code>などとしてimportし、起動オプションに<code>--theme フレームワーク名</code>という形で指定する方法です。</p>
+<p>いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。</p>
+<p>CSSやJSはWeb上からCDN等で取得できるものはできるだけそれらを使うようにしています。
+したがって、ネットに接続できない環境では利用できません。
+そのような場合は、必要なファイルをローカルの適当なディレクトリに保存して、<code>add_static_path</code>でパスを追加したうえで必要なファイルを<code>document.add_css_file</code>などで読み込ませてください。</p>
+<h4>モジュールからimport</h4>
+<p>例えば<code>bootstrap3</code>を使う場合、以下のようになります。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">wdom.misc</span> <span class="kn">import</span> <span class="n">install_asyncio</span>
+<span class="kn">from</span> <span class="nn">wdom.themes</span> <span class="kn">import</span> <span class="n">bootstrap3</span>
+<span class="kn">from</span> <span class="nn">wdom.themes.bootstrap3</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">wdom.document</span> <span class="kn">import</span> <span class="n">get_document</span>
+<span class="kn">from</span> <span class="nn">wdom.server</span> <span class="kn">import</span> <span class="n">get_app</span><span class="p">,</span> <span class="n">start_server</span><span class="p">,</span> <span class="n">stop_server</span>
+
+<span class="n">install_asyncio</span><span class="p">()</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
+<span class="n">doc</span><span class="o">.</span><span class="n">register_theme</span><span class="p">(</span><span class="n">bootstrap3</span><span class="p">)</span>
+
+<span class="n">doc</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Click!&#39;</span><span class="p">))</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">start_server</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="n">stop_server</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>doc.register_theme(bootstrap3)</code>でdocumentにcssとjsを読み込む設定を行っています。
+同時に、HTMLをパースした時に作られるクラスが設定されます。
+例えば、<code>doc.createElement('button')</code>とするとクラスに<code>.btn</code>が指定された<code>&lt;button&gt;</code>要素（<code>bootstrap3.Button</code>クラスのインスタンス）が作られるようになり、<code>doc.body.innerHTML = '&lt;button is="primary-button"&gt;PrimaryButton&lt;/button&gt;'</code>とすると<code>bootstrap3.PrimaryButton</code>クラスのインスタンスが作られるようになります。</p>
+<p>複数回<code>register_theme</code>を実行して複数のテーマを設定することも可能ですが、おそらく干渉するのでお薦めしません。
+既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。</p>
+<p>各テーマモジュール（<code>wdom.themes</code>以下のモジュール）は<code>wdom.tag</code>クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。</p>
+<h4>起動オプションで指定</h4>
+<p>先ほどと違い、<code>wdom.themes</code>モジュールをimportして設定します。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">wdom.misc</span> <span class="kn">import</span> <span class="n">install_asyncio</span>
+<span class="kn">from</span> <span class="nn">wdom</span> <span class="kn">import</span> <span class="n">themes</span>
+<span class="kn">from</span> <span class="nn">wdom.themes</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">wdom.document</span> <span class="kn">import</span> <span class="n">get_document</span>
+<span class="kn">from</span> <span class="nn">wdom.server</span> <span class="kn">import</span> <span class="n">get_app</span><span class="p">,</span> <span class="n">start_server</span><span class="p">,</span> <span class="n">stop_server</span>
+
+<span class="n">install_asyncio</span><span class="p">()</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
+<span class="n">doc</span><span class="o">.</span><span class="n">register_theme</span><span class="p">(</span><span class="n">themes</span><span class="p">)</span>
+
+<span class="n">doc</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Click!&#39;</span><span class="p">))</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">start_server</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="n">stop_server</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+</pre></div>
+
+
+<p>先ほどと同様に、<code>doc.register_theme(themes)</code>することで読み込むファイルやHTMLから作られるクラスが設定されます。</p>
+<p>起動オプションに<code>--theme bootstrap3</code>と指定するとボタンがbootstrapのボタンになり、<code>--theme pure</code>と指定するとPure cssのボタンになります。
+<code>--theme</code>オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。</p>
+<p>上記のコードを<code>theme.py</code>として保存して、<code>--theme</code>オプションを色々変えているところです。
+（端が切れているのでわかりにくいですが、実行時に<code>--open-browser</code>を指定して左側のブラウザに新しくタブを開いています）</p>
+<h3>テーマの作り方</h3>
+<p>お気に入りのフレームワークがなかったり、既存のものに修正を加えたい場合などは作ることもできます。</p>
+<p><a href="https://github.com/miyakogi/wdom/blob/dev/wdom/themes/bootstrap3.py">bootstrap</a>の場合を例に簡単に作り方を紹介します。</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="n">NewTagClass</span> <span class="k">as</span> <span class="n">NewTag</span>
+<span class="kn">from</span> <span class="nn">wdom.tag</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Bootstrap3&#39;</span>
+<span class="n">project_url</span> <span class="o">=</span> <span class="s1">&#39;http://getbootstrap.com/&#39;</span>
+<span class="n">project_repository</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/twbs/bootstrap&#39;</span>
+<span class="n">license</span> <span class="o">=</span> <span class="s1">&#39;MIT License&#39;</span>
+<span class="n">license_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/twbs/bootstrap/blob/master/LICENSE&#39;</span>
+
+<span class="n">css_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">js_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">Button</span> <span class="o">=</span> <span class="n">NewTag</span><span class="p">(</span><span class="s1">&#39;Button&#39;</span><span class="p">,</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="n">bases</span><span class="o">=</span><span class="n">Button</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;btn&#39;</span><span class="p">)</span>
+<span class="n">DefaultButton</span> <span class="o">=</span> <span class="n">NewTag</span><span class="p">(</span><span class="s1">&#39;DefaultButton&#39;</span><span class="p">,</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;btn-default&#39;</span><span class="p">,</span> <span class="n">is_</span><span class="o">=</span><span class="s1">&#39;default-button&#39;</span><span class="p">)</span>
+
+<span class="err">（中略）</span>
+
+<span class="n">extended_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Button</span><span class="p">,</span>
+    <span class="n">DefaultButton</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p>まず、<code>from wdom.tag import *</code>で<code>wdom.tag</code>モジュールを全てimportします。
+<code>from wdom.tag import NewTagClass as NewTag</code>として名前を変えてimportしていますが、これには特に理由はありません。
+<code>NewTagClass</code>のままでも大丈夫です。
+（その場合は、以下の<code>NewTag</code>を<code>NewTagClass</code>に読み替えて下さい）</p>
+<p>そして<code>name = ... ~ license_url = ...</code>でフレームワークの情報を記入します。
+これはwikiに載せるスクリーンショットを作るために使っているだけなので、自分で作ったcssなどを当てる場合は不要です。</p>
+<p><code>css_files</code>と<code>js_files</code>で必要なファイルを指定します。
+これは指定した順番でロードされます。
+上記のbootstrapの場合では<code>bootstrap.min.js</code>が依存している<code>jquery</code>を先に指定しています。</p>
+<p>各要素（クラス）は<code>NewTag('Pythonのクラス名', '要素のタグ', 基底クラス, 任意の数の名前付き引数)</code>で定義します。
+名前付き引数の部分は、多くの場合<code>class_</code>によるクラス属性の指定と<code>is_</code>によるis属性の指定（custom elementとしてHTMLから生成する時に使われる）だけで十分だと思います。
+もちろん通常の<code>class</code>文で定義することも可能です。
+クラス定義の詳細は前回の記事をご参照ください。</p>
+<p>最後に、定義したクラスのリストを<code>extended_classes</code>に指定します。
+ここで指定したクラスがHTMLからパースする時に使われます。</p>
+<h2>起動オプション</h2>
+<h3>ログレベル</h3>
+<p><code>--logging {level}</code>で表示するログのレベルを指定できます。
+指定可能なレベルは、詳細な順に<code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code>です。
+デフォルトでは<code>info</code>に設定されます。</p>
+<h3>ポート番号指定</h3>
+<p>デフォルトでは<code>8888</code>番ポートで起動します。
+<code>--port 12345</code>などのように<code>--port</code>オプションでこのポート番号は変更できます。</p>
+<p>適当に開いているポートを使いたい時は<code>--port 0</code>と指定してください。
+毎回ポート番号が変わるとブラウザで表示を確認するのが面倒ですが、次に紹介する<code>--open-browser</code>オプションをつけると自動的にブラウザで開かれます。</p>
+<h3>自動ブラウザ表示</h3>
+<p><code>--open-browser</code> オプションをつけて実行すると、実行時に自動的にブラウザのタブを開きます。
+デフォルトではシステム標準のブラウザを使います。
+ブラウザを指定したい場合は<code>--browser ブラウザ名</code>で指定して下さい。</p>
+<p>Pythonの<a href="http://docs.python.jp/3/library/webbrowser.html">webbrowserモジュール</a>を使っているので、指定できる名前はそちらを参照してください。
+Pythonで<code>import webbrowser; print(webbrowser._borwsers)</code>とすることで利用可能な名前が確認できます。</p>
+<h3>自動シャットダウン</h3>
+<p><code>--auto-shutdown</code> オプションつきで起動すると、開いているブラウザのタブが全て閉じられた時点で自動的に終了します。
+タブのリロードでは終了しません。
+ちょっとしたツールを作って使ってもらう時に、用が済んだらブラウザを閉じるだけで終了できます。</p>
+<h3>自動リロード機能</h3>
+<p>ソースファイルに変更があった時、自動的に再読み込みします。
+<code>--autoreload</code> オプションをつけて起動すると有効になります。</p>
+<div class="highlight"><pre><span></span>python your_app.py --autoreload
+</pre></div>
+
+
+<p>デフォルトでは、importしているpythonのファイル、及び<code>add_static_path</code>で追加されたパス以下のファイルが監視の対象です。
+tornadoの機能をそのまま使っています。
+むしろこの機能のためにtornadoが必須ライブラリになっています。</p>
+<p>実際に上記の3つのオプションを使ったところがこちらです。</p>
+<h3>デバッグ</h3>
+<p><code>--debug</code>オプションを指定することで、自動リロードが有効になりログレベルが<code>debug</code>に指定されます。
+<code>--autoreload --logging debug</code>と指定した場合と同じです。</p>
+<h3>その他</h3>
+<p><code>--help</code>と指定するとオプションの一覧が表示されます。</p>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/miyakogi"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/MiyakoDev"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
+                            GitLabでドキュメントのビルドとホスティング
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
+                            PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
+                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
+                            Vimのパッケージ機能を試してみました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">
+                            Python製の静的サイトジェネレータを色々試してみました
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/gitlab-ci.html">
+                            <i class="fa fa-folder-open fa-lg"></i> GitLab CI
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/python.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Python
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Vim
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-0">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 miyakogi
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-59101475-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
+</body>
+</html>
