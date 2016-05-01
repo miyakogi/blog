@@ -20,6 +20,11 @@ WDOMのターゲットは、あくまでブラウザベースのデスクトッ�
 
 <!--more-->
 
+- 2016/05/01:追記
+    - 要素の属性アクセスについて記述を追加
+    - `style`属性について記述を追加
+    - JavaScriptを実行する方法を追加
+
 ## 動機
 
 PythonのGUIライブラリだと標準ライブラリのTkInterやPyQt、wxPythonなどが有名で、私はPyQtを結構使っていましたが、以下の不満もありました。
@@ -29,6 +34,7 @@ PythonのGUIライブラリだと標準ライブラリのTkInterやPyQt、wxPyth
     - いい感じのCSSを読み込んでクラス指定くらいで済ませたいです
 - インストールが大変
     - `pip install PyQt`では今の所インストールできません
+        - [2016/04/28 追記] [できるようになった](https://www.riverbankcomputing.com/pipermail/pyqt/2016-April/037388.html)ようです
     - anacondaなどで楽できるらしいですが好きじゃないです
 - 配布可能なバイナリパッケージにするのもそれなりに面倒
     - だいぶ記憶が薄れてしまいましたが、いくつかはまった記憶があります
@@ -281,13 +287,29 @@ print(a.getAttribute('href')) # None
 各要素に設定されている属性の一覧は`要素.attributes`で取得することができます。
 この時返されるオブジェクトは`{'属性名': Attrノード, ...}`の辞書風オブジェクト（NamedNodeMap）です。
 
-#### 特殊な属性値
+### 特殊な属性値
 
-一部の属性値は、要素の属性として直接アクセスすることができます。
+一部の属性値は、要素の属性（プロパティ）として直接アクセスすることができます。
 
 例えば`id`属性は`要素.id`で取得したり`要素.id = 'some_id'`で設定することができます。
-`id`属性が設定されていない状態で`要素.id`を取得すると空文字列が返ります。
-返り値の型は属性によって異なり、例えば`hidden`属性は`True`または`False`を返しますし、`style`属性は`CSSStyleDeclaration`のインスタンスを返します。
+`getAttribute`メソッドで属性値を取得した場合、属性が存在する場合の返り値は文字列型で属性が存在しない場合は`None`が返されますが、プロパティから取得した場合の型は属性によって異なります。
+`id`属性の場合、設定されていない状態では`要素.id`を取得すると（`None`ではなく）空文字列が返ります。
+
+その他、例えば`hidden`属性は`True`または`False`の真偽値を返しますし、`style`属性は`CSSStyleDeclaration`のインスタンスを返します。
+
+`hidden`属性の様に真偽値を返すプロパティは、プロパティから値を設定した場合と`setAttribute`メソッドで値を指定した場合の振る舞いが直感とは異なるので注意が必要です。
+`a=document.createElement('a'); a.hidden = True; a.html == '<a hidden></a>'`という要素を例に挙げると、`a.hidden = False`と設定すると`a.html == '<a></a>'`と`hidden`属性は削除されますが、`a.setAttribute('hidden', False)`では`hidden`属性は削除さず、`a.html == '<a hidden></a>'`のままです。
+`a.hidden = False`と同じように属性値を削除するためには、`a.removeAttribute('hidden')`として属性値を削除する必要があります。
+（正直微妙な気はしますが）これはブラウザJSの挙動と（ほぼ）同じです。
+
+また、`style`属性は`CSSStyleDeclaration`を返しますが、属性値の設定は文字列で行うことができます。
+つまり`a.style = 'color: red;'`という様にスタイルを指定することができます。
+ただし上記の方法だとすでに`style`属性が設定されていた場合に既存のスタイルを削除してしまいます。
+スタイルに修正を加える場合は、`a.style.color = 'red'`などのように`style`属性が返す`CSSStyleDeclaration`に対して行う方が安全でしょう。
+`CSSStyleDeclaration`は各CSSプロパティ（`color`や`background`など）にプロパティアクセスできます。
+`-`を含むプロパティ（`background-color`や`margin-bottom`）などは`-`直後の文字を大文字にして`-`を取り除く（`a.style.backgroundColor`や`a.style.marginBottom`など）ことでアクセスできます。
+ほとんどのCSSプロパティはこのルールが適用されますが、`float`の様に一部異なるものも存在します。
+（といっても、現時点でWDOMで実装されているのは`float`属性だけです。他にもありましたらご指摘下さい。）
 
 - 参考
     - [HTMLElement](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement)
@@ -295,6 +317,7 @@ print(a.getAttribute('href')) # None
         - 実際の実装状況は[こちら](https://github.com/miyakogi/wdom/wiki/Features)の`interface Element`以下をご参照ください
     - [element.id](https://developer.mozilla.org/ja/docs/Web/API/Element/id)
     - [element.style](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style)
+    - [CSS Properties Reference - CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference)
 
 ### イベント
 
@@ -571,6 +594,40 @@ DefaultButton = NewTagClass('DefaultButton', 'button', MyButton, class_='btn-def
 独自仕様なので今後変更される可能性もあります。
 ご注意ください。
 （クラス変数の`class_`は`classes`にしてリストでクラスを指定する形にしたい気持ちもあります）
+
+### 任意のJavaScriptコードの実行
+
+JavaScriptライブラリを併用してJavaScriptの実行が必要になる場合もあると思いますが、（現時点では）動的に`script`要素を追加してもブラウザによっては実行されません。
+これはブラウザの仕様にも依存しているのですが、最近のブラウザは`script`要素を`innerHTML`など書き換えても実行されないものもあるためです。
+（WDOMでは要素の追加時にブラウザ上で`insertAdjacentHTML`を使っているのが原因なので、今後各ブラウザの実装状況を鑑みながら修正したいとは考えています。）
+
+そこで、WDOMではブラウザ上でJavaScriptを実行するため、各要素（Element）に`exec`というメソッドを用意しています。
+（メソッド名は今後変更される可能性があります。）
+
+`exec`メソッドは文字列を引数としてとり、与えられた文字列をJavaScriptとしてブラウザ上で実行します。
+例えば、以下のコードでは`button`要素がクリックされた時にアラートが表示されます。
+
+```python
+from wdom.tag import Button
+button = Button('click')
+def clicked(e):
+    button.exec('alert("clicked!");')
+button.addEventListener('click', clicked)
+```
+
+この例では一行の処理ですが、複数行でも実行可能です。
+
+`exec`で実行されるスクリプト内では`this`（または`node`という変数）で自身（ブラウザ上の対応するDOM）にアクセスすることができます。
+これは以下のJavaScriptをブラウザ上で実行しているのと等価です。
+
+```javacript
+var node = (execを呼び出した要素)
+function() {
+    eval(execに与えられた文字列)
+}.bind(node)()
+```
+
+`window`や`document`などのブラウザ上のオブジェクトにアクセスすることや、事前に読み込ませたJavaScriptで定義された関数を実行することも可能です。
 
 ## HTMLでの記述
 
