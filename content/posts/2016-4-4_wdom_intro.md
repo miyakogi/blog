@@ -306,10 +306,12 @@ print(a.getAttribute('href')) # None
 つまり`a.style = 'color: red;'`という様にスタイルを指定することができます。
 ただし上記の方法だとすでに`style`属性が設定されていた場合に既存のスタイルを削除してしまいます。
 スタイルに修正を加える場合は、`a.style.color = 'red'`などのように`style`属性が返す`CSSStyleDeclaration`に対して行う方が安全でしょう。
+
 `CSSStyleDeclaration`は各CSSプロパティ（`color`や`background`など）にプロパティアクセスできます。
 `-`を含むプロパティ（`background-color`や`margin-bottom`）などは`-`直後の文字を大文字にして`-`を取り除く（`a.style.backgroundColor`や`a.style.marginBottom`など）ことでアクセスできます。
 ほとんどのCSSプロパティはこのルールが適用されますが、`float`の様に一部異なるものも存在します。
-（といっても、現時点でWDOMで実装されているのは`float`属性だけです。他にもありましたらご指摘下さい。）
+とはいっても、現時点でWDOMで実装されているのは`float`属性だけです。他にもありましたらご指摘下さい。
+詳細は[CSS Properties Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference)を参照して下さい。
 
 - 参考
     - [HTMLElement](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement)
@@ -317,7 +319,7 @@ print(a.getAttribute('href')) # None
         - 実際の実装状況は[こちら](https://github.com/miyakogi/wdom/wiki/Features)の`interface Element`以下をご参照ください
     - [element.id](https://developer.mozilla.org/ja/docs/Web/API/Element/id)
     - [element.style](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style)
-    - [CSS Properties Reference - CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference)
+    - [CSS Properties Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference)
 
 ### イベント
 
