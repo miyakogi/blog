@@ -13,13 +13,13 @@
 
         <meta name="author" content="miyakogi" />
         <meta name="keywords" content="python wdom" />
-        <meta name="description" content="先日紹介したWDOMの開発者向け機能の紹介です。 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。 基本的な機能は前回の記事をご参照ください。 昨日、前回の記事にstyle属性の記述やJavaScriptを実行する方法なども追加しています。 WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。 まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、pip install -Uだと更新されません。 お手数ですが一旦アンインストールしてインストールし直してください。 pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。" />
+        <meta name="description" content="先日紹介したWDOMの開発者向け機能の紹介です。 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。 基本的な機能は前回の記事をご参照ください。 昨日、前回の記事にstyle属性の記述やJavaScriptを実行する方法なども追加しています。 WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。 まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、pip install -Uだと更新されません。 お手数ですが一旦アンインストールしてインストールし直してください。 pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。 [2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="WDOMのテーマ機能と起動オプションの紹介"/>
         <meta property="og:url" content="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html"/>
-        <meta property="og:description" content="先日紹介したWDOMの開発者向け機能の紹介です。 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。 基本的な機能は前回の記事をご参照ください。 昨日、前回の記事にstyle属性の記述やJavaScriptを実行する方法なども追加しています。 WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。 まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、pip install -Uだと更新されません。 お手数ですが一旦アンインストールしてインストールし直してください。 pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。"/>
+        <meta property="og:description" content="先日紹介したWDOMの開発者向け機能の紹介です。 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。 基本的な機能は前回の記事をご参照ください。 昨日、前回の記事にstyle属性の記述やJavaScriptを実行する方法なども追加しています。 WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。 まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、pip install -Uだと更新されません。 お手数ですが一旦アンインストールしてインストールし直してください。 pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。 [2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました"/>
         <meta property="article:published_time" content="2016-05-02" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="python wdom" />
@@ -115,6 +115,9 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 
 <p>前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。</p>
+<ul>
+<li>[2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました</li>
+</ul>
 <!--more-->
 
 <h2>テーマ機能</h2>
@@ -137,7 +140,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 もしこのようなフレームワークの要望があれば、別リポジトリを用意することを検討します。</p>
 <h3>使い方</h3>
 <p>大きく分けてふた通りあります。</p>
-<p>一つは<code>from wdom.themes.フレームワーク名 import Button</code>などとしてモジュールから明示的にimportする方法、もうひとつは<code>from.wdom.themes import Button</code>などとしてimportし、起動オプションに<code>--theme フレームワーク名</code>という形で指定する方法です。</p>
+<p>一つは<code>from wdom.themes.フレームワーク名 import Button</code>などとしてモジュールから明示的にimportする方法、もうひとつは<code>from.wdom.themes.default import Button</code>などとしてimportし、起動オプションに<code>--theme フレームワーク名</code>という形で指定する方法です。</p>
 <p>いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。
 また、CSSやJSは、Web上からCDN等で取得できるものはできるだけそれらを使うようにしています。
 したがって、ネットに接続できない環境では利用できません。
@@ -172,17 +175,17 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。</p>
 <p>各テーマモジュール（<code>wdom.themes</code>以下のモジュール）は<code>wdom.tag</code>クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。</p>
 <h4>起動オプションで指定</h4>
-<p>先ほどと違い、<code>wdom.themes</code>モジュールをimportして設定します。</p>
+<p>先ほどと違い、<code>wdom.themes.default</code>モジュールをimportして設定します。</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">wdom.misc</span> <span class="kn">import</span> <span class="n">install_asyncio</span>
-<span class="kn">from</span> <span class="nn">wdom</span> <span class="kn">import</span> <span class="n">themes</span>
-<span class="kn">from</span> <span class="nn">wdom.themes</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">wdom.themes</span> <span class="kn">import</span> <span class="n">default</span>
+<span class="kn">from</span> <span class="nn">wdom.themes.default</span> <span class="kn">import</span> <span class="n">Button</span>
 <span class="kn">from</span> <span class="nn">wdom.document</span> <span class="kn">import</span> <span class="n">get_document</span>
 <span class="kn">from</span> <span class="nn">wdom.server</span> <span class="kn">import</span> <span class="n">get_app</span><span class="p">,</span> <span class="n">start_server</span><span class="p">,</span> <span class="n">stop_server</span>
 
 <span class="n">install_asyncio</span><span class="p">()</span>
 <span class="n">doc</span> <span class="o">=</span> <span class="n">get_document</span><span class="p">()</span>
-<span class="n">doc</span><span class="o">.</span><span class="n">register_theme</span><span class="p">(</span><span class="n">themes</span><span class="p">)</span>
+<span class="n">doc</span><span class="o">.</span><span class="n">register_theme</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
 
 <span class="n">doc</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Click!&#39;</span><span class="p">))</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">get_app</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
@@ -194,7 +197,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 </pre></div>
 
 
-<p>先ほどと同様に、<code>doc.register_theme(themes)</code>することで読み込むファイルやHTMLから作られるクラスが設定されます。</p>
+<p>先ほどと同様に、<code>doc.register_theme(default)</code>することで読み込むファイルやHTMLから作られるクラスが設定されます。</p>
 <p>起動オプションに<code>--theme bootstrap3</code>と指定するとボタンが<a href="http://getbootstrap.com/">Bootstrap</a>のボタンになり、<code>--theme pure</code>と指定すると<a href="http://purecss.io/">Pure</a>のボタンになります。
 <code>--theme</code>オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。</p>
 <p>以下の動画は上記のコードを<code>theme.py</code>として保存して、<code>--theme</code>オプションを色々変えているところです。
@@ -390,8 +393,8 @@ Pythonで<code>import webbrowser; print(webbrowser._borwsers)</code>とするこ
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
-                            python wdom
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -400,13 +403,13 @@ Pythonで<code>import webbrowser; print(webbrowser._borwsers)</code>とするこ
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
-                            wdom
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -415,8 +418,8 @@ Pythonで<code>import webbrowser; print(webbrowser._borwsers)</code>とするこ
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
-                            pelican
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
+                            python wdom
                         </a>
                     </li>
                 </ul>

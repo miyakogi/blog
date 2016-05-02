@@ -14,6 +14,9 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 
 &lt;p&gt;前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました&lt;/li&gt;
+&lt;/ul&gt;
 &lt;!--more--&gt;
 
 &lt;h2&gt;テーマ機能&lt;/h2&gt;
@@ -36,7 +39,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 もしこのようなフレームワークの要望があれば、別リポジトリを用意することを検討します。&lt;/p&gt;
 &lt;h3&gt;使い方&lt;/h3&gt;
 &lt;p&gt;大きく分けてふた通りあります。&lt;/p&gt;
-&lt;p&gt;一つは&lt;code&gt;from wdom.themes.フレームワーク名 import Button&lt;/code&gt;などとしてモジュールから明示的にimportする方法、もうひとつは&lt;code&gt;from.wdom.themes import Button&lt;/code&gt;などとしてimportし、起動オプションに&lt;code&gt;--theme フレームワーク名&lt;/code&gt;という形で指定する方法です。&lt;/p&gt;
+&lt;p&gt;一つは&lt;code&gt;from wdom.themes.フレームワーク名 import Button&lt;/code&gt;などとしてモジュールから明示的にimportする方法、もうひとつは&lt;code&gt;from.wdom.themes.default import Button&lt;/code&gt;などとしてimportし、起動オプションに&lt;code&gt;--theme フレームワーク名&lt;/code&gt;という形で指定する方法です。&lt;/p&gt;
 &lt;p&gt;いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。
 また、CSSやJSは、Web上からCDN等で取得できるものはできるだけそれらを使うようにしています。
 したがって、ネットに接続できない環境では利用できません。
@@ -71,17 +74,17 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。&lt;/p&gt;
 &lt;p&gt;各テーマモジュール（&lt;code&gt;wdom.themes&lt;/code&gt;以下のモジュール）は&lt;code&gt;wdom.tag&lt;/code&gt;クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。&lt;/p&gt;
 &lt;h4&gt;起動オプションで指定&lt;/h4&gt;
-&lt;p&gt;先ほどと違い、&lt;code&gt;wdom.themes&lt;/code&gt;モジュールをimportして設定します。&lt;/p&gt;
+&lt;p&gt;先ほどと違い、&lt;code&gt;wdom.themes.default&lt;/code&gt;モジュールをimportして設定します。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;themes&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes.default&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.document&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.server&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_server&lt;/span&gt;
 
 &lt;span class="n"&gt;install_asyncio&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;themes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Click!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -93,7 +96,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;先ほどと同様に、&lt;code&gt;doc.register_theme(themes)&lt;/code&gt;することで読み込むファイルやHTMLから作られるクラスが設定されます。&lt;/p&gt;
+&lt;p&gt;先ほどと同様に、&lt;code&gt;doc.register_theme(default)&lt;/code&gt;することで読み込むファイルやHTMLから作られるクラスが設定されます。&lt;/p&gt;
 &lt;p&gt;起動オプションに&lt;code&gt;--theme bootstrap3&lt;/code&gt;と指定するとボタンが&lt;a href="http://getbootstrap.com/"&gt;Bootstrap&lt;/a&gt;のボタンになり、&lt;code&gt;--theme pure&lt;/code&gt;と指定すると&lt;a href="http://purecss.io/"&gt;Pure&lt;/a&gt;のボタンになります。
 &lt;code&gt;--theme&lt;/code&gt;オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。&lt;/p&gt;
 &lt;p&gt;以下の動画は上記のコードを&lt;code&gt;theme.py&lt;/code&gt;として保存して、&lt;code&gt;--theme&lt;/code&gt;オプションを色々変えているところです。
