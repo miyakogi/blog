@@ -13,13 +13,13 @@
 
         <meta name="author" content="miyakogi" />
         <meta name="keywords" content="python,wdom" />
-        <meta name="description" content="WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））" />
+        <meta name="description" content="WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも）） 関連記事 WDOMのテーマ機能と起動オプションの紹介 - Blank File" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介"/>
         <meta property="og:url" content="https://miyakogi.github.io/blog/20160406/wdom_intro.html"/>
-        <meta property="og:description" content="WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも））"/>
+        <meta property="og:description" content="WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。 miyakogi/wdom: DOM manipulation library for python WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。 ちなみに、拙作LiveMark.vimもこれを使っています。 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。 もしバグを発見したらGitHubのIssueに報告していただけると助かります。 （できれば英語でお願いします（難しければタイトルだけでも）） 関連記事 WDOMのテーマ機能と起動オプションの紹介 - Blank File"/>
         <meta property="article:published_time" content="2016-04-06" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="python" />
@@ -112,6 +112,12 @@ Blank File            </a>
 <p>まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。</p>
 <p>もしバグを発見したら<a href="https://github.com/miyakogi/wdom/issues">GitHubのIssue</a>に報告していただけると助かります。
 （できれば英語でお願いします（難しければタイトルだけでも））</p>
+<ul>
+<li>関連記事<ul>
+<li><a href="http://h-miyako.hatenablog.com/entry/2016/05/02/180543">WDOMのテーマ機能と起動オプションの紹介 - Blank File</a></li>
+</ul>
+</li>
+</ul>
 <!--more-->
 
 <ul>
@@ -969,11 +975,6 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
                             python wdom
                         </a>
@@ -989,13 +990,18 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
-                            pelican
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
                             gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
                         </a>
                     </li>
                 </ul>

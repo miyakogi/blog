@@ -208,6 +208,12 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 &lt;p&gt;まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。&lt;/p&gt;
 &lt;p&gt;もしバグを発見したら&lt;a href="https://github.com/miyakogi/wdom/issues"&gt;GitHubのIssue&lt;/a&gt;に報告していただけると助かります。
 （できれば英語でお願いします（難しければタイトルだけでも））&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;関連記事&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://h-miyako.hatenablog.com/entry/2016/05/02/180543"&gt;WDOMのテーマ機能と起動オプションの紹介 - Blank File&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;!--more--&gt;
 
 &lt;ul&gt;
