@@ -18,6 +18,9 @@ WDOMのターゲットは、あくまでブラウザベースのデスクトッ�
 もしバグを発見したら[GitHubのIssue](https://github.com/miyakogi/wdom/issues)に報告していただけると助かります。
 （できれば英語でお願いします（難しければタイトルだけでも））
 
+- 関連記事
+    - [WDOMのテーマ機能と起動オプションの紹介 - Blank File](http://h-miyako.hatenablog.com/entry/2016/05/02/180543)
+
 <!--more-->
 
 - 2016/05/01:追記
