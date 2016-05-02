@@ -24,6 +24,8 @@ pip uinstall -y wdom && pip install git+http://github.com/miyakogi/wdom
 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。
 
+- [2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました
+
 <!--more-->
 
 ## テーマ機能
@@ -55,7 +57,7 @@ CSSフレームワークを使うことで見た目を自由に変更できま�
 
 大きく分けてふた通りあります。
 
-一つは`from wdom.themes.フレームワーク名 import Button`などとしてモジュールから明示的にimportする方法、もうひとつは`from.wdom.themes import Button`などとしてimportし、起動オプションに`--theme フレームワーク名`という形で指定する方法です。
+一つは`from wdom.themes.フレームワーク名 import Button`などとしてモジュールから明示的にimportする方法、もうひとつは`from.wdom.themes.default import Button`などとしてimportし、起動オプションに`--theme フレームワーク名`という形で指定する方法です。
 
 いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。
 また、CSSやJSは、Web上からCDN等で取得できるものはできるだけそれらを使うようにしています。
@@ -98,19 +100,19 @@ except KeyboardInterrupt:
 
 #### 起動オプションで指定
 
-先ほどと違い、`wdom.themes`モジュールをimportして設定します。
+先ほどと違い、`wdom.themes.default`モジュールをimportして設定します。
 
 ```python
 import asyncio
 from wdom.misc import install_asyncio
-from wdom import themes
-from wdom.themes import Button
+from wdom.themes import default
+from wdom.themes.default import Button
 from wdom.document import get_document
 from wdom.server import get_app, start_server, stop_server
 
 install_asyncio()
 doc = get_document()
-doc.register_theme(themes)
+doc.register_theme(default)
 
 doc.body.append(Button('Click!'))
 app = get_app(doc)
@@ -121,7 +123,7 @@ except KeyboardInterrupt:
     stop_server(server)
 ```
 
-先ほどと同様に、`doc.register_theme(themes)`することで読み込むファイルやHTMLから作られるクラスが設定されます。
+先ほどと同様に、`doc.register_theme(default)`することで読み込むファイルやHTMLから作られるクラスが設定されます。
 
 起動オプションに`--theme bootstrap3`と指定するとボタンが[Bootstrap](http://getbootstrap.com/)のボタンになり、`--theme pure`と指定すると[Pure](http://purecss.io/)のボタンになります。
 `--theme`オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。
