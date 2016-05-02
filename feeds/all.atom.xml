@@ -1,5 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-04-29T23:08:00+09:00</updated><entry><title>GitLabでドキュメントのビルドとホスティング</title><link href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html" rel="alternate"></link><updated>2016-04-29T23:08:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-29:blog/20160429/gitlab-pages-ci.html</id><summary type="html">&lt;p&gt;完全に思いつきで、&lt;a href="https://gitlab.com/"&gt;GitLab&lt;/a&gt;でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-05-02T17:00:00+09:00</updated><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
+CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。&lt;/p&gt;
+&lt;p&gt;基本的な機能は&lt;a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403"&gt;前回の記事&lt;/a&gt;をご参照ください。
+昨日、前回の記事に&lt;code&gt;style&lt;/code&gt;属性の記述やJavaScriptを実行する方法なども追加しています。&lt;/p&gt;
+&lt;!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] ---&gt;
+
+&lt;p&gt;WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。
+まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、&lt;code&gt;pip install -U&lt;/code&gt;だと更新されません。
+お手数ですが一旦アンインストールしてインストールし直してください。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip uinstall -y wdom &amp;amp;&amp;amp; pip install git+http://github.com/miyakogi/wdom
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
+前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;テーマ機能&lt;/h2&gt;
+&lt;p&gt;CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒です。
+そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。
+利用可能なフレームワークは画像付きで&lt;a href="https://github.com/miyakogi/wdom/wiki/ScreenShots"&gt;wiki&lt;/a&gt;に記載しています。
+（スクリーンショットは&lt;a href="http://selenium-python.readthedocs.io/"&gt;その道のプロ&lt;/a&gt;にお願いして一枚一枚心を込めて撮ってもらいました）&lt;/p&gt;
+&lt;p&gt;スクリーンショットは&lt;a href="https://github.com/miyakogi/wdom/blob/dev/wdom/examples/theming.py"&gt;このスクリプト&lt;/a&gt;で要素を色々並べています。
+以下の画像はBootstrapの場合です。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="bootstrap theme" src="https://raw.githubusercontent.com/wiki/miyakogi/wdom/images/Bootstrap3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;ただし、完全には各フレームワークの違いを隠蔽できていない（特にフォーム部品やGrid関係）ので、最終的にはフレームワークを決めて微調整をする必要があると思います。
+また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません・・・&lt;/p&gt;
+&lt;p&gt;数は今のところ20個ちょっとあります。
+他にもよさそうなフレームワークをご存じでしたらぜひ教えてください。
+ツイッターで &lt;a href="https://twitter.com/MiyakoDev"&gt;@miyakoDev&lt;/a&gt; 宛にメンションしていただくか、&lt;a href="https://github.com/miyakogi/wdom/issues"&gt;issue&lt;/a&gt;に登録していただければできるだけ対応します。
+もちろん既存のものを参考にモジュールを書いていただいてPRを送っていただくのも大歓迎です。&lt;/p&gt;
+&lt;p&gt;ただし、ライセンスが明記されていない、あるいはGPL等の制限のあるライセンスでCDNからファイルが取得できないフレームワークは残念ながらお断りさせていただきます。
+また、GPLライセンスのフレームワークでCDNから取得する場合も、最悪の場合クラス名を指定しただけでGPLの制限を受けることもないとは言い切れないので、お断りするかもしれません。
+（気にしすぎだとは思いますが、わざわざリスクを犯したくないのでご理解ください）
+もしこのようなフレームワークの要望があれば、別リポジトリを用意することを検討します。&lt;/p&gt;
+&lt;h3&gt;使い方&lt;/h3&gt;
+&lt;p&gt;大きく分けてふた通りあります。&lt;/p&gt;
+&lt;p&gt;一つは&lt;code&gt;from wdom.themes.フレームワーク名 import Button&lt;/code&gt;などとしてモジュールから明示的にimportする方法、もうひとつは&lt;code&gt;from.wdom.themes import Button&lt;/code&gt;などとしてimportし、起動オプションに&lt;code&gt;--theme フレームワーク名&lt;/code&gt;という形で指定する方法です。&lt;/p&gt;
+&lt;p&gt;いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。
+また、CSSやJSは、Web上からCDN等で取得できるものはできるだけそれらを使うようにしています。
+したがって、ネットに接続できない環境では利用できません。
+そのような場合は、必要なファイルをローカルの適当なディレクトリに保存して、&lt;code&gt;add_static_path&lt;/code&gt;でパスを追加したうえで必要なファイルを&lt;code&gt;document.add_css_file&lt;/code&gt;などで読み込ませてください。&lt;/p&gt;
+&lt;h4&gt;モジュールからimport&lt;/h4&gt;
+&lt;p&gt;例えば&lt;code&gt;bootstrap3&lt;/code&gt;を使う場合、以下のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bootstrap3&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes.bootstrap3&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.document&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.server&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_server&lt;/span&gt;
+
+&lt;span class="n"&gt;install_asyncio&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bootstrap3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Click!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_event_loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_forever&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;stop_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;doc.register_theme(bootstrap3)&lt;/code&gt;でdocumentにcssとjsを読み込む設定を行っています。
+同時に、HTMLをパースした時に作られるクラスが設定されます。
+例えば、&lt;code&gt;doc.createElement('button')&lt;/code&gt;とするとクラス属性に&lt;code&gt;.btn&lt;/code&gt;が指定された&lt;code&gt;&amp;lt;button&amp;gt;&lt;/code&gt;要素（&lt;code&gt;bootstrap3.Button&lt;/code&gt;クラスのインスタンス）が作られるようになり、&lt;code&gt;doc.body.innerHTML = '&amp;lt;button is="primary-button"&amp;gt;PrimaryButton&amp;lt;/button&amp;gt;'&lt;/code&gt;とすると&lt;code&gt;bootstrap3.PrimaryButton&lt;/code&gt;クラスのインスタンスが作られるようになります。&lt;/p&gt;
+&lt;p&gt;複数回&lt;code&gt;register_theme&lt;/code&gt;を実行して複数のテーマを設定することも可能ですが、おそらく干渉するのでお薦めしません。
+既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。&lt;/p&gt;
+&lt;p&gt;各テーマモジュール（&lt;code&gt;wdom.themes&lt;/code&gt;以下のモジュール）は&lt;code&gt;wdom.tag&lt;/code&gt;クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。&lt;/p&gt;
+&lt;h4&gt;起動オプションで指定&lt;/h4&gt;
+&lt;p&gt;先ほどと違い、&lt;code&gt;wdom.themes&lt;/code&gt;モジュールをimportして設定します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;themes&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.document&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.server&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_server&lt;/span&gt;
+
+&lt;span class="n"&gt;install_asyncio&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;themes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Click!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_event_loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_forever&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;stop_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;先ほどと同様に、&lt;code&gt;doc.register_theme(themes)&lt;/code&gt;することで読み込むファイルやHTMLから作られるクラスが設定されます。&lt;/p&gt;
+&lt;p&gt;起動オプションに&lt;code&gt;--theme bootstrap3&lt;/code&gt;と指定するとボタンが&lt;a href="http://getbootstrap.com/"&gt;Bootstrap&lt;/a&gt;のボタンになり、&lt;code&gt;--theme pure&lt;/code&gt;と指定すると&lt;a href="http://purecss.io/"&gt;Pure&lt;/a&gt;のボタンになります。
+&lt;code&gt;--theme&lt;/code&gt;オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。&lt;/p&gt;
+&lt;p&gt;以下の動画は上記のコードを&lt;code&gt;theme.py&lt;/code&gt;として保存して、&lt;code&gt;--theme&lt;/code&gt;オプションを色々変えているところです。
+（端が切れているのでわかりにくいですが、実行時に&lt;code&gt;--open-browser&lt;/code&gt;を指定して左側のブラウザに新しくタブを開いています）&lt;/p&gt;
+&lt;p&gt;&lt;img alt="themes example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/themes_demo.gif" /&gt;&lt;/p&gt;
+&lt;h3&gt;テーマの作り方&lt;/h3&gt;
+&lt;p&gt;お気に入りのフレームワークがなかったり、既存のものに修正を加えたい場合などは作ることもできます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom/blob/dev/wdom/themes/bootstrap3.py"&gt;Bootstrap&lt;/a&gt;の場合を例に簡単に作り方を紹介します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python3&lt;/span&gt;
+&lt;span class="c1"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;NewTagClass&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;NewTag&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+
+&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Bootstrap3&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;project_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://getbootstrap.com/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;project_repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://github.com/twbs/bootstrap&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;license&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;MIT License&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;license_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://github.com/twbs/bootstrap/blob/master/LICENSE&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;css_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;js_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;headers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+&lt;span class="n"&gt;Button&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NewTag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Button&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;button&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bases&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;btn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;DefaultButton&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NewTag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;DefaultButton&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;button&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;btn-default&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;is_&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;default-button&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;（中略）&lt;/span&gt;
+
+&lt;span class="n"&gt;extended_classes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;DefaultButton&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;まず、&lt;code&gt;from wdom.tag import *&lt;/code&gt;で&lt;code&gt;wdom.tag&lt;/code&gt;モジュールを全てimportします。
+&lt;code&gt;from wdom.tag import NewTagClass as NewTag&lt;/code&gt;として名前を変えてimportしていますが、これには特に理由はありません。
+&lt;code&gt;NewTagClass&lt;/code&gt;のままでも大丈夫です。
+（その場合は、以下の&lt;code&gt;NewTag&lt;/code&gt;を&lt;code&gt;NewTagClass&lt;/code&gt;に読み替えて下さい）&lt;/p&gt;
+&lt;p&gt;そして&lt;code&gt;name = ... ~ license_url = ...&lt;/code&gt;でフレームワークの情報を記入します。
+これはwikiに載せるスクリーンショットを作るために使っているだけなので、自分で作ったcssなどを当てる場合は不要です。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;css_files&lt;/code&gt;と&lt;code&gt;js_files&lt;/code&gt;で必要なファイルを指定します。
+これは指定した順番でロードされます。
+上記のbootstrapの場合では&lt;code&gt;bootstrap.min.js&lt;/code&gt;が&lt;code&gt;jquery&lt;/code&gt;に依存しているのでそれを先に指定しています。&lt;/p&gt;
+&lt;p&gt;各要素（クラス）は&lt;code&gt;NewTag('Pythonのクラス名', '要素のタグ', 基底クラス, 任意の数の名前付き引数)&lt;/code&gt;で定義します。
+名前付き引数の部分は、多くの場合&lt;code&gt;class_&lt;/code&gt;によるクラス属性の指定と&lt;code&gt;is_&lt;/code&gt;によるis属性の指定（custom elementとしてHTMLから生成する時に使われる）だけで十分だと思います。
+もちろん通常の&lt;code&gt;class&lt;/code&gt;文で定義することも可能です。
+クラス定義の詳細は前回の記事をご参照ください。&lt;/p&gt;
+&lt;p&gt;最後に、定義したクラスのリストを&lt;code&gt;extended_classes&lt;/code&gt;に指定します。
+ここで指定したクラスがHTMLからパースする時に使われます。&lt;/p&gt;
+&lt;h2&gt;起動オプション&lt;/h2&gt;
+&lt;h3&gt;ログレベル&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;--logging {level}&lt;/code&gt;で表示するログのレベルを指定できます。
+指定可能なレベルは、詳細な順に&lt;code&gt;debug&lt;/code&gt;, &lt;code&gt;info&lt;/code&gt;, &lt;code&gt;warn&lt;/code&gt;, &lt;code&gt;error&lt;/code&gt;です。
+デフォルトでは&lt;code&gt;info&lt;/code&gt;に設定されます。&lt;/p&gt;
+&lt;h3&gt;ポート番号指定&lt;/h3&gt;
+&lt;p&gt;デフォルトでは&lt;code&gt;8888&lt;/code&gt;番ポートで起動します。
+&lt;code&gt;--port 12345&lt;/code&gt;などのように&lt;code&gt;--port&lt;/code&gt;オプションでこのポート番号は変更できます。&lt;/p&gt;
+&lt;p&gt;適当に開いているポートを使いたい時は&lt;code&gt;--port 0&lt;/code&gt;と指定してください。
+毎回ポート番号が変わるとブラウザで表示を確認するのが面倒ですが、次に紹介する&lt;code&gt;--open-browser&lt;/code&gt;オプションをつけると自動的にブラウザで開かれます。&lt;/p&gt;
+&lt;h3&gt;自動ブラウザ表示&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;--open-browser&lt;/code&gt; オプションをつけて実行すると、実行時に自動的にブラウザのタブを開きます。
+デフォルトではシステム標準のブラウザを使います。
+ブラウザを指定したい場合は&lt;code&gt;--browser ブラウザ名&lt;/code&gt;で指定して下さい。&lt;/p&gt;
+&lt;p&gt;Pythonの&lt;a href="http://docs.python.jp/3/library/webbrowser.html"&gt;webbrowserモジュール&lt;/a&gt;を使っているので、指定できる名前はそちらを参照してください。
+Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;とすることで利用可能な名前が確認できます。&lt;/p&gt;
+&lt;h3&gt;自動シャットダウン&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;--auto-shutdown&lt;/code&gt; オプションつきで起動すると、開いているブラウザのタブが全て閉じられた時点で自動的に終了します。
+タブのリロードでは終了しません。
+ちょっとしたツールを作って使ってもらう時に、用が済んだらブラウザを閉じるだけで終了できます。&lt;/p&gt;
+&lt;h3&gt;自動リロード機能&lt;/h3&gt;
+&lt;p&gt;ソースファイルに変更があった時、自動的に再読み込みします。
+&lt;code&gt;--autoreload&lt;/code&gt; オプションをつけて起動すると有効になります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python your_app.py --autoreload
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;デフォルトでは、importしているpythonのファイル、及び&lt;code&gt;add_static_path&lt;/code&gt;で追加されたパス以下のファイルが監視の対象です。
+これはtornadoの機能をそのまま使っています。
+むしろこの機能のためにtornadoが必須ライブラリになっています。&lt;/p&gt;
+&lt;p&gt;実際に上記の3つのオプションを使ってファイルに変更を加えている様子です。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="autoreload example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/autoreload.gif" /&gt;&lt;/p&gt;
+&lt;h3&gt;デバッグ&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;--debug&lt;/code&gt;オプションを指定することで、自動リロードが有効になりログレベルが&lt;code&gt;debug&lt;/code&gt;に指定されます。
+&lt;code&gt;--autoreload --logging debug&lt;/code&gt;と指定した場合と同じです。&lt;/p&gt;
+&lt;h3&gt;ヘルプ&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;--help&lt;/code&gt;と指定するとオプションの一覧が表示されます。&lt;/p&gt;
+&lt;h2&gt;あとがき&lt;/h2&gt;
+&lt;p&gt;今後書こうと思っているWDOMの紹介記事は、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Seleniumを使ったテスト方法&lt;/li&gt;
+&lt;li&gt;（cx_Freezeを使って）実行可能な形で配布する方法&lt;/li&gt;
+&lt;li&gt;Electronと組み合わせて配布する方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;です。&lt;/p&gt;
+&lt;p&gt;このあたりが書き終わったらドキュメントを整備してPyPIに登録しようと思います。&lt;/p&gt;
+&lt;p&gt;他に欲しい機能とかどんなものがあるでしょうか？
+パット思いつくのはJinja2やtornadoのテンプレートをパースする機能のサポートとかグラフ描画ライブラリのサポートですが。
+リクエストありましたらツイッターなどで教えていただけると嬉しいです。&lt;/p&gt;</summary><category term="python wdom"></category></entry><entry><title>GitLabでドキュメントのビルドとホスティング</title><link href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html" rel="alternate"></link><updated>2016-04-29T23:08:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-29:blog/20160429/gitlab-pages-ci.html</id><summary type="html">&lt;p&gt;完全に思いつきで、&lt;a href="https://gitlab.com/"&gt;GitLab&lt;/a&gt;でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。&lt;/p&gt;
 &lt;p&gt;GitLabはGitHubみたいなサービスです。
 （というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？）
 （そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・）&lt;/p&gt;
@@ -110,6 +310,14 @@ MarkdownファイルをWeb上から編集して、そのままコミット→ビ
 （できれば英語でお願いします（難しければタイトルだけでも））&lt;/p&gt;
 &lt;!--more--&gt;
 
+&lt;ul&gt;
+&lt;li&gt;2016/05/01:追記&lt;ul&gt;
+&lt;li&gt;要素の属性アクセスについて記述を追加&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;style&lt;/code&gt;属性について記述を追加&lt;/li&gt;
+&lt;li&gt;JavaScriptを実行する方法を追加&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;PythonのGUIライブラリだと標準ライブラリのTkInterやPyQt、wxPythonなどが有名で、私はPyQtを結構使っていましたが、以下の不満もありました。&lt;/p&gt;
 &lt;ul&gt;
@@ -119,7 +327,10 @@ MarkdownファイルをWeb上から編集して、そのままコミット→ビ
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;インストールが大変&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;pip install PyQt&lt;/code&gt;では今の所インストールできません&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pip install PyQt&lt;/code&gt;では今の所インストールできません&lt;ul&gt;
+&lt;li&gt;[2016/04/28 追記] &lt;a href="https://www.riverbankcomputing.com/pipermail/pyqt/2016-April/037388.html"&gt;できるようになった&lt;/a&gt;ようです&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;anacondaなどで楽できるらしいですが好きじゃないです&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -369,11 +580,25 @@ HTMLの&lt;code&gt;&amp;lt;a href="http://......./"&amp;gt;リンク&amp;lt;/a&a
 
 &lt;p&gt;各要素に設定されている属性の一覧は&lt;code&gt;要素.attributes&lt;/code&gt;で取得することができます。
 この時返されるオブジェクトは&lt;code&gt;{'属性名': Attrノード, ...}&lt;/code&gt;の辞書風オブジェクト（NamedNodeMap）です。&lt;/p&gt;
-&lt;h4&gt;特殊な属性値&lt;/h4&gt;
-&lt;p&gt;一部の属性値は、要素の属性として直接アクセスすることができます。&lt;/p&gt;
+&lt;h3&gt;特殊な属性値&lt;/h3&gt;
+&lt;p&gt;一部の属性値は、要素の属性（プロパティ）として直接アクセスすることができます。&lt;/p&gt;
 &lt;p&gt;例えば&lt;code&gt;id&lt;/code&gt;属性は&lt;code&gt;要素.id&lt;/code&gt;で取得したり&lt;code&gt;要素.id = 'some_id'&lt;/code&gt;で設定することができます。
-&lt;code&gt;id&lt;/code&gt;属性が設定されていない状態で&lt;code&gt;要素.id&lt;/code&gt;を取得すると空文字列が返ります。
-返り値の型は属性によって異なり、例えば&lt;code&gt;hidden&lt;/code&gt;属性は&lt;code&gt;True&lt;/code&gt;または&lt;code&gt;False&lt;/code&gt;を返しますし、&lt;code&gt;style&lt;/code&gt;属性は&lt;code&gt;CSSStyleDeclaration&lt;/code&gt;のインスタンスを返します。&lt;/p&gt;
+&lt;code&gt;getAttribute&lt;/code&gt;メソッドで属性値を取得した場合、属性が存在する場合の返り値は文字列型で属性が存在しない場合は&lt;code&gt;None&lt;/code&gt;が返されますが、プロパティから取得した場合の型は属性によって異なります。
+&lt;code&gt;id&lt;/code&gt;属性の場合、設定されていない状態では&lt;code&gt;要素.id&lt;/code&gt;を取得すると（&lt;code&gt;None&lt;/code&gt;ではなく）空文字列が返ります。&lt;/p&gt;
+&lt;p&gt;その他、例えば&lt;code&gt;hidden&lt;/code&gt;属性は&lt;code&gt;True&lt;/code&gt;または&lt;code&gt;False&lt;/code&gt;の真偽値を返しますし、&lt;code&gt;style&lt;/code&gt;属性は&lt;code&gt;CSSStyleDeclaration&lt;/code&gt;のインスタンスを返します。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hidden&lt;/code&gt;属性の様に真偽値を返すプロパティは、プロパティから値を設定した場合と&lt;code&gt;setAttribute&lt;/code&gt;メソッドで値を指定した場合の振る舞いが直感とは異なるので注意が必要です。
+&lt;code&gt;a=document.createElement('a'); a.hidden = True; a.html == '&amp;lt;a hidden&amp;gt;&amp;lt;/a&amp;gt;'&lt;/code&gt;という要素を例に挙げると、&lt;code&gt;a.hidden = False&lt;/code&gt;と設定すると&lt;code&gt;a.html == '&amp;lt;a&amp;gt;&amp;lt;/a&amp;gt;'&lt;/code&gt;と&lt;code&gt;hidden&lt;/code&gt;属性は削除されますが、&lt;code&gt;a.setAttribute('hidden', False)&lt;/code&gt;では&lt;code&gt;hidden&lt;/code&gt;属性は削除さず、&lt;code&gt;a.html == '&amp;lt;a hidden&amp;gt;&amp;lt;/a&amp;gt;'&lt;/code&gt;のままです。
+&lt;code&gt;a.hidden = False&lt;/code&gt;と同じように属性値を削除するためには、&lt;code&gt;a.removeAttribute('hidden')&lt;/code&gt;として属性値を削除する必要があります。
+（正直微妙な気はしますが）これはブラウザJSの挙動と（ほぼ）同じです。&lt;/p&gt;
+&lt;p&gt;また、&lt;code&gt;style&lt;/code&gt;属性は&lt;code&gt;CSSStyleDeclaration&lt;/code&gt;を返しますが、属性値の設定は文字列で行うことができます。
+つまり&lt;code&gt;a.style = 'color: red;'&lt;/code&gt;という様にスタイルを指定することができます。
+ただし上記の方法だとすでに&lt;code&gt;style&lt;/code&gt;属性が設定されていた場合に既存のスタイルを削除してしまいます。
+スタイルに修正を加える場合は、&lt;code&gt;a.style.color = 'red'&lt;/code&gt;などのように&lt;code&gt;style&lt;/code&gt;属性が返す&lt;code&gt;CSSStyleDeclaration&lt;/code&gt;に対して行う方が安全でしょう。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CSSStyleDeclaration&lt;/code&gt;は各CSSプロパティ（&lt;code&gt;color&lt;/code&gt;や&lt;code&gt;background&lt;/code&gt;など）にプロパティアクセスできます。
+&lt;code&gt;-&lt;/code&gt;を含むプロパティ（&lt;code&gt;background-color&lt;/code&gt;や&lt;code&gt;margin-bottom&lt;/code&gt;）などは&lt;code&gt;-&lt;/code&gt;直後の文字を大文字にして&lt;code&gt;-&lt;/code&gt;を取り除く（&lt;code&gt;a.style.backgroundColor&lt;/code&gt;や&lt;code&gt;a.style.marginBottom&lt;/code&gt;など）ことでアクセスできます。
+ほとんどのCSSプロパティはこのルールが適用されますが、&lt;code&gt;float&lt;/code&gt;の様に一部異なるものも存在します。
+とはいっても、現時点でWDOMで実装されているのは&lt;code&gt;float&lt;/code&gt;属性だけです。他にもありましたらご指摘下さい。
+詳細は&lt;a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference"&gt;CSS Properties Reference&lt;/a&gt;を参照して下さい。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;参考&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement"&gt;HTMLElement&lt;/a&gt;&lt;ul&gt;
@@ -383,6 +608,7 @@ HTMLの&lt;code&gt;&amp;lt;a href="http://......./"&amp;gt;リンク&amp;lt;/a&a
 &lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/id"&gt;element.id&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style"&gt;element.style&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference"&gt;CSS Properties Reference&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -617,6 +843,33 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 独自仕様なので今後変更される可能性もあります。
 ご注意ください。
 （クラス変数の&lt;code&gt;class_&lt;/code&gt;は&lt;code&gt;classes&lt;/code&gt;にしてリストでクラスを指定する形にしたい気持ちもあります）&lt;/p&gt;
+&lt;h3&gt;任意のJavaScriptコードの実行&lt;/h3&gt;
+&lt;p&gt;JavaScriptライブラリを併用してJavaScriptの実行が必要になる場合もあると思いますが、（現時点では）動的に&lt;code&gt;script&lt;/code&gt;要素を追加してもブラウザによっては実行されません。
+これはブラウザの仕様にも依存しているのですが、最近のブラウザは&lt;code&gt;script&lt;/code&gt;要素を&lt;code&gt;innerHTML&lt;/code&gt;など書き換えても実行されないものもあるためです。
+（WDOMでは要素の追加時にブラウザ上で&lt;code&gt;insertAdjacentHTML&lt;/code&gt;を使っているのが原因なので、今後各ブラウザの実装状況を鑑みながら修正したいとは考えています。）&lt;/p&gt;
+&lt;p&gt;そこで、WDOMではブラウザ上でJavaScriptを実行するため、各要素（Element）に&lt;code&gt;exec&lt;/code&gt;というメソッドを用意しています。
+（メソッド名は今後変更される可能性があります。）&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;exec&lt;/code&gt;メソッドは文字列を引数としてとり、与えられた文字列をJavaScriptとしてブラウザ上で実行します。
+例えば、以下のコードでは&lt;code&gt;button&lt;/code&gt;要素がクリックされた時にアラートが表示されます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
+&lt;span class="n"&gt;button&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;clicked&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;button&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="k"&gt;exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;alert(&amp;quot;clicked!&amp;quot;);&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;button&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clicked&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;この例では一行の処理ですが、複数行でも実行可能です。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;exec&lt;/code&gt;で実行されるスクリプト内では&lt;code&gt;this&lt;/code&gt;（または&lt;code&gt;node&lt;/code&gt;という変数）で自身（ブラウザ上の対応するDOM）にアクセスすることができます。
+これは以下のJavaScriptをブラウザ上で実行しているのと等価です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;var node = (execを呼び出した要素)
+function() {
+    eval(execに与えられた文字列)
+}.bind(node)()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;window&lt;/code&gt;や&lt;code&gt;document&lt;/code&gt;などのブラウザ上のオブジェクトにアクセスすることや、事前に読み込ませたJavaScriptで定義された関数を実行することも可能です。&lt;/p&gt;
 &lt;h2&gt;HTMLでの記述&lt;/h2&gt;
 &lt;p&gt;構造を上記のような&lt;code&gt;appendChild&lt;/code&gt;などだけで作っていくのは大変なので、HTMLで記述してパースできるようにしてあります。
 JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設定するだけです。&lt;/p&gt;

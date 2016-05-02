@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>WDOMの開発者向け機能の紹介 - Blank File</title>
+    <title>WDOMのテーマ機能と起動オプションの紹介 - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,18 +9,18 @@
 
 
 
-<link rel="canonical" href="https://miyakogi.github.io/blog/drafts/wdom2.html">
+<link rel="canonical" href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html">
 
         <meta name="author" content="miyakogi" />
         <meta name="keywords" content="python wdom" />
-        <meta name="description" content="先日紹介したWDOMの開発者向け機能の紹介です。 主に起動オプションについて紹介します。 基本的にな機能は前回の記事をご参照ください。 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じ＆話題にならなくて悲しかったので、今回は視覚に訴える感じを目指して書きます。 テーマ機能 CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒ですよね。 そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。 利用可能なフレームワークは画像付きでwikiに記載しています。 （スクリーンショットは ..." />
+        <meta name="description" content="先日紹介したWDOMの開発者向け機能の紹介です。 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。 基本的な機能は前回の記事をご参照ください。 昨日、前回の記事にstyle属性の記述やJavaScriptを実行する方法なども追加しています。 WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。 まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、pip install -Uだと更新されません。 お手数ですが一旦アンインストールしてインストールし直してください。 pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="WDOMの開発者向け機能の紹介"/>
-        <meta property="og:url" content="https://miyakogi.github.io/blog/drafts/wdom2.html"/>
-        <meta property="og:description" content="先日紹介したWDOMの開発者向け機能の紹介です。 主に起動オプションについて紹介します。 基本的にな機能は前回の記事をご参照ください。 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じ＆話題にならなくて悲しかったので、今回は視覚に訴える感じを目指して書きます。 テーマ機能 CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒ですよね。 そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。 利用可能なフレームワークは画像付きでwikiに記載しています。 （スクリーンショットは ..."/>
-        <meta property="article:published_time" content="2016-04-27" />
+        <meta property="og:title" content="WDOMのテーマ機能と起動オプションの紹介"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html"/>
+        <meta property="og:description" content="先日紹介したWDOMの開発者向け機能の紹介です。 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。 基本的な機能は前回の記事をご参照ください。 昨日、前回の記事にstyle属性の記述やJavaScriptを実行する方法なども追加しています。 WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。 まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、pip install -Uだと更新されません。 お手数ですが一旦アンインストールしてインストールし直してください。 pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom 前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・ 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。"/>
+        <meta property="article:published_time" content="2016-05-02" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="python wdom" />
             <meta property="article:author" content="miyakogi" />
@@ -75,10 +75,10 @@ Blank File            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://miyakogi.github.io/blog/drafts/wdom2.html"
+                    <a href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html"
                        rel="bookmark"
-                       title="Permalink to WDOMの開発者向け機能の紹介">
-                        WDOMの開発者向け機能の紹介
+                       title="Permalink to WDOMのテーマ機能と起動オプションの紹介">
+                        WDOMのテーマ機能と起動オプションの紹介
                     </a>
                 </h1>
             </header>
@@ -88,7 +88,7 @@ Blank File            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-04-27T10:22:00+09:00"> Wed 27 April 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-05-02T17:00:00+09:00"> Mon 02 May 2016</time>
     </span>
 
 
@@ -101,30 +101,45 @@ Blank File            </a>
 </footer><!-- /.post-info -->                    </div>
                 </div>
                 <p>先日紹介したWDOMの開発者向け機能の紹介です。
-主に起動オプションについて紹介します。</p>
-<p>基本的にな機能は前回の記事をご参照ください。</p>
+CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。</p>
+<p>基本的な機能は<a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403">前回の記事</a>をご参照ください。
+昨日、前回の記事に<code>style</code>属性の記述やJavaScriptを実行する方法なども追加しています。</p>
+<!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] --->
+
+<p>WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。
+まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、<code>pip install -U</code>だと更新されません。
+お手数ですが一旦アンインストールしてインストールし直してください。</p>
+<div class="highlight"><pre><span></span>pip uinstall -y wdom &amp;&amp; pip install git+http://github.com/miyakogi/wdom
+</pre></div>
+
+
 <p>前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
-前回はテキストオンリーで寂しい感じ＆話題にならなくて悲しかったので、今回は視覚に訴える感じを目指して書きます。</p>
+前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。</p>
+<!--more-->
+
 <h2>テーマ機能</h2>
-<p>CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒ですよね。
+<p>CSSフレームワークを使うことで見た目を自由に変更できますが、フレームワークによってボタンなどのクラス指定が異なっていて面倒です。
 そこで、WDOMでは各フレームワークをラップするモジュールを提供し、手軽に見た目を変更できるようにしました。
 利用可能なフレームワークは画像付きで<a href="https://github.com/miyakogi/wdom/wiki/ScreenShots">wiki</a>に記載しています。
 （スクリーンショットは<a href="http://selenium-python.readthedocs.io/">その道のプロ</a>にお願いして一枚一枚心を込めて撮ってもらいました）</p>
+<p>スクリーンショットは<a href="https://github.com/miyakogi/wdom/blob/dev/wdom/examples/theming.py">このスクリプト</a>で要素を色々並べています。
+以下の画像はBootstrapの場合です。</p>
+<p><img alt="bootstrap theme" src="https://raw.githubusercontent.com/wiki/miyakogi/wdom/images/Bootstrap3.png" /></p>
 <p>ただし、完全には各フレームワークの違いを隠蔽できていない（特にフォーム部品やGrid関係）ので、最終的にはフレームワークを決めて微調整をする必要があると思います。
 また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません・・・</p>
 <p>数は今のところ20個ちょっとあります。
 他にもよさそうなフレームワークをご存じでしたらぜひ教えてください。
-ツイッターで <a href="https://twitter.com/MiyakoDev">@miyakoDev</a> 宛にメンションしていただくか、<a href="https://github.com/miyakogi/wdom/issues">issue</a>登録していただければできるだけ対応します。
-もちろん既存のものを参考にpythonモジュールを書いていただいてPRを送っていただくのも大歓迎です。</p>
+ツイッターで <a href="https://twitter.com/MiyakoDev">@miyakoDev</a> 宛にメンションしていただくか、<a href="https://github.com/miyakogi/wdom/issues">issue</a>に登録していただければできるだけ対応します。
+もちろん既存のものを参考にモジュールを書いていただいてPRを送っていただくのも大歓迎です。</p>
 <p>ただし、ライセンスが明記されていない、あるいはGPL等の制限のあるライセンスでCDNからファイルが取得できないフレームワークは残念ながらお断りさせていただきます。
-また、あるのかわかりませんが、GPLライセンスのフレームワークでCDNから取得する場合も、最悪の場合クラス名を指定しただけでGPLの制限を受けることもないとは言い切れないので、お断りするかもしれません。
+また、GPLライセンスのフレームワークでCDNから取得する場合も、最悪の場合クラス名を指定しただけでGPLの制限を受けることもないとは言い切れないので、お断りするかもしれません。
 （気にしすぎだとは思いますが、わざわざリスクを犯したくないのでご理解ください）
 もしこのようなフレームワークの要望があれば、別リポジトリを用意することを検討します。</p>
 <h3>使い方</h3>
 <p>大きく分けてふた通りあります。</p>
 <p>一つは<code>from wdom.themes.フレームワーク名 import Button</code>などとしてモジュールから明示的にimportする方法、もうひとつは<code>from.wdom.themes import Button</code>などとしてimportし、起動オプションに<code>--theme フレームワーク名</code>という形で指定する方法です。</p>
-<p>いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。</p>
-<p>CSSやJSはWeb上からCDN等で取得できるものはできるだけそれらを使うようにしています。
+<p>いずれの場合も、CSSやJSを読み込むためにモジュールのimport及び設定が必要になります。
+また、CSSやJSは、Web上からCDN等で取得できるものはできるだけそれらを使うようにしています。
 したがって、ネットに接続できない環境では利用できません。
 そのような場合は、必要なファイルをローカルの適当なディレクトリに保存して、<code>add_static_path</code>でパスを追加したうえで必要なファイルを<code>document.add_css_file</code>などで読み込ませてください。</p>
 <h4>モジュールからimport</h4>
@@ -152,7 +167,7 @@ Blank File            </a>
 
 <p><code>doc.register_theme(bootstrap3)</code>でdocumentにcssとjsを読み込む設定を行っています。
 同時に、HTMLをパースした時に作られるクラスが設定されます。
-例えば、<code>doc.createElement('button')</code>とするとクラスに<code>.btn</code>が指定された<code>&lt;button&gt;</code>要素（<code>bootstrap3.Button</code>クラスのインスタンス）が作られるようになり、<code>doc.body.innerHTML = '&lt;button is="primary-button"&gt;PrimaryButton&lt;/button&gt;'</code>とすると<code>bootstrap3.PrimaryButton</code>クラスのインスタンスが作られるようになります。</p>
+例えば、<code>doc.createElement('button')</code>とするとクラス属性に<code>.btn</code>が指定された<code>&lt;button&gt;</code>要素（<code>bootstrap3.Button</code>クラスのインスタンス）が作られるようになり、<code>doc.body.innerHTML = '&lt;button is="primary-button"&gt;PrimaryButton&lt;/button&gt;'</code>とすると<code>bootstrap3.PrimaryButton</code>クラスのインスタンスが作られるようになります。</p>
 <p>複数回<code>register_theme</code>を実行して複数のテーマを設定することも可能ですが、おそらく干渉するのでお薦めしません。
 既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。</p>
 <p>各テーマモジュール（<code>wdom.themes</code>以下のモジュール）は<code>wdom.tag</code>クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。</p>
@@ -180,13 +195,14 @@ Blank File            </a>
 
 
 <p>先ほどと同様に、<code>doc.register_theme(themes)</code>することで読み込むファイルやHTMLから作られるクラスが設定されます。</p>
-<p>起動オプションに<code>--theme bootstrap3</code>と指定するとボタンがbootstrapのボタンになり、<code>--theme pure</code>と指定するとPure cssのボタンになります。
+<p>起動オプションに<code>--theme bootstrap3</code>と指定するとボタンが<a href="http://getbootstrap.com/">Bootstrap</a>のボタンになり、<code>--theme pure</code>と指定すると<a href="http://purecss.io/">Pure</a>のボタンになります。
 <code>--theme</code>オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。</p>
-<p>上記のコードを<code>theme.py</code>として保存して、<code>--theme</code>オプションを色々変えているところです。
+<p>以下の動画は上記のコードを<code>theme.py</code>として保存して、<code>--theme</code>オプションを色々変えているところです。
 （端が切れているのでわかりにくいですが、実行時に<code>--open-browser</code>を指定して左側のブラウザに新しくタブを開いています）</p>
+<p><img alt="themes example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/themes_demo.gif" /></p>
 <h3>テーマの作り方</h3>
 <p>お気に入りのフレームワークがなかったり、既存のものに修正を加えたい場合などは作ることもできます。</p>
-<p><a href="https://github.com/miyakogi/wdom/blob/dev/wdom/themes/bootstrap3.py">bootstrap</a>の場合を例に簡単に作り方を紹介します。</p>
+<p><a href="https://github.com/miyakogi/wdom/blob/dev/wdom/themes/bootstrap3.py">Bootstrap</a>の場合を例に簡単に作り方を紹介します。</p>
 <div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
@@ -229,7 +245,7 @@ Blank File            </a>
 これはwikiに載せるスクリーンショットを作るために使っているだけなので、自分で作ったcssなどを当てる場合は不要です。</p>
 <p><code>css_files</code>と<code>js_files</code>で必要なファイルを指定します。
 これは指定した順番でロードされます。
-上記のbootstrapの場合では<code>bootstrap.min.js</code>が依存している<code>jquery</code>を先に指定しています。</p>
+上記のbootstrapの場合では<code>bootstrap.min.js</code>が<code>jquery</code>に依存しているのでそれを先に指定しています。</p>
 <p>各要素（クラス）は<code>NewTag('Pythonのクラス名', '要素のタグ', 基底クラス, 任意の数の名前付き引数)</code>で定義します。
 名前付き引数の部分は、多くの場合<code>class_</code>によるクラス属性の指定と<code>is_</code>によるis属性の指定（custom elementとしてHTMLから生成する時に使われる）だけで十分だと思います。
 もちろん通常の<code>class</code>文で定義することも可能です。
@@ -264,14 +280,27 @@ Pythonで<code>import webbrowser; print(webbrowser._borwsers)</code>とするこ
 
 
 <p>デフォルトでは、importしているpythonのファイル、及び<code>add_static_path</code>で追加されたパス以下のファイルが監視の対象です。
-tornadoの機能をそのまま使っています。
+これはtornadoの機能をそのまま使っています。
 むしろこの機能のためにtornadoが必須ライブラリになっています。</p>
-<p>実際に上記の3つのオプションを使ったところがこちらです。</p>
+<p>実際に上記の3つのオプションを使ってファイルに変更を加えている様子です。</p>
+<p><img alt="autoreload example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/autoreload.gif" /></p>
 <h3>デバッグ</h3>
 <p><code>--debug</code>オプションを指定することで、自動リロードが有効になりログレベルが<code>debug</code>に指定されます。
 <code>--autoreload --logging debug</code>と指定した場合と同じです。</p>
-<h3>その他</h3>
+<h3>ヘルプ</h3>
 <p><code>--help</code>と指定するとオプションの一覧が表示されます。</p>
+<h2>あとがき</h2>
+<p>今後書こうと思っているWDOMの紹介記事は、</p>
+<ul>
+<li>Seleniumを使ったテスト方法</li>
+<li>（cx_Freezeを使って）実行可能な形で配布する方法</li>
+<li>Electronと組み合わせて配布する方法</li>
+</ul>
+<p>です。</p>
+<p>このあたりが書き終わったらドキュメントを整備してPyPIに登録しようと思います。</p>
+<p>他に欲しい機能とかどんなものがあるでしょうか？
+パット思いつくのはJinja2やtornadoのテンプレートをパースする機能のサポートとかグラフ描画ライブラリのサポートですが。
+リクエストありましたらツイッターなどで教えていただけると嬉しいです。</p>
             </div>
             <!-- /.entry-content -->
     <hr />
@@ -301,6 +330,11 @@ tornadoの機能をそのまま使っています。
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html">
+                            WDOMのテーマ機能と起動オプションの紹介
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
                             GitLabでドキュメントのビルドとホスティング
                         </a>
@@ -318,11 +352,6 @@ tornadoの機能をそのまま使っています。
                     <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20160229/vim_pack.html">
                             Vimのパッケージ機能を試してみました
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">
-                            Python製の静的サイトジェネレータを色々試してみました
                         </a>
                     </li>
                 </ul>
@@ -361,8 +390,13 @@ tornadoの機能をそのまま使っています。
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
-                            gitlab mkdocs ci
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
+                            python wdom
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -381,8 +415,8 @@ tornadoの機能をそのまま使っています。
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
                         </a>
                     </li>
                 </ul>
