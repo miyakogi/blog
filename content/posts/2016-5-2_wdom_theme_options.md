@@ -9,7 +9,6 @@ Status: published
 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。
 
 基本的な機能は[前回の記事](http://h-miyako.hatenablog.com/entry/2016/04/06/185403)をご参照ください。
-昨日、前回の記事に`style`属性の記述やJavaScriptを実行する方法なども追加しています。
 
 <!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] --->
 
@@ -25,6 +24,7 @@ pip uinstall -y wdom && pip install git+http://github.com/miyakogi/wdom
 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。
 
 - [2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました
+- [2017/08/11 編集]: 最近のアップデートを反映
 
 <!--more-->
 
@@ -41,9 +41,9 @@ CSSフレームワークを使うことで見た目を自由に変更できま�
 ![bootstrap theme](https://raw.githubusercontent.com/wiki/miyakogi/wdom/images/Bootstrap3.png)
 
 ただし、完全には各フレームワークの違いを隠蔽できていない（特にフォーム部品やGrid関係）ので、最終的にはフレームワークを決めて微調整をする必要があると思います。
-また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません・・・
+また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません。
 
-数は今のところ20個ちょっとあります。
+テーマ数は今のところ20個ちょっとあります。
 他にもよさそうなフレームワークをご存じでしたらぜひ教えてください。
 ツイッターで [@miyakoDev](https://twitter.com/MiyakoDev) 宛にメンションしていただくか、[issue](https://github.com/miyakogi/wdom/issues)に登録していただければできるだけ対応します。
 もちろん既存のものを参考にモジュールを書いていただいてPRを送っていただくのも大歓迎です。
@@ -69,24 +69,15 @@ CSSフレームワークを使うことで見た目を自由に変更できま�
 例えば`bootstrap3`を使う場合、以下のようになります。
 
 ```python
-import asyncio
-from wdom.misc import install_asyncio
+from wdom import server
 from wdom.themes import bootstrap3
 from wdom.themes.bootstrap3 import Button
 from wdom.document import get_document
-from wdom.server import get_app, start_server, stop_server
 
-install_asyncio()
 doc = get_document()
 doc.register_theme(bootstrap3)
-
 doc.body.append(Button('Click!'))
-app = get_app(doc)
-server = start_server(app)
-try:
-    asyncio.get_event_loop().run_forever()
-except KeyboardInterrupt:
-    stop_server(server)
+server.start()
 ```
 
 `doc.register_theme(bootstrap3)`でdocumentにcssとjsを読み込む設定を行っています。
@@ -94,7 +85,7 @@ except KeyboardInterrupt:
 例えば、`doc.createElement('button')`とするとクラス属性に`.btn`が指定された`<button>`要素（`bootstrap3.Button`クラスのインスタンス）が作られるようになり、`doc.body.innerHTML = '<button is="primary-button">PrimaryButton</button>'`とすると`bootstrap3.PrimaryButton`クラスのインスタンスが作られるようになります。
 
 複数回`register_theme`を実行して複数のテーマを設定することも可能ですが、おそらく干渉するのでお薦めしません。
-既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。
+既存のフレームワーク＋自分で少しCSSを書いて追加、などは問題ないと思います。
 
 各テーマモジュール（`wdom.themes`以下のモジュール）は`wdom.tag`クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。
 
@@ -103,24 +94,15 @@ except KeyboardInterrupt:
 先ほどと違い、`wdom.themes.default`モジュールをimportして設定します。
 
 ```python
-import asyncio
-from wdom.misc import install_asyncio
+from wdom import server
 from wdom.themes import default
 from wdom.themes.default import Button
 from wdom.document import get_document
-from wdom.server import get_app, start_server, stop_server
 
-install_asyncio()
 doc = get_document()
 doc.register_theme(default)
-
 doc.body.append(Button('Click!'))
-app = get_app(doc)
-server = start_server(app)
-try:
-    asyncio.get_event_loop().run_forever()
-except KeyboardInterrupt:
-    stop_server(server)
+server.start()
 ```
 
 先ほどと同様に、`doc.register_theme(default)`することで読み込むファイルやHTMLから作られるクラスが設定されます。
@@ -144,7 +126,7 @@ except KeyboardInterrupt:
 # -*- coding: utf-8 -*-
 
 from wdom.tag import NewTagClass as NewTag
-from wdom.tag import *
+from wdom.themes import *
 
 name = 'Bootstrap3'
 project_url = 'http://getbootstrap.com/'
@@ -173,7 +155,7 @@ extended_classes = [
 ]
 ```
 
-まず、`from wdom.tag import *`で`wdom.tag`モジュールを全てimportします。
+まず、`from wdom.themes import *`で`wdom.themes`モジュールを全てimportします。
 `from wdom.tag import NewTagClass as NewTag`として名前を変えてimportしていますが、これには特に理由はありません。
 `NewTagClass`のままでも大丈夫です。
 （その場合は、以下の`NewTag`を`NewTagClass`に読み替えて下さい）
@@ -260,8 +242,6 @@ python your_app.py --autoreload
 * Electronと組み合わせて配布する方法
 
 です。
-
-このあたりが書き終わったらドキュメントを整備してPyPIに登録しようと思います。
 
 他に欲しい機能とかどんなものがあるでしょうか？
 パット思いつくのはJinja2やtornadoのテンプレートをパースする機能のサポートとかグラフ描画ライブラリのサポートですが。

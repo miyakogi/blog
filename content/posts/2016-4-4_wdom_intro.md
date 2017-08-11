@@ -16,7 +16,6 @@ WDOMのターゲットは、あくまでブラウザベースのデスクトッ�
 まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。
 
 もしバグを発見したら[GitHubのIssue](https://github.com/miyakogi/wdom/issues)に報告していただけると助かります。
-（できれば英語でお願いします（難しければタイトルだけでも））
 
 - 関連記事
     - [WDOMのテーマ機能と起動オプションの紹介 - Blank File](http://h-miyako.hatenablog.com/entry/2016/05/02/180543)
@@ -27,6 +26,9 @@ WDOMのターゲットは、あくまでブラウザベースのデスクトッ�
     - 要素の属性アクセスについて記述を追加
     - `style`属性について記述を追加
     - JavaScriptを実行する方法を追加
+
+- 2017/08/11:編集
+    - 最近のアップデートを反映
 
 ## 動機
 
@@ -78,9 +80,8 @@ PythonのGUIライブラリだと標準ライブラリのTkInterやPyQt、wxPyth
 
 ## 必要環境
 
-Python3.5.1以上（つまり現在の最新版のみ）の対応です。
-オプションのaiohttpを使わなければ3.4.4でも動くかもしれません。
-あと、おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。
+Python 3.5.2以上の対応です。
+おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。
 
 ブラウザ上に表示するのでブラウザが必要です。
 逆に言えば、Pythonが動作してブラウザがある環境であれば動作します。
@@ -92,8 +93,11 @@ Python3.5.1以上（つまり現在の最新版のみ）の対応です。
 
 普通にpipでインストールできます。
 
-PyPIに登録しようかと思ったのですが、まだ細かいバグがありそうだったので見送りました。
-近いうちに登録したいとは考えています。
+```
+pip install wdom
+```
+
+最新版はgithubから
 
 ```
 pip install git+http://github.com/miyakogi/wdom
@@ -109,32 +113,23 @@ pip install aiohttp
 
 aiohttpがインストールされていれば勝手にそっちを使うので、特別な設定は必要ありません。
 
+2017/08/11: aiohttpのサポートは取りやめました。
+
 ## 基本的な使い方
 
 とりあえず "Hello, WDOM" と表示するだけのプログラムは以下のようになります。
 
 ```python
-import asyncio
-from wdom.misc import install_asyncio # tornadoを使う時だけ必要です
-from wdom.server import get_app, start_server, stop_server
+from wdom import server
 from wdom.document import get_document
+from wdom.tag import H1
 
 if __name__ == '__main__':
-    install_asyncio() # tornadoを使う時だけ必要です
-
     document = get_document()  # documentオブジェクトを取得
     h1 = document.createElement('h1')  # 'h1' タグを作る
     h1.textContent = 'Hello, WDOM'  # 'h1' タグの文字列を指定
     document.body.appendChild(h1)  # 'body' タグに 'h1' タグを挿入
-
-    # 以下はテンプレだと思って下さい
-    app = get_app(document)
-    loop = asyncio.get_event_loop()
-    server = start_server(app, port=8888, loop=loop)  # webサーバのportを8888に指定
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        stop_server(server)
+    setver.start()  # webサーバ立ち上げ
 ```
 
 [サンプルコード](https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut1.py)
@@ -162,8 +157,7 @@ WDOMのUI部品はHTMLで表現することができ、実際にブラウザ上�
 
 この節では基本的なDOM操作について説明します。
 ブラウザ上のJavaScriptとほとんど同じなので、そちらをご存じの方は読み飛ばしてください。
-WDOMに実装済みの機能の一覧は[こちら](https://github.com/miyakogi/wdom/wiki/Features)をご参照下さい。
-正式なドキュメント（APIリファレンス）はまだ用意出来ていません、申し訳ありません。
+WDOMに実装済みの機能は[機能の一覧](https://github.com/miyakogi/wdom/wiki/Features)または後述する`Tag`クラスの[APIドキュメント](https://miyakogi.github.io/wdom/tag.html)に一覧があります。
 
 ### 要素の作成
 
@@ -266,7 +260,7 @@ for n in child_nodes:
 HTMLの`<a href="http://......./">リンク</a>`における`href=""`に相当する部分です。
 
 `getAttribute('属性名')`で取得、`setAttribute('属性名', '値')`で設定、`removeAttribute('属性名')`で削除できます。
-存在しない属性に対して`getAttribute`を行うと`None`が返されます。
+存在しない属性に対して`getAttribute`を行うと`None`または空文字列(`''`)、`False`など属性毎の規定に従った値が返されます。
 
 - 参考
     - [Attr MDN](https://developer.mozilla.org/en-US/docs/Web/API/Attr)
@@ -318,8 +312,6 @@ print(a.getAttribute('href')) # None
 
 - 参考
     - [HTMLElement](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement)
-        - WDOMではまだ全ての属性値が実装できてはいません
-        - 実際の実装状況は[こちら](https://github.com/miyakogi/wdom/wiki/Features)の`interface Element`以下をご参照ください
     - [element.id](https://developer.mozilla.org/ja/docs/Web/API/Element/id)
     - [element.style](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style)
     - [CSS Properties Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference)
@@ -365,7 +357,7 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
     h1.textContent = 'Hello, WDOM'
     input = document.createElement('input')
     def update(event):
-        h1.textContent = event.target.value
+        h1.textContent = event.currentTarget.value
     input.addEventListener('input', update)
     document.body.appendChild(input)
     document.body.appendChild(h1)
@@ -375,14 +367,14 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 
 文字列を入力すると "Hello, WDOM" と表示されていた部分が置き換えられるはずです。
 
-`update`関数内でアクセスしている`event.target`は、イベントが発火したオブジェクトへの参照（この場合はinput要素）です。
+`update`関数内でアクセスしている`event.currentTarget`は、イベントの対象となっているオブジェクトへの参照（この場合はinput要素）です。
 [input要素](https://developer.mozilla.org/ja/docs/Web/API/HTMLInputElement)は現在の入力値を`value`属性に保持しているので、それをh1要素の`textContent`に設定しています。
 
 `event`オブジェクトもDOMの[Event](https://developer.mozilla.org/ja/docs/Web/API/Event)オブジェクトと同じ構造をしているので、詳細は仕様を確認してください。
-（まだ[実装できていない部分](https://github.com/miyakogi/wdom/wiki/Features#events)も多いですが・・・特にイベントの伝播制御は全く手付かずです・・・）
+現在、`Event`、`MouseEvent`、`KeyboardEvent`、`DragEvent`が実装済みです。
 
 - 参考
-    - [event MDN](https://developer.mozilla.org/ja/docs/Web/API/Event)
+    - [Event MDN](https://developer.mozilla.org/ja/docs/Web/API/Event)
     - [Event reference MDN](https://developer.mozilla.org/en-US/docs/Web/Events)
 
 #### イベントリスナーの削除
@@ -415,7 +407,7 @@ class MyElement(Div):
         self.appendChild(self.h1)
 
     def update(self, event):
-        self.h1.textContent = event.target.value
+        self.h1.textContent = event.currentTarge.value
 
 if __name__ == '__main__':
     ... # 省略
@@ -488,7 +480,7 @@ print(MyElement().html_noid)
 
 `H1('Hello, WDOM', parent=self)`としている部分では、第一引数が新しく作られる要素の子要素に追加されます。
 文字列は自動的に[Textノード](https://developer.mozilla.org/ja/docs/Web/API/Text)（`wdom.node.Text`）に変換されます。
-`H1(H2(), P(), ...)`として複数の要素を追加することも可能です。
+`Div(H2(), P(), ...)`として複数の要素を追加することも可能です。
 
 ### 属性値を設定
 
@@ -541,7 +533,7 @@ print(MyButton().html_noid)
 
 [サンプルコード](https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut9.py)
 
-クラス変数の`class_`に指定したクラスが自動的に設定されます。
+クラス変数の`class_`に指定したクラス属性が自動的に設定されます。
 これは以下のように定義した場合とほぼ同じです。
 
 ```python
@@ -552,7 +544,7 @@ class MyButton(Button):
         ...
 ```
 
-違いは、インスタンスから削除できないという点と、クラス変数として定義したclass属性はsubclassに継承されるという点です。
+違いは、インスタンスから削除できないという点と、クラス変数として定義したクラス属性はサブクラスに継承されるという点です。
 
 前者は以下のような操作ができないことを意味します。
 
@@ -654,7 +646,7 @@ ul.innerHTML = '''
 
 [サンプルコード](https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut11.py)
 
-`innerHTML`は既存の子要素を全て削除して置き換えるのでご注意ください。
+`innerHTML`は既存の子要素を全て削除して置き換えます。
 
 各子要素にはリスト風オブジェクトの`ul.childNodes`経由でアクセス可能です。
 `ul.firstChild`や`ul.lastChild`などで最初・最後の子要素にもアクセスできます。
@@ -665,7 +657,7 @@ ul.innerHTML = '''
 このメソッドは既存の子要素は削除せず、`position`で指定した位置に要素を挿入します。
 詳細は[element.insertAdjacentHTML MDN](https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML)などをご参照ください。
 
-なお`outerHTML`は未実装です・・・
+なお`outerHTML`は未実装です。
 
 ## スタイルシートの適用
 
@@ -696,7 +688,6 @@ document.body.appendChild(Button(class_='btn'))
 [サンプルコード](https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut12.py)
 
 CSSとJSは頻繁に使われると思うので、以下のショートカットも用意してあります。
-（メソッド名は今後変更される可能性があります）
 
 ```python
 document.add_cssfile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
@@ -887,10 +878,3 @@ tagは拡張したいタグ（今回は継承元の`Button`クラスで定義さ
 説明が必要な独自機能を中心に書いたので、あまりDOMで規定されている機能については触れませんでしたが、基本的な機能は実装されています。
 DOM関係の実装状況は[こちら](https://github.com/miyakogi/wdom/wiki/Features)をご参照ください。
 他にも開発に便利な機能が少しあったりするのですが、それは別記事で紹介したいと思います。
-
-当面はCustom Elementの実装と正式なドキュメントの整備をすすめていきたいと考えています。
-あと、個別のHTML要素のクラスも`HTML〇〇Element`の形で（主要なものは）実装したいですね。
-イベント関係も、ドラッグ＆ドロップとかはまだ実装できていないので実装しないと・・・
-
-もちろんバグが見つかればできるだけ早く修正します。
-もう少し落ち着いたらPyPIに登録します。
