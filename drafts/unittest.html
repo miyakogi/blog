@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>CI - Blank File</title>
+    <title>Pythonのテストは標準ライブラリのunittestで十分かもしれない - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,16 +9,21 @@
 
 
 
+<link rel="canonical" href="/drafts/unittest.html">
 
-    <meta name="author" content="miyakogi" />
-    <meta name="keywords" content="CI" />
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="python test" />
+        <meta name="description" content="今までPythonのテストはpytestで書いていたのですが、最近になって標準ライブラリのunittestで十分な気がしてきたのでまとめておきます。 注意：あくまでテストケースの記述の話で、テストの実行にはcoverage.pyやtoxなどのツールを使っています。" />
 
-    <!-- Open Graph tags -->
         <meta property="og:site_name" content="Blank File" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Blank File"/>
-        <meta property="og:url" content=""/>
-        <meta property="og:description" content="Blank File"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Pythonのテストは標準ライブラリのunittestで十分かもしれない"/>
+        <meta property="og:url" content="/drafts/unittest.html"/>
+        <meta property="og:description" content="今までPythonのテストはpytestで書いていたのですが、最近になって標準ライブラリのunittestで十分な気がしてきたのでまとめておきます。 注意：あくまでテストケースの記述の話で、テストの実行にはcoverage.pyやtoxなどのツールを使っています。"/>
+        <meta property="article:published_time" content="2016-05-14" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="python test" />
+            <meta property="article:author" content="miyakogi" />
 
 
     <!-- Bootstrap -->
@@ -62,17 +67,41 @@ Blank File            </a>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-            <article>
-                <h2><a href="/20160206/ci1.html">カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</a></h2>
-                <div class="summary"><p>※ 注意：この記事には主観とグチが含まれています。</p>
-<p>コードのカバレッジ取得サービスを調べてみました。<a href="https://coveralls.io/">Coveralls.io</a>と<a href="https://codecov.io/">Codecov.io</a>の比較です。</p>
-<p>↓こんな感じのバッジがREADMEに表示されるやつです。</p>
-<p><a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"><img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master"></a></p>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/drafts/unittest.html"
+                       rel="bookmark"
+                       title="Permalink to Pythonのテストは標準ライブラリのunittestで十分かもしれない">
+                        Pythonのテストは標準ライブラリのunittestで十分かもしれない
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-05-14T08:09:00+09:00"> Sat 14 May 2016</time>
+    </span>
 
-                    <a class="btn btn-default btn-xs" href="/20160206/ci1.html">more ...</a>
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/python-test.html">python test</a>
+    
+</footer><!-- /.post-info -->                    </div>
                 </div>
-            </article>
-            <hr/>
+                <p>今までPythonのテストはpytestで書いていたのですが、最近になって標準ライブラリのunittestで十分な気がしてきたのでまとめておきます。</p>
+<p>注意：あくまでテストケースの記述の話で、テストの実行にはcoverage.pyやtoxなどのツールを使っています。</p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -90,8 +119,28 @@ Blank File            </a>
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="/20160206/ci1.html">
-                            カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)
+                        <a href="/20170731/m2r.html">
+                            MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/20160502/wdom_theme_options.html">
+                            WDOMのテーマ機能と起動オプションの紹介
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/20160429/gitlab-pages-ci.html">
+                            GitLabでドキュメントのビルドとホスティング
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/20160406/wdom_intro.html">
+                            PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/20160308/vimpack_py.html">
+                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
                         </a>
                     </li>
                 </ul>
@@ -202,7 +251,7 @@ Blank File            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2016 miyakogi
+         <div class="col-xs-10">&copy; 2017 miyakogi
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
