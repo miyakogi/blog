@@ -186,13 +186,14 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
 <p>ちょっと試すのにわざわざSphinxのプロジェクトを用意するのも面倒かと思ったので<a href="https://github.com/miyakogi/m2rdemo">簡単なプレビューエディタ</a>を作りました。
 こちらはPython3.5以上のみの対応です。</p>
 <h3>インストール</h3>
-<div class="highlight"><pre><span></span>pip install get+https://github.com/miyakogi/m2rdemo
+<div class="highlight"><pre><span></span>pip3 install get+https://github.com/miyakogi/m2rdemo
 </pre></div>
 
 
+<p>（<code>pip3</code>は<code>python3 -m pip</code>でも）</p>
 <h3>実行</h3>
 <p>以下のコマンドを実行するとブラウザのウィンドウが開きます。</p>
-<div class="highlight"><pre><span></span>python -m m2rdemo
+<div class="highlight"><pre><span></span>python3 -m m2rdemo
 </pre></div>
 
 
@@ -206,6 +207,24 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
 こちらもよろしくお願いします。</p>
 <p>[http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite]</p>
 <p>[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]</p>
+<h2>追記（2017/08/11 22:00）</h2>
+<p>FedoraとArchLinuxのリポジトリに入っていました（ブログ公開してから気づきました……）。</p>
+<p>Fedoraを使ってる方は以下のコマンドでpython3版がインストールできます。</p>
+<div class="highlight"><pre><span></span>sudo dnf install python3-m2r
+</pre></div>
+
+
+<p>ArchLinuxは</p>
+<div class="highlight"><pre><span></span>sudo pacman -S m2r
+</pre></div>
+
+
+<p>でインストールできました。</p>
+<p>また、Fedoraでは<code>python-m2r</code>で、ArchLinuxでは<code>python2-m2r</code>でそれぞれpython2版がインストールできるようです。
+Python2版をインストールした場合は<code>m2r</code>コマンドは設定されないようなので、コマンドラインから使う時は<code>python2 -m m2r [ファイル名]</code>とする必要があるようです。</p>
+<p>さっきから「〜ようです・思います」連発ですが、本当に知らなかったのでどうなっているのかよくわかっていません……。
+書いた人が知らないうちに登録されるものなんですね……。</p>
+<p>[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]</p>
             </div>
             <!-- /.entry-content -->
     <hr />
@@ -285,13 +304,48 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
             <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
                         <a href="https://miyakogi.github.io/blog/tag/vim.html">
                             vim
                         </a>
                     </li>
-                    <li class="list-group-item tag-1">
-                        <a href="https://miyakogi.github.io/blog/tag/python.html">
-                            python
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
+                            rst
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/markdown.html">
+                            markdown
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -302,41 +356,6 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
                             python wdom
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
-                            rst
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
-                            gitlab mkdocs ci
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
-                            pelican
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/markdown.html">
-                            markdown
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
-                            wdom
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
-                            CI
                         </a>
                     </li>
                 </ul>

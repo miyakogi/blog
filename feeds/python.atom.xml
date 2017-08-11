@@ -79,13 +79,14 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
 &lt;p&gt;ちょっと試すのにわざわざSphinxのプロジェクトを用意するのも面倒かと思ったので&lt;a href="https://github.com/miyakogi/m2rdemo"&gt;簡単なプレビューエディタ&lt;/a&gt;を作りました。
 こちらはPython3.5以上のみの対応です。&lt;/p&gt;
 &lt;h3&gt;インストール&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install get+https://github.com/miyakogi/m2rdemo
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip3 install get+https://github.com/miyakogi/m2rdemo
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;（&lt;code&gt;pip3&lt;/code&gt;は&lt;code&gt;python3 -m pip&lt;/code&gt;でも）&lt;/p&gt;
 &lt;h3&gt;実行&lt;/h3&gt;
 &lt;p&gt;以下のコマンドを実行するとブラウザのウィンドウが開きます。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python -m m2rdemo
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 -m m2rdemo
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -98,7 +99,25 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
 &lt;p&gt;ちなみにこのデモは&lt;a href="https://github.com/miyakogi/wdom"&gt;WDOM&lt;/a&gt;を使って作りました。
 こちらもよろしくお願いします。&lt;/p&gt;
 &lt;p&gt;[http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite]&lt;/p&gt;
-&lt;p&gt;[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]&lt;/p&gt;</content><category term="python"></category><category term="sphinx"></category><category term="markdown"></category><category term="rst"></category></entry><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><published>2016-05-02T17:00:00+09:00</published><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:/blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
+&lt;p&gt;[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]&lt;/p&gt;
+&lt;h2&gt;追記（2017/08/11 22:00）&lt;/h2&gt;
+&lt;p&gt;FedoraとArchLinuxのリポジトリに入っていました（ブログ公開してから気づきました……）。&lt;/p&gt;
+&lt;p&gt;Fedoraを使ってる方は以下のコマンドでpython3版がインストールできます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo dnf install python3-m2r
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ArchLinuxは&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S m2r
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;でインストールできました。&lt;/p&gt;
+&lt;p&gt;また、Fedoraでは&lt;code&gt;python-m2r&lt;/code&gt;で、ArchLinuxでは&lt;code&gt;python2-m2r&lt;/code&gt;でそれぞれpython2版がインストールできるようです。
+Python2版をインストールした場合は&lt;code&gt;m2r&lt;/code&gt;コマンドは設定されないようなので、コマンドラインから使う時は&lt;code&gt;python2 -m m2r [ファイル名]&lt;/code&gt;とする必要があるようです。&lt;/p&gt;
+&lt;p&gt;さっきから「〜ようです・思います」連発ですが、本当に知らなかったのでどうなっているのかよくわかっていません……。
+書いた人が知らないうちに登録されるものなんですね……。&lt;/p&gt;
+&lt;p&gt;[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]&lt;/p&gt;</content><category term="python"></category><category term="sphinx"></category><category term="markdown"></category><category term="rst"></category></entry><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><published>2016-05-02T17:00:00+09:00</published><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:/blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。&lt;/p&gt;
 &lt;p&gt;基本的な機能は&lt;a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403"&gt;前回の記事&lt;/a&gt;をご参照ください。&lt;/p&gt;
 &lt;!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] ---&gt;
