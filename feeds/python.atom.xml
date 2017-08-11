@@ -1,8 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-05-02T17:00:00+09:00</updated><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File - Python</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2017-07-31T23:11:00+09:00</updated><entry><title>MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）</title><link href="https://miyakogi.github.io/blog/20170731/m2r.html" rel="alternate"></link><published>2017-07-31T23:11:00+09:00</published><updated>2017-07-31T23:11:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-07-31:/blog/20170731/m2r.html</id><summary type="html">&lt;p&gt;MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる&lt;a href="https://github.com/miyakogi/m2r"&gt;M2R&lt;/a&gt;というツールを (1年ほど前に作っていたのですが今さら) 紹介します。&lt;/p&gt;
+&lt;p&gt;rstで出力するのでSphinx拡張としても使えます。
+Markdownのテーブルや脚注にも対応しています。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる&lt;a href="https://github.com/miyakogi/m2r"&gt;M2R&lt;/a&gt;というツールを (1年ほど前に作っていたのですが今さら) 紹介します。&lt;/p&gt;
+&lt;p&gt;rstで出力するのでSphinx拡張としても使えます。
+Markdownのテーブルや脚注にも対応しています。&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;できること&lt;/h2&gt;
+&lt;p&gt;以下のような入力文字列が&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# M2R Preview
+
+This is a m2r demo.
+
+You can **directly** write `Markdown`, :code:`reStructuredText`.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;M2Rを通すと次のようなrst形式になって&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gh"&gt;M2R Preview&lt;/span&gt;
+&lt;span class="gh"&gt;===========&lt;/span&gt;
+
+This is a m2r demo.
+
+You can &lt;span class="gs"&gt;**directly**&lt;/span&gt; write &lt;span class="s"&gt;``Markdown``\ , :code:`reStructuredText`.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(docutilsを通して) HTMLで出力するとこうなります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;document&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;m2r-preview&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;title&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;M2R Preview&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;This is a m2r demo.&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;You can &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;directly&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; write &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;docutils literal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Markdown&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;, &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;code&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;reStructuredText&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;code&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;.&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="変換後のHTMLのサンプル" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/html.png"&gt;&lt;/p&gt;
+&lt;p&gt;M2Rのドキュメントの&lt;a href="https://miyakogi.github.io/m2r/example.html"&gt;このページ&lt;/a&gt;はM2Rで&lt;a href="https://raw.githubusercontent.com/miyakogi/m2r/master/docs/example.md"&gt;このソース&lt;/a&gt;から出力したものです。&lt;/p&gt;
+&lt;h2&gt;動機&lt;/h2&gt;
+&lt;p&gt;SphinxでMarkdownを使いたくて作りました。&lt;/p&gt;
+&lt;p&gt;すでに&lt;a href="https://recommonmark.readthedocs.io/en/latest/"&gt;recommonmark&lt;/a&gt;というプロジェクトもありますが、実際にSphinxでドキュメントを書いていると脚注だったり参照だったり&lt;code&gt;.. note::&lt;/code&gt;とかのディレクティブだったり、何かとrstを書きたい時も出てきます。
+recommonmarkも一応&lt;code&gt;eval_rst&lt;/code&gt;などでrstを埋め込むこともできるのですが、ブロックでしか記述できなかったり単純に面倒だったり地味に不便でした。
+そこで、rstのディレクティブ (&lt;code&gt;.. note::&lt;/code&gt; とか) 程度なら人間が見て「ここはrstで書きたいんだな」と判断できるので機械的になんとかなるだろう、ということでrstもそのまま書けるように作ってみました。&lt;/p&gt;
+&lt;p&gt;正直、作る前は構文的にどこかで破綻するだろうと思っていたのですが案外うまく変換できているようです。
+とはいえ完璧に確認できているというわけではないので、使用する際はご注意ください。
+もし試していただいておかしいところがあったらお知らせいただけると幸いです。&lt;/p&gt;
+&lt;h2&gt;使い方&lt;/h2&gt;
+&lt;p&gt;対応するpythonのバージョンは2.7と3.4以上です。&lt;/p&gt;
+&lt;p&gt;インストールは普通にpipで以下のコマンドから。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install m2r
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;コマンドラインでの使い方&lt;/h3&gt;
+&lt;p&gt;以下のコマンドでMarkdown（とrstの混ざった）ファイルをrst形式に変換して拡張子&lt;code&gt;.rst&lt;/code&gt;のファイルとして保存します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;m2r input_file.md
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Sphinx拡張としての使い方&lt;/h3&gt;
+&lt;p&gt;M2Rをインストールした上でSphinxプロジェクトの&lt;code&gt;conf.py&lt;/code&gt;を以下のように修正してください。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;extensions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;m2r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c1"&gt;# source_suffix = &amp;#39;.rst&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;source_suffix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.rst&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;.md&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これで拡張子&lt;code&gt;.md&lt;/code&gt;のファイルはM2Rがrstに変換してからSphinxで処理されるようになります。&lt;/p&gt;
+&lt;h4&gt;Markdownファイルのinclude&lt;/h4&gt;
+&lt;p&gt;Sphinxでは &lt;code&gt;.. include:: ファイル名&lt;/code&gt; として他のrstファイルを読み込むことができます。
+Markdown形式のファイルを読み込んでも（今のところ処理の順番等の都合で）M2Rの変換が行われないので、Markdownファイルをインクルードする時は専用のディレクティブ &lt;code&gt;.. mdinclude:: ファイル名&lt;/code&gt; を使ってください。&lt;/p&gt;
+&lt;h2&gt;デモ&lt;/h2&gt;
+&lt;p&gt;ちょっと試すのにわざわざSphinxのプロジェクトを用意するのも面倒かと思ったので&lt;a href="https://github.com/miyakogi/m2rdemo"&gt;簡単なプレビューエディタ&lt;/a&gt;を作りました。
+こちらはPython3.5以上のみの対応です。&lt;/p&gt;
+&lt;h3&gt;インストール&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install get+https://github.com/miyakogi/m2rdemo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;実行&lt;/h3&gt;
+&lt;p&gt;以下のコマンドを実行するとブラウザのウィンドウが開きます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python -m m2rdemo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="起動直後の画面" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/preview.png"&gt;&lt;/p&gt;
+&lt;p&gt;左半分のテキストエリアを編集すると右のプレビューがリアルタイムに更新されます。
+初期状態ではHTMLまで変換した後の表示になっていますが、中間状態のrstや生HTMLの出力も右上のセレクタで切り替えると確認できます。&lt;/p&gt;
+&lt;p&gt;デモだと&lt;code&gt;#&lt;/code&gt;と&lt;code&gt;##&lt;/code&gt;が両方&lt;code&gt;H1&lt;/code&gt;タグで出力されて以下の見出しレベルもひとつずつずれたものになってしまう場合があります。
+これはM2Rのバグではなく、docutilsがrstからHTMLに変換する時にこのような処理をしているようです。
+中間のrstを確認していただければわかりますが、&lt;code&gt;#&lt;/code&gt;は次行の&lt;code&gt;====&lt;/code&gt;に、&lt;code&gt;##&lt;/code&gt;は&lt;code&gt;----&lt;/code&gt;に変換されていますので、Sphinxで使う場合には問題なく使えると思います。&lt;/p&gt;
+&lt;p&gt;ちなみにこのデモは&lt;a href="https://github.com/miyakogi/wdom"&gt;WDOM&lt;/a&gt;を使って作りました。
+こちらもよろしくお願いします。&lt;/p&gt;
+&lt;p&gt;[http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite]&lt;/p&gt;
+&lt;p&gt;[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]&lt;/p&gt;</content><category term="python"></category><category term="sphinx"></category><category term="markdown"></category><category term="rst"></category></entry><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><published>2016-05-02T17:00:00+09:00</published><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:/blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。&lt;/p&gt;
-&lt;p&gt;基本的な機能は&lt;a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403"&gt;前回の記事&lt;/a&gt;をご参照ください。
-昨日、前回の記事に&lt;code&gt;style&lt;/code&gt;属性の記述やJavaScriptを実行する方法なども追加しています。&lt;/p&gt;
+&lt;p&gt;基本的な機能は&lt;a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403"&gt;前回の記事&lt;/a&gt;をご参照ください。&lt;/p&gt;
 &lt;!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] ---&gt;
 
 &lt;p&gt;WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。
@@ -16,6 +114,25 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;[2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました&lt;/li&gt;
+&lt;li&gt;[2017/08/11 編集]: 最近のアップデートを反映&lt;/li&gt;
+&lt;/ul&gt;
+</summary><content type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
+CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。&lt;/p&gt;
+&lt;p&gt;基本的な機能は&lt;a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403"&gt;前回の記事&lt;/a&gt;をご参照ください。&lt;/p&gt;
+&lt;!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] ---&gt;
+
+&lt;p&gt;WDOMに色々更新を行ったので、ぜひ最新のバージョンでお試し下さい。
+まだPyPIに登録してない＆バージョン番号をきちんと管理していないので、&lt;code&gt;pip install -U&lt;/code&gt;だと更新されません。
+お手数ですが一旦アンインストールしてインストールし直してください。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip uinstall -y wdom &amp;amp;&amp;amp; pip install git+http://github.com/miyakogi/wdom
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;前回の記事を見なおしてみると、色々夢は語っていましたが、ほとんど実現できていないですね・・・悲しい・・・
+前回はテキストオンリーで寂しい感じだったので、今回は視覚に訴える感じを目指して書きます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[2016/05/03 追記]: デフォルトのテーマのimport方法を変更しました&lt;/li&gt;
+&lt;li&gt;[2017/08/11 編集]: 最近のアップデートを反映&lt;/li&gt;
 &lt;/ul&gt;
 &lt;!--more--&gt;
 
@@ -26,10 +143,10 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 （スクリーンショットは&lt;a href="http://selenium-python.readthedocs.io/"&gt;その道のプロ&lt;/a&gt;にお願いして一枚一枚心を込めて撮ってもらいました）&lt;/p&gt;
 &lt;p&gt;スクリーンショットは&lt;a href="https://github.com/miyakogi/wdom/blob/dev/wdom/examples/theming.py"&gt;このスクリプト&lt;/a&gt;で要素を色々並べています。
 以下の画像はBootstrapの場合です。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="bootstrap theme" src="https://raw.githubusercontent.com/wiki/miyakogi/wdom/images/Bootstrap3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="bootstrap theme" src="https://raw.githubusercontent.com/wiki/miyakogi/wdom/images/Bootstrap3.png"&gt;&lt;/p&gt;
 &lt;p&gt;ただし、完全には各フレームワークの違いを隠蔽できていない（特にフォーム部品やGrid関係）ので、最終的にはフレームワークを決めて微調整をする必要があると思います。
-また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません・・・&lt;/p&gt;
-&lt;p&gt;数は今のところ20個ちょっとあります。
+また、まだ複雑なコンポーネント（タブ切り替えなど）は実装できていません。&lt;/p&gt;
+&lt;p&gt;テーマ数は今のところ20個ちょっとあります。
 他にもよさそうなフレームワークをご存じでしたらぜひ教えてください。
 ツイッターで &lt;a href="https://twitter.com/MiyakoDev"&gt;@miyakoDev&lt;/a&gt; 宛にメンションしていただくか、&lt;a href="https://github.com/miyakogi/wdom/issues"&gt;issue&lt;/a&gt;に登録していただければできるだけ対応します。
 もちろん既存のものを参考にモジュールを書いていただいてPRを送っていただくのも大歓迎です。&lt;/p&gt;
@@ -46,24 +163,15 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 そのような場合は、必要なファイルをローカルの適当なディレクトリに保存して、&lt;code&gt;add_static_path&lt;/code&gt;でパスを追加したうえで必要なファイルを&lt;code&gt;document.add_css_file&lt;/code&gt;などで読み込ませてください。&lt;/p&gt;
 &lt;h4&gt;モジュールからimport&lt;/h4&gt;
 &lt;p&gt;例えば&lt;code&gt;bootstrap3&lt;/code&gt;を使う場合、以下のようになります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bootstrap3&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes.bootstrap3&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.document&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.server&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_server&lt;/span&gt;
 
-&lt;span class="n"&gt;install_asyncio&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bootstrap3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
 &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Click!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_event_loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_forever&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;stop_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -71,28 +179,19 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 同時に、HTMLをパースした時に作られるクラスが設定されます。
 例えば、&lt;code&gt;doc.createElement('button')&lt;/code&gt;とするとクラス属性に&lt;code&gt;.btn&lt;/code&gt;が指定された&lt;code&gt;&amp;lt;button&amp;gt;&lt;/code&gt;要素（&lt;code&gt;bootstrap3.Button&lt;/code&gt;クラスのインスタンス）が作られるようになり、&lt;code&gt;doc.body.innerHTML = '&amp;lt;button is="primary-button"&amp;gt;PrimaryButton&amp;lt;/button&amp;gt;'&lt;/code&gt;とすると&lt;code&gt;bootstrap3.PrimaryButton&lt;/code&gt;クラスのインスタンスが作られるようになります。&lt;/p&gt;
 &lt;p&gt;複数回&lt;code&gt;register_theme&lt;/code&gt;を実行して複数のテーマを設定することも可能ですが、おそらく干渉するのでお薦めしません。
-既存のフレームワーク＋自分で少しCSSを書いて追加、などは可能です。&lt;/p&gt;
+既存のフレームワーク＋自分で少しCSSを書いて追加、などは問題ないと思います。&lt;/p&gt;
 &lt;p&gt;各テーマモジュール（&lt;code&gt;wdom.themes&lt;/code&gt;以下のモジュール）は&lt;code&gt;wdom.tag&lt;/code&gt;クラスをimportしているので、基本的なHTMLタグに相当するクラスは全て利用可能です。&lt;/p&gt;
 &lt;h4&gt;起動オプションで指定&lt;/h4&gt;
 &lt;p&gt;先ほどと違い、&lt;code&gt;wdom.themes.default&lt;/code&gt;モジュールをimportして設定します。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes.default&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.document&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.server&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_server&lt;/span&gt;
 
-&lt;span class="n"&gt;install_asyncio&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
 &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Click!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_event_loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_forever&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;stop_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -101,7 +200,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 &lt;code&gt;--theme&lt;/code&gt;オプションが指定されなかったり、無効な値が指定された時はブラウザのデフォルトの表示になります。&lt;/p&gt;
 &lt;p&gt;以下の動画は上記のコードを&lt;code&gt;theme.py&lt;/code&gt;として保存して、&lt;code&gt;--theme&lt;/code&gt;オプションを色々変えているところです。
 （端が切れているのでわかりにくいですが、実行時に&lt;code&gt;--open-browser&lt;/code&gt;を指定して左側のブラウザに新しくタブを開いています）&lt;/p&gt;
-&lt;p&gt;&lt;img alt="themes example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/themes_demo.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="themes example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/themes_demo.gif"&gt;&lt;/p&gt;
 &lt;h3&gt;テーマの作り方&lt;/h3&gt;
 &lt;p&gt;お気に入りのフレームワークがなかったり、既存のものに修正を加えたい場合などは作ることもできます。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom/blob/dev/wdom/themes/bootstrap3.py"&gt;Bootstrap&lt;/a&gt;の場合を例に簡単に作り方を紹介します。&lt;/p&gt;
@@ -109,7 +208,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 &lt;span class="c1"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
 
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;NewTagClass&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;NewTag&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.themes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 
 &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Bootstrap3&amp;#39;&lt;/span&gt;
 &lt;span class="n"&gt;project_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://getbootstrap.com/&amp;#39;&lt;/span&gt;
@@ -139,7 +238,7 @@ CSSフレームワークを使ったテーマ機能と起動オプションに�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;まず、&lt;code&gt;from wdom.tag import *&lt;/code&gt;で&lt;code&gt;wdom.tag&lt;/code&gt;モジュールを全てimportします。
+&lt;p&gt;まず、&lt;code&gt;from wdom.themes import *&lt;/code&gt;で&lt;code&gt;wdom.themes&lt;/code&gt;モジュールを全てimportします。
 &lt;code&gt;from wdom.tag import NewTagClass as NewTag&lt;/code&gt;として名前を変えてimportしていますが、これには特に理由はありません。
 &lt;code&gt;NewTagClass&lt;/code&gt;のままでも大丈夫です。
 （その場合は、以下の&lt;code&gt;NewTag&lt;/code&gt;を&lt;code&gt;NewTagClass&lt;/code&gt;に読み替えて下さい）&lt;/p&gt;
@@ -185,7 +284,7 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 これはtornadoの機能をそのまま使っています。
 むしろこの機能のためにtornadoが必須ライブラリになっています。&lt;/p&gt;
 &lt;p&gt;実際に上記の3つのオプションを使ってファイルに変更を加えている様子です。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="autoreload example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/autoreload.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="autoreload example" src="https://raw.githubusercontent.com/miyakogi/ss/master/wdom/autoreload.gif"&gt;&lt;/p&gt;
 &lt;h3&gt;デバッグ&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;--debug&lt;/code&gt;オプションを指定することで、自動リロードが有効になりログレベルが&lt;code&gt;debug&lt;/code&gt;に指定されます。
 &lt;code&gt;--autoreload --logging debug&lt;/code&gt;と指定した場合と同じです。&lt;/p&gt;
@@ -199,18 +298,30 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 &lt;li&gt;Electronと組み合わせて配布する方法&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;です。&lt;/p&gt;
-&lt;p&gt;このあたりが書き終わったらドキュメントを整備してPyPIに登録しようと思います。&lt;/p&gt;
 &lt;p&gt;他に欲しい機能とかどんなものがあるでしょうか？
 パット思いつくのはJinja2やtornadoのテンプレートをパースする機能のサポートとかグラフ描画ライブラリのサポートですが。
-リクエストありましたらツイッターなどで教えていただけると嬉しいです。&lt;/p&gt;</summary><category term="python wdom"></category></entry><entry><title>PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介</title><link href="https://miyakogi.github.io/blog/20160406/wdom_intro.html" rel="alternate"></link><updated>2016-04-06T20:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-06:blog/20160406/wdom_intro.html</id><summary type="html">&lt;p&gt;WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。
+リクエストありましたらツイッターなどで教えていただけると嬉しいです。&lt;/p&gt;</content><category term="python wdom"></category></entry><entry><title>PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介</title><link href="https://miyakogi.github.io/blog/20160406/wdom_intro.html" rel="alternate"></link><published>2016-04-06T20:00:00+09:00</published><updated>2016-04-06T20:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-06:/blog/20160406/wdom_intro.html</id><summary type="html">&lt;p&gt;WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。
 ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom"&gt;miyakogi/wdom: DOM manipulation library for python&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。
 ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。
 ちなみに、拙作&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;LiveMark.vim&lt;/a&gt;もこれを使っています。&lt;/p&gt;
 &lt;p&gt;まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。&lt;/p&gt;
-&lt;p&gt;もしバグを発見したら&lt;a href="https://github.com/miyakogi/wdom/issues"&gt;GitHubのIssue&lt;/a&gt;に報告していただけると助かります。
-（できれば英語でお願いします（難しければタイトルだけでも））&lt;/p&gt;
+&lt;p&gt;もしバグを発見したら&lt;a href="https://github.com/miyakogi/wdom/issues"&gt;GitHubのIssue&lt;/a&gt;に報告していただけると助かります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;関連記事&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://h-miyako.hatenablog.com/entry/2016/05/02/180543"&gt;WDOMのテーマ機能と起動オプションの紹介 - Blank File&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</summary><content type="html">&lt;p&gt;WDOMというPythonでブラウザベースのGUIアプリを作るためのライブラリを作っています。
+ちょっとしたGUIツールを作ろうと思った時に満足できるものがなかったので作りました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom"&gt;miyakogi/wdom: DOM manipulation library for python&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;WDOMのターゲットは、あくまでブラウザベースのデスクトップGUIアプリです。
+ローカルにWebサーバを立ち上げてブラウザ上に表示しますが、Webフレームワークではありません。
+ちなみに、拙作&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;LiveMark.vim&lt;/a&gt;もこれを使っています。&lt;/p&gt;
+&lt;p&gt;まだ開発中なので細かいバグはあると思いますし、後方互換性を崩すような変更が入る可能性もありますが、そろそろ試してもらえるくらいにはなってきたので使い方を中心に紹介します。&lt;/p&gt;
+&lt;p&gt;もしバグを発見したら&lt;a href="https://github.com/miyakogi/wdom/issues"&gt;GitHubのIssue&lt;/a&gt;に報告していただけると助かります。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;関連記事&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://h-miyako.hatenablog.com/entry/2016/05/02/180543"&gt;WDOMのテーマ機能と起動オプションの紹介 - Blank File&lt;/a&gt;&lt;/li&gt;
@@ -220,10 +331,18 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 &lt;!--more--&gt;
 
 &lt;ul&gt;
-&lt;li&gt;2016/05/01:追記&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;2016/05/01:追記&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;要素の属性アクセスについて記述を追加&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;style&lt;/code&gt;属性について記述を追加&lt;/li&gt;
 &lt;li&gt;JavaScriptを実行する方法を追加&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2017/08/11:編集&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最近のアップデートを反映&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -298,9 +417,8 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 &lt;/ul&gt;
 &lt;p&gt;類似のプロジェクトでは&lt;a href="https://github.com/zoofIO/flexx"&gt;flexx&lt;/a&gt;や&lt;a href="http://www.reahl.org/"&gt;Reahl&lt;/a&gt;などがありましたが、これらはそれなりに学習コストが高そう＆Webフレームワークっぽかったので見送りました。&lt;/p&gt;
 &lt;h2&gt;必要環境&lt;/h2&gt;
-&lt;p&gt;Python3.5.1以上（つまり現在の最新版のみ）の対応です。
-オプションのaiohttpを使わなければ3.4.4でも動くかもしれません。
-あと、おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。&lt;/p&gt;
+&lt;p&gt;Python 3.5.2以上の対応です。
+おそらく大丈夫だとは思いますが、Windows環境ではテストしていません。&lt;/p&gt;
 &lt;p&gt;ブラウザ上に表示するのでブラウザが必要です。
 逆に言えば、Pythonが動作してブラウザがある環境であれば動作します。
 当然ですがIEはサポート対象外です。
@@ -308,8 +426,11 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 ブラウザはElectronやPyQtのブラウザなどでも大丈夫です（たぶん）。&lt;/p&gt;
 &lt;h2&gt;インストール&lt;/h2&gt;
 &lt;p&gt;普通にpipでインストールできます。&lt;/p&gt;
-&lt;p&gt;PyPIに登録しようかと思ったのですが、まだ細かいバグがありそうだったので見送りました。
-近いうちに登録したいとは考えています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install wdom
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;最新版はgithubから&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install git+http://github.com/miyakogi/wdom
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -322,29 +443,19 @@ Pythonで&lt;code&gt;import webbrowser; print(webbrowser._borwsers)&lt;/code&gt;
 
 
 &lt;p&gt;aiohttpがインストールされていれば勝手にそっちを使うので、特別な設定は必要ありません。&lt;/p&gt;
+&lt;p&gt;2017/08/11: aiohttpのサポートは取りやめました。&lt;/p&gt;
 &lt;h2&gt;基本的な使い方&lt;/h2&gt;
 &lt;p&gt;とりあえず "Hello, WDOM" と表示するだけのプログラムは以下のようになります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.misc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;install_asyncio&lt;/span&gt; &lt;span class="c1"&gt;# tornadoを使う時だけ必要です&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.server&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_server&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.document&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;H1&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;install_asyncio&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;# tornadoを使う時だけ必要です&lt;/span&gt;
-
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# documentオブジェクトを取得&lt;/span&gt;
     &lt;span class="n"&gt;h1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;h1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# &amp;#39;h1&amp;#39; タグを作る&lt;/span&gt;
     &lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello, WDOM&amp;#39;&lt;/span&gt;  &lt;span class="c1"&gt;# &amp;#39;h1&amp;#39; タグの文字列を指定&lt;/span&gt;
     &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# &amp;#39;body&amp;#39; タグに &amp;#39;h1&amp;#39; タグを挿入&lt;/span&gt;
-
-    &lt;span class="c1"&gt;# 以下はテンプレだと思って下さい&lt;/span&gt;
-    &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_event_loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;start_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# webサーバのportを8888に指定&lt;/span&gt;
-    &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_forever&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="n"&gt;stop_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;setver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# webサーバ立ち上げ&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -365,8 +476,7 @@ WDOMのUI部品はHTMLで表現することができ、実際にブラウザ上�
 &lt;p&gt;これらの要素はDOMで規定されている各種メソッドも備えているので、JavaScriptでDOMを扱う時と同じように要素の追加・削除などを行うことができます。&lt;/p&gt;
 &lt;p&gt;この節では基本的なDOM操作について説明します。
 ブラウザ上のJavaScriptとほとんど同じなので、そちらをご存じの方は読み飛ばしてください。
-WDOMに実装済みの機能の一覧は&lt;a href="https://github.com/miyakogi/wdom/wiki/Features"&gt;こちら&lt;/a&gt;をご参照下さい。
-正式なドキュメント（APIリファレンス）はまだ用意出来ていません、申し訳ありません。&lt;/p&gt;
+WDOMに実装済みの機能は&lt;a href="https://github.com/miyakogi/wdom/wiki/Features"&gt;機能の一覧&lt;/a&gt;または後述する&lt;code&gt;Tag&lt;/code&gt;クラスの&lt;a href="https://miyakogi.github.io/wdom/tag.html"&gt;APIドキュメント&lt;/a&gt;に一覧があります。&lt;/p&gt;
 &lt;h3&gt;要素の作成&lt;/h3&gt;
 &lt;p&gt;WDOMで要素を新規に作成する方法は、大別して以下の三種類の方法があります。&lt;/p&gt;
 &lt;ul&gt;
@@ -465,7 +575,7 @@ Pythonのリスト同様、&lt;code&gt;for child in 要素.childNodes:&lt;/code&
 &lt;p&gt;各要素にはHTML同様に属性値を設定することができます。
 HTMLの&lt;code&gt;&amp;lt;a href="http://......./"&amp;gt;リンク&amp;lt;/a&amp;gt;&lt;/code&gt;における&lt;code&gt;href=""&lt;/code&gt;に相当する部分です。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;getAttribute('属性名')&lt;/code&gt;で取得、&lt;code&gt;setAttribute('属性名', '値')&lt;/code&gt;で設定、&lt;code&gt;removeAttribute('属性名')&lt;/code&gt;で削除できます。
-存在しない属性に対して&lt;code&gt;getAttribute&lt;/code&gt;を行うと&lt;code&gt;None&lt;/code&gt;が返されます。&lt;/p&gt;
+存在しない属性に対して&lt;code&gt;getAttribute&lt;/code&gt;を行うと&lt;code&gt;None&lt;/code&gt;または空文字列(&lt;code&gt;''&lt;/code&gt;)、&lt;code&gt;False&lt;/code&gt;など属性毎の規定に従った値が返されます。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;参考&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Attr"&gt;Attr MDN&lt;/a&gt;&lt;/li&gt;
@@ -510,11 +620,7 @@ HTMLの&lt;code&gt;&amp;lt;a href="http://......./"&amp;gt;リンク&amp;lt;/a&a
 詳細は&lt;a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference"&gt;CSS Properties Reference&lt;/a&gt;を参照して下さい。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;参考&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement"&gt;HTMLElement&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;WDOMではまだ全ての属性値が実装できてはいません&lt;/li&gt;
-&lt;li&gt;実際の実装状況は&lt;a href="https://github.com/miyakogi/wdom/wiki/Features"&gt;こちら&lt;/a&gt;の&lt;code&gt;interface Element&lt;/code&gt;以下をご参照ください&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement"&gt;HTMLElement&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/id"&gt;element.id&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/style"&gt;element.style&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference"&gt;CSS Properties Reference&lt;/a&gt;&lt;/li&gt;
@@ -554,7 +660,7 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
     &lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello, WDOM&amp;#39;&lt;/span&gt;
     &lt;span class="nb"&gt;input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;
+        &lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;currentTarget&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;
     &lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -563,13 +669,13 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut3.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;文字列を入力すると "Hello, WDOM" と表示されていた部分が置き換えられるはずです。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;update&lt;/code&gt;関数内でアクセスしている&lt;code&gt;event.target&lt;/code&gt;は、イベントが発火したオブジェクトへの参照（この場合はinput要素）です。
+&lt;p&gt;&lt;code&gt;update&lt;/code&gt;関数内でアクセスしている&lt;code&gt;event.currentTarget&lt;/code&gt;は、イベントの対象となっているオブジェクトへの参照（この場合はinput要素）です。
 &lt;a href="https://developer.mozilla.org/ja/docs/Web/API/HTMLInputElement"&gt;input要素&lt;/a&gt;は現在の入力値を&lt;code&gt;value&lt;/code&gt;属性に保持しているので、それをh1要素の&lt;code&gt;textContent&lt;/code&gt;に設定しています。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;event&lt;/code&gt;オブジェクトもDOMの&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Event"&gt;Event&lt;/a&gt;オブジェクトと同じ構造をしているので、詳細は仕様を確認してください。
-（まだ&lt;a href="https://github.com/miyakogi/wdom/wiki/Features#events"&gt;実装できていない部分&lt;/a&gt;も多いですが・・・特にイベントの伝播制御は全く手付かずです・・・）&lt;/p&gt;
+現在、&lt;code&gt;Event&lt;/code&gt;、&lt;code&gt;MouseEvent&lt;/code&gt;、&lt;code&gt;KeyboardEvent&lt;/code&gt;、&lt;code&gt;DragEvent&lt;/code&gt;が実装済みです。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;参考&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Event"&gt;event MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Event"&gt;Event MDN&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/Events"&gt;Event reference MDN&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -590,8 +696,8 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;wdom.tag&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Div&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;H1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Input&lt;/span&gt;
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Div&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;H1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# h1要素を新しく作成&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello, WDOM&amp;#39;&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Input&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# input要素を新しく作成&lt;/span&gt;
@@ -600,9 +706,9 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;currentTarge&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="c1"&gt;# 省略&lt;/span&gt;
 
     &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -637,8 +743,8 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 &lt;p&gt;毎回appendChildを呼び出すのも面倒なので、インスタンス生成時に&lt;code&gt;parent&lt;/code&gt;引数で親要素を指定できるようにしてあります。&lt;/p&gt;
 &lt;p&gt;先ほどの例は以下のように書き換えることができます。
 （要素の追加される順番が先ほどと違ってしまいますが）&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;H1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# h1要素を新しく作成して自分の子要素にする&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello, WDOM&amp;#39;&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# input要素を新しく作成して自分の子要素にする&lt;/span&gt;
@@ -649,8 +755,8 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut5.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;子要素を自動的に追加&lt;/h3&gt;
 &lt;p&gt;逆に、子要素をインスタンス作成時に追加することもできます。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="c1"&gt;# 子要素として&amp;#39;Hello, WDOM&amp;#39;を持つh1要素を新しく作成し、子要素に追加&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;h1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;H1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello, WDOM&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# input要素を新しく作成して自分の子要素にする&lt;/span&gt;
@@ -661,7 +767,7 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut6.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;H1('Hello, WDOM', parent=self)&lt;/code&gt;としている部分では、第一引数が新しく作られる要素の子要素に追加されます。
 文字列は自動的に&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Text"&gt;Textノード&lt;/a&gt;（&lt;code&gt;wdom.node.Text&lt;/code&gt;）に変換されます。
-&lt;code&gt;H1(H2(), P(), ...)&lt;/code&gt;として複数の要素を追加することも可能です。&lt;/p&gt;
+&lt;code&gt;Div(H2(), P(), ...)&lt;/code&gt;として複数の要素を追加することも可能です。&lt;/p&gt;
 &lt;h3&gt;属性値を設定&lt;/h3&gt;
 &lt;p&gt;インスタンス化する時に属性値を設定することもできます。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;checkbox&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -704,17 +810,17 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 
 
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut9.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;クラス変数の&lt;code&gt;class_&lt;/code&gt;に指定したクラスが自動的に設定されます。
+&lt;p&gt;クラス変数の&lt;code&gt;class_&lt;/code&gt;に指定したクラス属性が自動的に設定されます。
 これは以下のように定義した場合とほぼ同じです。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;class&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;btn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="o"&gt;...&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;違いは、インスタンスから削除できないという点と、クラス変数として定義したclass属性はsubclassに継承されるという点です。&lt;/p&gt;
+&lt;p&gt;違いは、インスタンスから削除できないという点と、クラス変数として定義したクラス属性はサブクラスに継承されるという点です。&lt;/p&gt;
 &lt;p&gt;前者は以下のような操作ができないことを意味します。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;btn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;btn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;classList&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;remove&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;btn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# classListから&amp;#39;btn&amp;#39;クラスを削除しようとしても&lt;/span&gt;
@@ -724,8 +830,8 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 
 &lt;p&gt;後者の継承されるという点は文字通りですが、継承されたクラスで&lt;code&gt;class_&lt;/code&gt;と指定しても置き換えられず、追加されます。
 例えば&lt;code&gt;DefaultButton&lt;/code&gt;というクラスを作り、&lt;code&gt;class="btn btn-default"&lt;/code&gt;というクラス属性を持たせたい場合は、&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;DefaultButton&lt;/span&gt;(&lt;span class="n"&gt;MyButton&lt;/span&gt;):
-    &lt;span class="n"&gt;class_&lt;/span&gt; = &lt;span class="s"&gt;&amp;#39;btn-default&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;DefaultButton&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="nx"&gt;class_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;btn-default&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -795,7 +901,7 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 
 
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut11.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;innerHTML&lt;/code&gt;は既存の子要素を全て削除して置き換えるのでご注意ください。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;innerHTML&lt;/code&gt;は既存の子要素を全て削除して置き換えます。&lt;/p&gt;
 &lt;p&gt;各子要素にはリスト風オブジェクトの&lt;code&gt;ul.childNodes&lt;/code&gt;経由でアクセス可能です。
 &lt;code&gt;ul.firstChild&lt;/code&gt;や&lt;code&gt;ul.lastChild&lt;/code&gt;などで最初・最後の子要素にもアクセスできます。
 これもJavaScript（というかDOMの仕様）と同じです。
@@ -803,7 +909,7 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 &lt;p&gt;また、&lt;code&gt;insertAdjacentHTML(position, html)&lt;/code&gt;メソッドでもHTMLをパースできます。
 このメソッドは既存の子要素は削除せず、&lt;code&gt;position&lt;/code&gt;で指定した位置に要素を挿入します。
 詳細は&lt;a href="https://developer.mozilla.org/ja/docs/Web/API/Element/insertAdjacentHTML"&gt;element.insertAdjacentHTML MDN&lt;/a&gt;などをご参照ください。&lt;/p&gt;
-&lt;p&gt;なお&lt;code&gt;outerHTML&lt;/code&gt;は未実装です・・・&lt;/p&gt;
+&lt;p&gt;なお&lt;code&gt;outerHTML&lt;/code&gt;は未実装です。&lt;/p&gt;
 &lt;h2&gt;スタイルシートの適用&lt;/h2&gt;
 &lt;p&gt;デフォルトの表示は寂しいので、スタイルシートを適用しましょう。
 見栄えは重要です。&lt;/p&gt;
@@ -826,8 +932,7 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 
 
 &lt;p&gt;&lt;a href="https://github.com/miyakogi/wdom_tutorial_ja/blob/master/tut12.py"&gt;サンプルコード&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;CSSとJSは頻繁に使われると思うので、以下のショートカットも用意してあります。
-（メソッド名は今後変更される可能性があります）&lt;/p&gt;
+&lt;p&gt;CSSとJSは頻繁に使われると思うので、以下のショートカットも用意してあります。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_cssfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_jsfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_jsfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -852,7 +957,7 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 &lt;p&gt;&lt;code&gt;app.py&lt;/code&gt;で次のように指定します。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;
 
-&lt;span class="n"&gt;static_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abspath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__file__&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;static_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abspath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__file__&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_document&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_cssfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/static/css/app.css&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -914,7 +1019,7 @@ JavaScriptと同様、&lt;code&gt;innerHTML&lt;/code&gt;でHTML文字列を設�
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Div&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="c1"&gt;# 独自タグを&amp;#39;my-element&amp;#39;と指定&lt;/span&gt;
     &lt;span class="n"&gt;tag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;my-element&amp;#39;&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="c1"&gt;# 省略&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -979,12 +1084,12 @@ tagは拡張したいタグ（今回は継承元の&lt;code&gt;Button&lt;/code&g
 &lt;p&gt;長くなってしまいましたが、お読みいただきありがとうございました。&lt;/p&gt;
 &lt;p&gt;説明が必要な独自機能を中心に書いたので、あまりDOMで規定されている機能については触れませんでしたが、基本的な機能は実装されています。
 DOM関係の実装状況は&lt;a href="https://github.com/miyakogi/wdom/wiki/Features"&gt;こちら&lt;/a&gt;をご参照ください。
-他にも開発に便利な機能が少しあったりするのですが、それは別記事で紹介したいと思います。&lt;/p&gt;
-&lt;p&gt;当面はCustom Elementの実装と正式なドキュメントの整備をすすめていきたいと考えています。
-あと、個別のHTML要素のクラスも&lt;code&gt;HTML〇〇Element&lt;/code&gt;の形で（主要なものは）実装したいですね。
-イベント関係も、ドラッグ＆ドロップとかはまだ実装できていないので実装しないと・・・&lt;/p&gt;
-&lt;p&gt;もちろんバグが見つかればできるだけ早く修正します。
-もう少し落ち着いたらPyPIに登録します。&lt;/p&gt;</summary><category term="python"></category><category term="wdom"></category></entry><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215/static_site_generators.html" rel="alternate"></link><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:blog/20160215/static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
+他にも開発に便利な機能が少しあったりするのですが、それは別記事で紹介したいと思います。&lt;/p&gt;</content><category term="python"></category><category term="wdom"></category></entry><entry><title>Python製の静的サイトジェネレータを色々試してみました</title><link href="https://miyakogi.github.io/blog/20160215/static_site_generators.html" rel="alternate"></link><published>2016-02-15T15:00:00+09:00</published><updated>2016-02-15T15:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-15:/blog/20160215/static_site_generators.html</id><summary type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
+ということでいくつか静的サイトジェネレータを調べたのでまとめました。&lt;/p&gt;
+&lt;p&gt;ついでに比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
+内容はこのブログの過去数回分です。
+同じテーマでも日本語だと雰囲気が違ったりするので、よかったら参考にしてください。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
 ということでいくつか静的サイトジェネレータを調べたのでまとめました。&lt;/p&gt;
 &lt;p&gt;ついでに比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
 内容はこのブログの過去数回分です。
@@ -1118,7 +1223,7 @@ python-announce-listに頻繁に更新メールが送られてくるので、開
 Markdownの場合、デフォルトでは&lt;code&gt;&amp;lt;!-- TEASER_END --&amp;gt;&lt;/code&gt;というコメントまでが要約になります。
 はてなブログと同じ&lt;code&gt;&amp;lt;!-- more --&amp;gt;&lt;/code&gt;を使いたかったので、設定ファイルで以下のように設定しました。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;INDEX_TEASERS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
-&lt;span class="n"&gt;TEASER_REGEXP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r&amp;#39;&amp;lt;!--\s*(more)(:(.+))?\s*--&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;TEASER_REGEXP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;!--\s*(more)(:(.+))?\s*--&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1177,10 +1282,14 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;h3&gt;あとがき&lt;/h3&gt;
 &lt;p&gt;この記事書いてたらmattnさんがJekyll 3.0の記事を公開していました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/20160215110235.htm"&gt;Big Sky :: GitHub Pages が Jekyll 3.0 になり、ますますブログが書きやすくなった。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</summary><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
+&lt;p&gt;Jekyllも便利そうです。&lt;/p&gt;</content><category term="python"></category><category term="pelican"></category><category term="static site generator"></category></entry><entry><title>カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</title><link href="https://miyakogi.github.io/blog/20160206/ci1.html" rel="alternate"></link><published>2016-02-06T17:00:00+09:00</published><updated>2016-02-06T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:/blog/20160206/ci1.html</id><summary type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
 &lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
 &lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master"&gt;&lt;/a&gt;&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;※ 注意：この記事には主観とグチが含まれています。&lt;/p&gt;
+&lt;p&gt;コードのカバレッジ取得サービスを調べてみました。&lt;a href="https://coveralls.io/"&gt;Coveralls.io&lt;/a&gt;と&lt;a href="https://codecov.io/"&gt;Codecov.io&lt;/a&gt;の比較です。&lt;/p&gt;
+&lt;p&gt;↓こんな感じのバッジがREADMEに表示されるやつです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;!-- more --&gt;
 
 &lt;p&gt;TravisCIなどで自動テストを行い、ついでにテストのカバレッジも取得している方は多いと思います。
@@ -1204,7 +1313,7 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;p&gt;実際には使う方のサービスだけ設定すればOKです。ってゆーかですね、coverallsはこれだけで済むということに気づくまで結構時間がかかりました。&lt;/p&gt;
 &lt;h4&gt;以下、しばらくcoverallsへの愚痴です&lt;/h4&gt;
 &lt;p&gt;下の画像はcoverallsのドキュメントのpythonの説明です。本当にこれだけです。やる気が感じられません。好みじゃないのでリンクは貼りません。対応言語は結構たくさんありました。Rubyとかはドキュメントも結構充実してました。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="coveralls python document" src="https://miyakogi.github.io/blog/images/coveralls_pydoc.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coveralls python document" src="https://miyakogi.github.io/blog/images/coveralls_pydoc.png"&gt;&lt;/p&gt;
 &lt;p&gt;まずpypiにcoveralls用のパッケージが二つあります。coverallsとpython-coverallsです。よくわからないのでざっくり説明を見た結果、おそらく大差ありません。coverallsの方がユーザーが一桁くらい多そうでした。公式が一つだけ用意してそれだけドキュメントに書いておいてくれればいいのに・・・&lt;/p&gt;
 &lt;p&gt;また、coverallsの説明にはテストを走らせたあとに&lt;code&gt;coverage run&lt;/code&gt;を実行してカバレッジを計算すると説明があるのですが、&lt;code&gt;py.test&lt;/code&gt;を使った場合の説明がありません。私はpytestでテストを走らせてpytest-covというパッケージでテストと同時にカバレッジを取得していたので、追加でさらにcoverageを走らせるのか、スキップするテストの設定はどうするのか、カバレッジの計算から除外するモジュールの設定はどうするのか、などの情報がなくて困りました。実際にはpytest-covがcoverageを走らせているっぽいので特に何もしなくてよかったのですが。これは自分の知識不足が悪いのですが。。。情報少ない。。。そもそもトライするためのリポジトリをgithubに作っても、タイミングが悪かったのかgithubの更新が上手く取得できず、かなりストレスを感じました。&lt;/p&gt;
 &lt;h4&gt;一方、codecovは&lt;/h4&gt;
@@ -1216,15 +1325,15 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;h3&gt;リポジトリのページ&lt;/h3&gt;
 &lt;p&gt;バッジから対象リポジトリの結果を開いたところです。（上：coveralls、下：codecov）
 どちらも全体のカバレッジはすぐわかるように大きく表示されています。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="coveralls repository top" src="https://miyakogi.github.io/blog/images/coveralls_top.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov repository top" src="https://miyakogi.github.io/blog/images/codecov_top.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coveralls repository top" src="https://miyakogi.github.io/blog/images/coveralls_top.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov repository top" src="https://miyakogi.github.io/blog/images/codecov_top.png"&gt;&lt;/p&gt;
 &lt;p&gt;Coverallsはビルド毎のカバレッジ変化が表示されているのですが、個別のファイルのカバレッジはパッと見ではわかりません。ここからさらにリンクをクリックしてページ遷移する必要があります。&lt;/p&gt;
 &lt;p&gt;Codecovは最新のカバレッジしか表示されていませんが、個別のファイルのカバレッジも最初から表示されており、問題のあるファイルがすぐにわかります。この表示はツリー形式とリスト形式で切り替え可能です。また、ビルド毎のカバレッジの変化をグラフ表示する機能もあります（後述）。&lt;/p&gt;
 &lt;h3&gt;テスト漏れ箇所の表示&lt;/h3&gt;
 &lt;p&gt;どちらのサービスも行ベースでテストされている/されていない箇所を表示する機能があります。
 むしろこの機能のためにカバレッジ取得サービスを使うようなものなので、ないと話になりません。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="coveralls file view" src="https://miyakogi.github.io/blog/images/coveralls_file.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov file view" src="https://miyakogi.github.io/blog/images/codecov_file.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coveralls file view" src="https://miyakogi.github.io/blog/images/coveralls_file.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov file view" src="https://miyakogi.github.io/blog/images/codecov_file.png"&gt;&lt;/p&gt;
 &lt;p&gt;テストされている行は緑、されていない行は赤くなっています。
 色に関しては好みの範囲だと思いますが、私はcodecovの方が違いがわかりやすくて好きです。&lt;/p&gt;
 &lt;p&gt;ちなみに、個別のファイルの結果を表示させるまでのクリック数は、Githubのリポジトリから&lt;/p&gt;
@@ -1240,20 +1349,20 @@ Arkは何かのプロジェクトページで使うかもしれません。&lt;/
 &lt;/ul&gt;
 &lt;p&gt;となっていてcodecovの方がファイルへのアクセスはしやすくなっています。その上、ユーザーが少ないからなのか、codecovの方がページを開くのが速くて快適です(体感)。&lt;/p&gt;
 &lt;p&gt;また、codecovは&lt;a href="https://github.com/codecov/browser-extension#codecov-extension"&gt;Chrome, Firefox, Opera向けのブラウザ拡張機能&lt;/a&gt;が用意されています。この拡張をインストールすると、Githubでcodecovと連携しているリポジトリのファイルを開いた時にテストの状況が表示されるようになります。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov github extension" src="https://miyakogi.github.io/blog/images/codecov_github.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov github extension" src="https://miyakogi.github.io/blog/images/codecov_github.png"&gt;&lt;/p&gt;
 &lt;p&gt;邪魔な時は「Coverage xx.xx%」のところをクリックすれば消せます。
 Github上でカバレッジが確認できるのはポイント高いと思います。
 見た目もいい感じです。&lt;/p&gt;
 &lt;h3&gt;その他の機能&lt;/h3&gt;
 &lt;p&gt;Codecovはslackなどへの通知機能もあるようです。Coverallsもあるのかもしれませんがよくわかりません。&lt;/p&gt;
 &lt;p&gt;Codecovはリポジトリのページにビルド毎のカバレッジ変化が表示されていませんでしたが、カバレッジの変化をグラフ表示する機能があります。前述のサンプルリポジトリのグラフはこれです。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master"&gt;&lt;/p&gt;
 &lt;p&gt;バッジのようにMarkdownやHTMLで簡単に貼り付けることができます。上のグラフのMarkdownはこんな感じです。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;![codecov.io](https://codecov.io/github/miyakogi/coveralls_sample/branch.svg?branch=master)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;バッジやグラフのMarkdown表示などはここから取得できます。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="codecov graph code" src="https://miyakogi.github.io/blog/images/codecov_getgraph.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="codecov graph code" src="https://miyakogi.github.io/blog/images/codecov_getgraph.png"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;small&gt;サイトのデザインは全体的にとてもオシャレな感じなのですが、なぜグラフだけこんなに残念な感じなのでしょうか。エクセルでももう少しマシなグラフを書いてくれそうです。しかも下部の会社名の所、見事にデザインが崩れています。改善を期待しています。。。&lt;/small&gt;&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;というわけで、全体的にcoverallsが印象悪かったせいでcodecovの広告記事みたいになってしまいましたが、codecov良かったのでしばらく使うつもりです。&lt;/p&gt;
 &lt;p&gt;Codecovいい感じなのでよかったら検討に加えてみてください。私は本当にcodecovと関係ないのですが、この分野かなり生き残り厳しいので (TravisやCircleCI以外の消えていったCIサービスは数知れません)、サービス終了されて渋々coverallsへ移行するという状況は避けたいのです・・・よろしくお願いします・・・&lt;/p&gt;
-&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</summary><category term="Python"></category><category term="CI"></category></entry></feed>
+&lt;p&gt;長文にお付き合いいただきありがとうございました。参考になれば幸いです。&lt;/p&gt;</content><category term="Python"></category><category term="CI"></category></entry></feed>

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-03-08T23:20:00+09:00</updated><entry><title>Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました</title><link href="https://miyakogi.github.io/blog/20160308/vimpack_py.html" rel="alternate"></link><updated>2016-03-08T23:20:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-03-08:blog/20160308/vimpack_py.html</id><summary type="html">&lt;p&gt;先日からVim本体のパッケージ機能を使い、プラグインマネージャは使わない生活をしています。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File - Vim</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-03-08T23:20:00+09:00</updated><entry><title>Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました</title><link href="https://miyakogi.github.io/blog/20160308/vimpack_py.html" rel="alternate"></link><published>2016-03-08T23:20:00+09:00</published><updated>2016-03-08T23:20:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-03-08:/blog/20160308/vimpack_py.html</id><summary type="html">&lt;p&gt;先日からVim本体のパッケージ機能を使い、プラグインマネージャは使わない生活をしています。
+とはいえプラグインのアップデートやヘルプの生成は手作業では面倒なので、そのあたりを処理してくれるPythonのスクリプトを書きました。&lt;/p&gt;
+&lt;p&gt;始めは&lt;a href="https://github.com/miyakogi/dotfiles"&gt;dotfileをgit管理&lt;/a&gt;（今まではhgで管理してbitbucketに置いてました）にしてプラグインをsubmoduleにすれば十分かと思ったのですが、やってみたら意外と面倒でした。
+Pythonで書いたのは、自分の場合VimがあるところならまずPythonもあるというのと、3.4で入った&lt;a href="http://docs.python.jp/3/library/pathlib.html"&gt;pathlib&lt;/a&gt;というパスをいい感じに扱えるライブラリを使ってみたかったからです。&lt;/p&gt;
+&lt;p&gt;この記事を書きながらログ周りやオプションを整備してリファクタリングもしましたが、あくまで自分用に書いたスクリプトなので機能は最低限です。
+gitにしか対応していませんが、パッケージ機能を試したい方はもし良ければお使いください。
+なお、Vimのパッケージ機能についてはヘルプや&lt;a href="http://h-miyako.hatenablog.com/entry/2016/02/29/211534"&gt;先日の記事&lt;/a&gt;をご参照ください。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;先日からVim本体のパッケージ機能を使い、プラグインマネージャは使わない生活をしています。
 とはいえプラグインのアップデートやヘルプの生成は手作業では面倒なので、そのあたりを処理してくれるPythonのスクリプトを書きました。&lt;/p&gt;
 &lt;p&gt;始めは&lt;a href="https://github.com/miyakogi/dotfiles"&gt;dotfileをgit管理&lt;/a&gt;（今まではhgで管理してbitbucketに置いてました）にしてプラグインをsubmoduleにすれば十分かと思ったのですが、やってみたら意外と面倒でした。
 Pythonで書いたのは、自分の場合VimがあるところならまずPythonもあるというのと、3.4で入った&lt;a href="http://docs.python.jp/3/library/pathlib.html"&gt;pathlib&lt;/a&gt;というパスをいい感じに扱えるライブラリを使ってみたかったからです。&lt;/p&gt;
@@ -136,7 +143,13 @@ Pythonの&lt;a href="http://docs.python.jp/3/library/argparse.html"&gt;argparse&
 &lt;p&gt;初めてpathlibをガッツリ使ってみました。
 少しクセがありますが、基本的に便利でいい感じでした。&lt;/p&gt;
 &lt;p&gt;もしvimpack.pyのバグに気づいたら、コメントでもリポジトリのissueでもいいので教えていただけるとすごく嬉しいです。
-機能追加は・・・しないと思いますので適当にいじってください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim_pack.html" rel="alternate"></link><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:blog/20160229/vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
+機能追加は・・・しないと思いますので適当にいじってください。&lt;/p&gt;</content><category term="vim"></category><category term="python"></category></entry><entry><title>Vimのパッケージ機能を試してみました</title><link href="https://miyakogi.github.io/blog/20160229/vim_pack.html" rel="alternate"></link><published>2016-02-29T17:52:00+09:00</published><updated>2016-02-29T17:52:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-29:/blog/20160229/vim_pack.html</id><summary type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
+dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。&lt;/p&gt;
+&lt;p&gt;この機能は入ったばかりなので、今後仕様の変更があるかもしれませんし、バグもあるかもしれませんし、（たぶん）機能追加もあると思います。
+記事の内容が古くなっているかもしれないので、日付とVimのバージョンをよく確認してください。&lt;/p&gt;
+&lt;p&gt;試す人は本体のデバッグに自分のVimを捧げる気持ちでいきましょう。
+バックアップ重要です。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;最近&lt;a href="https://github.com/Shougo/dein.vim"&gt;dein.vim&lt;/a&gt;がバズったりVim本体にパッケージ機能が追加されたり、Vim界隈は第二次プラグインマネージャ戦争の気配に包まれています &lt;em&gt;[要出典]&lt;/em&gt;。
 dein.vimはすでにいくつか紹介記事がありますが、本体の方はあまり情報を見かけかなかったので先日試した結果を含めて紹介します。&lt;/p&gt;
 &lt;p&gt;この機能は入ったばかりなので、今後仕様の変更があるかもしれませんし、バグもあるかもしれませんし、（たぶん）機能追加もあると思います。
 記事の内容が古くなっているかもしれないので、日付とVimのバージョンをよく確認してください。&lt;/p&gt;
@@ -253,7 +266,12 @@ augroup END
 ここから必要そうな設定を拝借してvimrcで設定するなりして、&lt;code&gt;let g:did_load_filetypes=1&lt;/code&gt;しておけばデフォルトのファイルタイプ設定は読まれなくなります。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;NeoBundleがメンテナンスモードに入ると聞いてdein.vimへの移行を考えている方、どうせプラグイン周りの設定をいじるならついでに本体のパッケージ機能も試してみませんか？
-いっしょに人柱してバグを探しましょう。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
+いっしょに人柱してバグを探しましょう。&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>Livemark.vimを色々更新しました</title><link href="https://miyakogi.github.io/blog/20160214/livemark_update.html" rel="alternate"></link><published>2016-02-14T13:14:00+09:00</published><updated>2016-02-14T13:14:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-14:/blog/20160214/livemark_update.html</id><summary type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;+channel&lt;/code&gt;なVimじゃなくても&lt;code&gt;+python&lt;/code&gt;なら動作するので、よければお試し下さい。
+安定したものがいい場合は&lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt;などをおすすめします。&lt;/p&gt;
+&lt;p&gt;オプションはGitHubの&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;README&lt;/a&gt;に一応全て書いてあります。
+まだバグがあるかもしれませんが、その時は&lt;a href="https://github.com/miyakogi/livemark.vim/issues"&gt;Issue&lt;/a&gt;に報告していただけると喜んで対応します。Issueを書くのが面倒でしたら、Twitterで&lt;a href="https://twitter.com/MiyakoDev"&gt;@MiyakoDev&lt;/a&gt;にメンションしていただいても大丈夫です。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Markdown文書をリアルタイムで更新するVimプラグイン、&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;Livemark.vim&lt;/a&gt;を更新しました。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;+channel&lt;/code&gt;なVimじゃなくても&lt;code&gt;+python&lt;/code&gt;なら動作するので、よければお試し下さい。
 安定したものがいい場合は&lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt;などをおすすめします。&lt;/p&gt;
 &lt;p&gt;オプションはGitHubの&lt;a href="https://github.com/miyakogi/livemark.vim"&gt;README&lt;/a&gt;に一応全て書いてあります。
@@ -330,7 +348,11 @@ Livemarkにバグがあっても「まぁ、そういう時もあるよね」と
 落ち着いたらPyPIに登録して &lt;strong&gt;「まだじゃわすくりぷとで消耗しているの？」&lt;/strong&gt; 的な煽りタイトルの記事を書きたいと思っています。
 ヘタれたらもっと穏便なタイトルにするので優しくしてください。&lt;/p&gt;
 &lt;p&gt;以上です。
-開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</summary><category term="vim"></category><category term="python"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+開発中のものを色々取り入れているのでバグがある可能性大ですが、人柱精神旺盛な方、よろしければお試しください。&lt;/p&gt;</content><category term="vim"></category><category term="python"></category></entry><entry><title>Vim の channel と json のパフォーマンス</title><link href="https://miyakogi.github.io/blog/20160206/channel1.html" rel="alternate"></link><published>2016-02-06T10:00:00+09:00</published><updated>2016-02-06T10:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-02-06:/blog/20160206/channel1.html</id><summary type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
+ありがとうございます。
+最近では海外の方からもGithubのスターをいただきました。
+思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;先日公開した &lt;a href="https://github.com/miyakogi/livemark.vim"&gt;livemark.vim&lt;/a&gt; には想像以上にたくさんの反響をいただきました。
 ありがとうございます。
 最近では海外の方からもGithubのスターをいただきました。
 思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。&lt;/p&gt;
@@ -359,7 +381,7 @@ Livemarkにバグがあっても「まぁ、そういう時もあるよね」と
 &lt;p&gt;とはいえ、まだ安定しているとは言いがたい状態なので、マークダウンのプレビューには &lt;a href="https://github.com/kannokanno/previm"&gt;previm&lt;/a&gt; などを使うのがいいと思います。&lt;/p&gt;
 &lt;p&gt;今の実装だと変更がある度に画面全体を再描画していて大きいファイルのプレビューは厳しいので、差分だけ更新するような処理を実装中です。&lt;/p&gt;
 &lt;p&gt;そんな感じで地味に更新したりしてたのですが、&lt;a href="http://ftp.vim.org/vim/patches/7.4/7.4.1244"&gt;このパッチ&lt;/a&gt;でchannel関係の関数名が全部変わったので動かなくなりました（つらい&lt;/p&gt;
-&lt;p&gt;&lt;img alt="channel error" src="https://miyakogi.github.io/blog/images/channel_error.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="channel error" src="https://miyakogi.github.io/blog/images/channel_error.png"&gt;&lt;/p&gt;
 &lt;p&gt;修正してもまた仕様変更あったら面倒だなぁ、と微妙にやる気が減退気味だったのと、pythonでデータ送ってもそんなにもたつきを感じなかったりして「もしかして Vim の channel より python の方が速い・・・？いや channel も json も C で書かれてるしそんなはずは・・・でも Vim だし何が起きるかわからん」という疑問が沸き起こったので測ってみました。&lt;/p&gt;
 &lt;p&gt;Livemark.vim では編集中のバッファの文字列を取得して json として送っているので、&lt;/p&gt;
 &lt;ol&gt;
@@ -503,7 +525,12 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;/table&gt;
 &lt;p&gt;合計あまり変わらない・・・&lt;s&gt;Pythonよりは速くて「channelすごい！jsonすごい！」って記事になる予定だったのに・・・・&lt;/s&gt;jsonのエンコードにすごい時間かかってますね・・・よく考えたら、一度Vim scriptになってるのでむしろよく頑張ってる方だと思います。
 「あれ、たしかpython標準のjsonモジュールって・・・」って&lt;a href="http://postd.cc/memory-use-and-speed-of-json-parsers/"&gt;などの疑問&lt;/a&gt;を持ってはいけません。&lt;/p&gt;
-&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</summary><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129/livemark1.html" rel="alternate"></link><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:blog/20160129/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
+&lt;p&gt;というわけで！Pythonで処理してもあまりパフォーマンスに影響なさそうなので！むしろ20万行のマークダウンとか書かないと思うので！channelの仕様変更に負けずに地味に更新していきたいと思います！レッツポジティブ！&lt;/p&gt;</content><category term="Vim"></category></entry><entry><title>Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました</title><link href="https://miyakogi.github.io/blog/20160129/livemark1.html" rel="alternate"></link><published>2016-01-29T19:00:00+09:00</published><updated>2016-01-29T19:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-01-29:/blog/20160129/livemark1.html</id><summary type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm"&gt;Big Sky :: Vim にchannel(ソケット通信機能)が付いた。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
+&lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
+みんな大好きMarkdownのリアルタイムプレビューです。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Vimにchannel機能が実装されました。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://mattn.kaoriya.net/software/vim/20160129114716.htm"&gt;Big Sky :: Vim にchannel(ソケット通信機能)が付いた。&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。&lt;/p&gt;
 &lt;p&gt;というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。
@@ -532,18 +559,18 @@ Pythonの場合は Vim で読み込んだデータを python に渡す処理も�
 &lt;h2&gt;使い方&lt;/h2&gt;
 &lt;p&gt;Vimで適当なmarkdownファイルを開き、&lt;code&gt;:LiveMark&lt;/code&gt;を実行してください。するとchromeが起動しますので、vimでファイルを編集したりカーソルを動かしたりしてみてください。リアルタイムで変更がブラウザ上に反映されるはずです。&lt;/p&gt;
 &lt;p&gt;また、Vim上のカーソル位置も取得していますので、長い文章でブラウザの画面に収まらない場合、カーソル位置が画面に収まるようにいい感じ（自称）にスクロールします。&lt;/p&gt;
-&lt;p&gt;スタイルが何もないと寂しいので、&lt;a href="http://honokak.osaka/"&gt;Honoka&lt;/a&gt; という日本語向けの Bootstrap テーマを同梱させていただきました&lt;sup id="fnref:honoka-cdn"&gt;&lt;a class="footnote-ref" href="#fn:honoka-cdn" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。日本語でもきれいに表示されると思います。&lt;/p&gt;
+&lt;p&gt;スタイルが何もないと寂しいので、&lt;a href="http://honokak.osaka/"&gt;Honoka&lt;/a&gt; という日本語向けの Bootstrap テーマを同梱させていただきました&lt;sup id="fnref-honoka-cdn"&gt;&lt;a class="footnote-ref" href="#fn-honoka-cdn"&gt;1&lt;/a&gt;&lt;/sup&gt;。日本語でもきれいに表示されると思います。&lt;/p&gt;
 &lt;p&gt;終了する時は&lt;code&gt;:LiveMarkDisable&lt;/code&gt;です。何もしなくてもVimが終了した時にサーバープロセスは止まります。&lt;/p&gt;
 &lt;h4&gt;手抜き感の漂うスクリーンキャスト・・・&lt;/h4&gt;
-&lt;p&gt;&lt;img alt="screen cast" src="https://miyakogi.github.io/blog/images/livemark_sample.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="screen cast" src="https://miyakogi.github.io/blog/images/livemark_sample.gif"&gt;&lt;/p&gt;
 &lt;h2&gt;諸注意&lt;/h2&gt;
 &lt;p&gt;エラーなどでPythonのプロセスが残ってしまう場合があります。その時はプロセスを殺してください。&lt;/p&gt;
 &lt;div class="footnote"&gt;
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;ol&gt;
-&lt;li id="fn:honoka-cdn"&gt;
+&lt;li id="fn-honoka-cdn"&gt;
 &lt;p&gt;HonokaのCDNがわからなかったのでコードを含めています。
-ライセンスはMITとのことなので大丈夫だとは思いますが、もし不都合ありましたらご一報ください。&amp;#160;&lt;a class="footnote-backref" href="#fnref:honoka-cdn" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+ライセンスはMITとのことなので大丈夫だとは思いますが、もし不都合ありましたらご一報ください。&amp;#160;&lt;a class="footnote-backref" href="#fnref-honoka-cdn" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</summary><category term="Python"></category><category term="Vim"></category></entry></feed>
+&lt;/div&gt;</content><category term="Python"></category><category term="Vim"></category></entry></feed>

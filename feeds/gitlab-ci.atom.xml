@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/gitlab-ci.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-04-29T23:08:00+09:00</updated><entry><title>GitLabでドキュメントのビルドとホスティング</title><link href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html" rel="alternate"></link><updated>2016-04-29T23:08:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-29:blog/20160429/gitlab-pages-ci.html</id><summary type="html">&lt;p&gt;完全に思いつきで、&lt;a href="https://gitlab.com/"&gt;GitLab&lt;/a&gt;でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File - GitLab CI</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/gitlab-ci.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2016-04-29T23:08:00+09:00</updated><entry><title>GitLabでドキュメントのビルドとホスティング</title><link href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html" rel="alternate"></link><published>2016-04-29T23:08:00+09:00</published><updated>2016-04-29T23:08:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-04-29:/blog/20160429/gitlab-pages-ci.html</id><summary type="html">&lt;p&gt;完全に思いつきで、&lt;a href="https://gitlab.com/"&gt;GitLab&lt;/a&gt;でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。&lt;/p&gt;
+&lt;p&gt;GitLabはGitHubみたいなサービスです。
+（というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？）
+（そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・）&lt;/p&gt;
+&lt;p&gt;GitHubでも似たようなことはできますが、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Travis CI（などのCIサービス）を使ってgh-pagesブランチにプッシュする&lt;/li&gt;
+&lt;li&gt;Read the Docsを使ってそっちでビルド＆表示&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などいずれにしろ別サービスとの連携が必要になってしまいます。
+ローカルでhtmlを作って自分でpushすることもできますが、それは何か少し負けた気がするので却下です。&lt;/p&gt;
+&lt;p&gt;GitLabはCIもGitLab上で回せるので、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;リポジトリに変更をpush&lt;/li&gt;
+&lt;li&gt;ビルドしてHTML（静的ページ）生成&lt;/li&gt;
+&lt;li&gt;ページをホスティング&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;まで一つのサービスで完結できました。&lt;/p&gt;
+&lt;p&gt;GitLabのアカウントはGitHubの認証で簡単に作れるので、例えば英語ドキュメントの翻訳プロジェクトなどでは使ってみるのもありではないでしょうか。&lt;/p&gt;
+&lt;p&gt;ということで簡単に手順を紹介します。&lt;/p&gt;
+&lt;p&gt;ちなみに、思いついてからGitLabのアカウントを作るような状態でしたが、一時間足らずでリポジトリを作ってページを表示するまでできました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;試しに作ったリポジトリ: &lt;a href="https://gitlab.com/miyakogi/test-doc"&gt;https://gitlab.com/miyakogi/test-doc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;出力されたページ: &lt;a href="https://miyakogi.gitlab.io/test-doc/index.html"&gt;https://miyakogi.gitlab.io/test-doc/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</summary><content type="html">&lt;p&gt;完全に思いつきで、&lt;a href="https://gitlab.com/"&gt;GitLab&lt;/a&gt;でドキュメントをgit管理してCIでビルドしてGitLab Pagesで表示する、というのをやってみました。&lt;/p&gt;
 &lt;p&gt;GitLabはGitHubみたいなサービスです。
 （というかGitHubクローンで、以前はあまりにも似過ぎてたためになんか色々あったらしい、というウワサをどこかで目にしたような・・・？）
 （そのせいかわかりませんが、プルリクエストはMerge Requestという名前のようですね・・・）&lt;/p&gt;
@@ -76,7 +101,7 @@ MkDocsをインストールした後にビルドしているだけですが、�
 同一サービス上で実行されるので、GitHub + Travis CIよりやはり実行開始は早いです。
 あと、&lt;code&gt;.gitlab-ci.yml&lt;/code&gt;の記述がおかしいとすぐにエラーを表示してくれます。&lt;/p&gt;
 &lt;p&gt;プッシュ直後はこんな感じです。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="GitLab Top" src="https://miyakogi.github.io/blog/images/gitlab1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="GitLab Top" src="https://miyakogi.github.io/blog/images/gitlab1.png"&gt;&lt;/p&gt;
 &lt;p&gt;無事にビルドできれば、&lt;code&gt;https://ユーザー名.gitlab.io/プロジェクト名&lt;/code&gt;にアクセスすることでページが表示されるはずです。&lt;/p&gt;
 &lt;h2&gt;感想&lt;/h2&gt;
 &lt;p&gt;実際に使ってみてよかった点は、CIも静的ページのホスティングも単一サービスで完結しているので設定が楽、ということに尽きると思います。
@@ -99,4 +124,4 @@ MarkdownファイルをWeb上から編集して、そのままコミット→ビ
 &lt;li&gt;&lt;a href="https://gitlab.com/pages/jekyll"&gt;Jekyllの参考ページ&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="gitlab mkdocs ci"></category></entry></feed>
+&lt;/ul&gt;</content><category term="gitlab mkdocs ci"></category></entry></feed>

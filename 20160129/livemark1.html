@@ -9,7 +9,7 @@
 
 
 
-<link rel="canonical" href="/20160129/livemark1.html">
+<link rel="canonical" href="https://miyakogi.github.io/blog/20160129/livemark1.html">
 
         <meta name="author" content="miyakogi" />
         <meta name="keywords" content="Python,Vim" />
@@ -18,7 +18,7 @@
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました"/>
-        <meta property="og:url" content="/20160129/livemark1.html"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20160129/livemark1.html"/>
         <meta property="og:description" content="Vimにchannel機能が実装されました。 Big Sky :: Vim にchannel(ソケット通信機能)が付いた。 昨日から株価・為替は乱高下し、大臣の辞任、日銀のマイナス金利導入決定など国内では大きなニュースが続いていますが、Vimmerにとってはこのパッチが最も影響があったのではないでしょうか。 というわけで、せっかくなのでchannel機能を使ってプラグインを書いてみました。 みんな大好きMarkdownのリアルタイムプレビューです。"/>
         <meta property="article:published_time" content="2016-01-29" />
             <meta property="article:section" content="Vim" />
@@ -28,15 +28,19 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="/theme/css/bootstrap.ja.min.css" type="text/css"/>
-    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="/theme/css/pygments/trac.css" rel="stylesheet">
-    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
 
 
 
-
+        <link href="https://miyakogi.github.io/blog/feeds/vim.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File Vim ATOM Feed"/>
 
 </head>
 <body>
@@ -50,14 +54,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="navbar-brand">
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
 Blank File            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -72,7 +76,7 @@ Blank File            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="/20160129/livemark1.html"
+                    <a href="https://miyakogi.github.io/blog/20160129/livemark1.html"
                        rel="bookmark"
                        title="Permalink to Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました">
                         Vim に channel が実装されたので Markdown をプレビューするプラグインを作りました
@@ -93,9 +97,9 @@ Blank File            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="/tag/python.html">Python</a>
+	<a href="https://miyakogi.github.io/blog/tag/python.html">Python</a>
         /
-	<a href="/tag/vim.html">Vim</a>
+	<a href="https://miyakogi.github.io/blog/tag/vim.html">Vim</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -131,7 +135,7 @@ Blank File            </a>
 <p>スタイルが何もないと寂しいので、<a href="http://honokak.osaka/">Honoka</a> という日本語向けの Bootstrap テーマを同梱させていただきました<sup id="fnref-honoka-cdn"><a class="footnote-ref" href="#fn-honoka-cdn">1</a></sup>。日本語でもきれいに表示されると思います。</p>
 <p>終了する時は<code>:LiveMarkDisable</code>です。何もしなくてもVimが終了した時にサーバープロセスは止まります。</p>
 <h4>手抜き感の漂うスクリーンキャスト・・・</h4>
-<p><img alt="screen cast" src="/images/livemark_sample.gif"></p>
+<p><img alt="screen cast" src="https://miyakogi.github.io/blog/images/livemark_sample.gif"></p>
 <h2>諸注意</h2>
 <p>エラーなどでPythonのプロセスが残ってしまう場合があります。その時はプロセスを殺してください。</p>
 <div class="footnote">
@@ -145,6 +149,14 @@ Blank File            </a>
 </div>
             </div>
             <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
         </article>
     </section>
 
@@ -164,113 +176,121 @@ Blank File            </a>
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="/20170731/m2r.html">
+                        <a href="https://miyakogi.github.io/blog/20170731/m2r.html">
                             MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/20160502/wdom_theme_options.html">
+                        <a href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html">
                             WDOMのテーマ機能と起動オプションの紹介
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/20160429/gitlab-pages-ci.html">
+                        <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
                             GitLabでドキュメントのビルドとホスティング
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/20160406/wdom_intro.html">
+                        <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
                             PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/20160308/vimpack_py.html">
+                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
                             Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
                         </a>
                     </li>
                 </ul>
             </li>
 
-            <li class="list-group-item"><a href="/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
                 <ul class="list-group" id="categories">
                     <li class="list-group-item">
-                        <a href="/category/gitlab-ci.html">
+                        <a href="https://miyakogi.github.io/blog/category/gitlab-ci.html">
                             <i class="fa fa-folder-open fa-lg"></i> GitLab CI
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/category/python.html">
+                        <a href="https://miyakogi.github.io/blog/category/python.html">
                             <i class="fa fa-folder-open fa-lg"></i> Python
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/category/vim.html">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
                             <i class="fa fa-folder-open fa-lg"></i> Vim
                         </a>
                     </li>
                 </ul>
             </li>
 
-            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
-                        <a href="/tag/vim.html">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
                             vim
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="/tag/python.html">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
                             python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="/tag/static-site-generator.html">
-                            static site generator
+                        <a href="https://miyakogi.github.io/blog/tag/sphinx.html">
+                            sphinx
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="/tag/gitlab-mkdocs-ci.html">
-                            gitlab mkdocs ci
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="/tag/ci.html">
-                            CI
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="/tag/wdom.html">
-                            wdom
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="/tag/rst.html">
-                            rst
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="/tag/pelican.html">
-                            pelican
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="/tag/markdown.html">
-                            markdown
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="/tag/python-wdom.html">
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
                             python wdom
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="/tag/sphinx.html">
-                            sphinx
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
+                            rst
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/markdown.html">
+                            markdown
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
                         </a>
                     </li>
                 </ul>
             </li>
 
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
     <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
       <ul class="list-group" id="links">
@@ -304,14 +324,33 @@ Blank File            </a>
       </div>
    </div>
 </footer>
-<script src="/theme/js/jquery.min.js"></script>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/theme/js/bootstrap.min.js"></script>
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="/theme/js/respond.min.js"></script>
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
 
+    <!-- Google Analytics -->
+    <script type="text/javascript">
 
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-59101475-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
 </body>
 </html>
