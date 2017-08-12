@@ -117,7 +117,11 @@ Markdown形式のファイルを読み込んでも（今のところ処理の順
 Python2版をインストールした場合は&lt;code&gt;m2r&lt;/code&gt;コマンドは設定されないようなので、コマンドラインから使う時は&lt;code&gt;python2 -m m2r [ファイル名]&lt;/code&gt;とする必要があるようです。&lt;/p&gt;
 &lt;p&gt;さっきから「〜ようです・思います」連発ですが、本当に知らなかったのでどうなっているのかよくわかっていません……。
 書いた人が知らないうちに登録されるものなんですね……。&lt;/p&gt;
-&lt;p&gt;[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]&lt;/p&gt;</content><category term="python"></category><category term="sphinx"></category><category term="markdown"></category><category term="rst"></category></entry><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><published>2016-05-02T17:00:00+09:00</published><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:/blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
+&lt;p&gt;[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]&lt;/p&gt;
+&lt;p&gt;[さらに追記]&lt;/p&gt;
+&lt;p&gt;一夜明けて動揺が収まりました。
+かなり驚きましたがこういうことがあるとめっちゃモチベがあがります。
+わざわざ手間をかけて登録してくださった方には感謝していますしとてもうれしいです。&lt;/p&gt;</content><category term="python"></category><category term="sphinx"></category><category term="markdown"></category><category term="rst"></category></entry><entry><title>WDOMのテーマ機能と起動オプションの紹介</title><link href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html" rel="alternate"></link><published>2016-05-02T17:00:00+09:00</published><updated>2016-05-02T17:00:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2016-05-02:/blog/20160502/wdom_theme_options.html</id><summary type="html">&lt;p&gt;先日紹介したWDOMの開発者向け機能の紹介です。
 CSSフレームワークを使ったテーマ機能と起動オプションについて紹介します。&lt;/p&gt;
 &lt;p&gt;基本的な機能は&lt;a href="http://h-miyako.hatenablog.com/entry/2016/04/06/185403"&gt;前回の記事&lt;/a&gt;をご参照ください。&lt;/p&gt;
 &lt;!--- [http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite] ---&gt;
