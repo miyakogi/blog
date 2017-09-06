@@ -3,7 +3,6 @@ Slug: pyppeteer
 Date: 2017-9-2 21:53
 Category: python
 Tags: python pyppeteer
-Status: draft
 
 [Puppeteer](https://github.com/GoogleChrome/puppeteer) というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。
 私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、[pyppeteer](https://github.com/miyakogi/pyppeteer)という名前で公開しました。
