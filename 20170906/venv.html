@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ - Blank File</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="https://miyakogi.github.io/blog/20170906/venv.html">
+
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="python" />
+        <meta name="description" content="Pythonのパッケージや仮想環境、プロジェクトを管理するツールを色々紹介します。 自分用の備忘録も兼ねているので私のコメントにはかなり主観が入っています。 色々紹介しますが、基本的には pip と venv (virtialenv) で十分です。 これらで不便を感じていないのであれば、わざわざ他のツールを使う必要はないと思います。 不満を感じた時にその不満を解消するツールを試してみるのがいいのではないでしょうか。" />
+
+        <meta property="og:site_name" content="Blank File" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20170906/venv.html"/>
+        <meta property="og:description" content="Pythonのパッケージや仮想環境、プロジェクトを管理するツールを色々紹介します。 自分用の備忘録も兼ねているので私のコメントにはかなり主観が入っています。 色々紹介しますが、基本的には pip と venv (virtialenv) で十分です。 これらで不便を感じていないのであれば、わざわざ他のツールを使う必要はないと思います。 不満を感じた時にその不満を解消するツールを試してみるのがいいのではないでしょうか。"/>
+        <meta property="article:published_time" content="2017-09-06" />
+            <meta property="article:section" content="python" />
+            <meta property="article:tag" content="python" />
+            <meta property="article:author" content="miyakogi" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
+
+
+
+        <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File python ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
+Blank File            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://miyakogi.github.io/blog/20170906/venv.html"
+                       rel="bookmark"
+                       title="Permalink to Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ">
+                        Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2017-09-06T07:08:00+09:00"> Wed 06 September 2017</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://miyakogi.github.io/blog/tag/python.html">python</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Pythonのパッケージや仮想環境、プロジェクトを管理するツールを色々紹介します。
+自分用の備忘録も兼ねているので私のコメントにはかなり主観が入っています。</p>
+<p>色々紹介しますが、基本的には pip と venv (virtialenv) で十分です。
+これらで不便を感じていないのであれば、わざわざ他のツールを使う必要はないと思います。
+不満を感じた時にその不満を解消するツールを試してみるのがいいのではないでしょうか。</p>
+<!-- more -->
+
+<p><strong>免責事項:</strong>
+この記事の目的は「こういうのがある（らしい）よー」と文字通り紹介するだけで、特にどれかをオススメするという意図はありません。
+似たようなツールで紹介できていないものも多々あると思います。
+個別のツールの使い方も詳しくは紹介しません。
+というか初めて名前を知ったものもあって使い方がよくわかってなかったりします。
+とりあえず名前を挙げておいて、もしいい感じだったら誰か詳しい記事でも書いてくれないかなーくらいの気持ちで載せているものが半分くらいです。
+なので試す際は自己責任でお願いします。</p>
+<p>もし「こーゆーのほしかった！」というツールが見つかったという人がいれば望外の喜びです。
+ぜひ良さをブログ等で宣伝してください。
+（できれば使い方も（参考にさせていただきたいです））</p>
+<h2>標準ライブラリの2つ (pipとvenv)</h2>
+<p>pipとvenvはPythonに同梱されています。</p>
+<h3>pip</h3>
+<p>PyPIなどからPythonのパッケージをインストールするツールです。</p>
+<p>これは説明不要ですね。
+最近のpythonにはほぼ標準で入っています。
+<code>pip</code>コマンドがないと言われたら<code>python -m ensurepip</code>でインストールできます。</p>
+<h3>virtualenv/venv</h3>
+<p>仮想環境を作成します。
+Python3.3くらいから<code>venv</code>が標準ライブラリに含まれました。
+実はvirtualenvとvenvでびみょ〜〜に違いがあったりした気がしますが、普通に使う分には違いを意識することはないと思います。</p>
+<p>venvの場合は以下のコマンドで新しい仮想環境が作れます。
+（<code>pyvenv</code>コマンドは<a href="http://docs.python.jp/3/library/venv.html">非推奨になりました</a>。）</p>
+<div class="highlight"><pre><span></span>python -m venv /path/to/venv
+</pre></div>
+
+
+<p><code>source /path/to/venv/bin/activate</code>で仮想環境が有効になります。</p>
+<p>プロジェクト別に環境を作ることで、各環境にインストールされるパッケージを分けることができます。
+<code>packageA</code>の2.0以上が必要なのに別のプロジェクトでは<code>packageA</code>の2.0未満が必要、などという事態が未然に防げます。</p>
+<h2>Pythonのバージョン管理</h2>
+<h3><a href="https://github.com/saghul/pythonz">pythonz</a></h3>
+<p>様々なバージョンのPythonをダウンロード・インストールできます。
+インストールと言ってもビルドして特定のディレクトリに置かれるだけです。
+デフォルトのpythonを切り替えるようなことはしません。</p>
+<p>私はtox用に複数バージョンのpythonを用意するのにつかってます。</p>
+<h3><a href="https://github.com/pyenv/pyenv">pyenv</a></h3>
+<p>複数バージョンのpythonと仮想環境をセットで管理してくれます。
+有名なのでググると色々情報が出てくると思います。</p>
+<p>私はほとんど使ったことがありません。
+ちょっと1つのツールで色々やり過ぎのように感じられて好みではありませんでした。</p>
+<h3><a href="https://github.com/qw3rtman/p">p</a></h3>
+<p>こちらもpythonのバージョン切り替えらしいです。
+使えるpythonが列挙されて選ぶのが楽そうです。</p>
+<p>使ってないのでよくわかりません。</p>
+<h2>パッケージ管理</h2>
+<h3><a href="https://github.com/mitsuhiko/pipsi/">pipsi</a></h3>
+<p>pip代替？的なツールのようですが正直よくわかりません。</p>
+<p>flaskの作者さん製。</p>
+<h2>仮想環境管理</h2>
+<h3><a href="https://virtualenvwrapper.readthedocs.io/en/latest/">virtualenvwrapper</a></h3>
+<p>virtualenvを使いやすくするコマンドを提供してくれます。</p>
+<p>virtualenvで作った仮想環境を有効にするには <code>source /path/to/bin/activate</code> する必要がありましたが、これを使うと <code>workon [仮想環境名]</code> でactivateできるようになります。
+また、仮想環境の作成（<code>mkvirtualenv</code>）や削除（<code>rmvirtualenv</code>）のコマンドもあり、管理しやすくなります。</p>
+<p>私は一時期使っていましたが、最近は<a href="https://github.com/Tarrasch/zsh-autoenv">zsh-autoenv</a>で自動的にactivateするようにしたので使わなくなりました。</p>
+<h3>inve (<a href="https://gist.github.com/datagrok/2199506">gist</a>)</h3>
+<p>virtualenvの <code>activate/deactivate</code> を直接使わずに、特定の仮想環境でコマンド/シェルが実行できるようにするスクリプトです。</p>
+<p>activate/deactivate の問題点について述べられています。</p>
+<h3><a href="https://github.com/sashahart/vex">vex</a></h3>
+<p>上記のinveをパッケージにしてvirtualenvwrapperの仮想環境とひも付けた……のかな？</p>
+<p>以下のように使うとコマンドが仮想環境で実行されます。</p>
+<div class="highlight"><pre><span></span>vex 仮想環境名 command
+</pre></div>
+
+
+<p><code>command</code> のところを <code>zsh</code> 等にすれば仮想環境がactivateされたシェルが立ち上がるようです。
+仮想環境はvirtualenvwrapperで作ったものを使うようです。</p>
+<p>virtualenv/venvの <code>activate</code> は現在のシェルの <code>PATH</code> 等の環境変数を書き換えることで環境を切り替え、<code>deactivate</code> で元に戻すという動作ですが、vex (inveも) では仮想環境用のシェルを新しく立ち上げるのでシェルを閉じることで仮想環境から抜けます。</p>
+<p>これは後述のpewやpipenvも同様の方針です。</p>
+<h3><a href="https://github.com/berdario/pew">pew</a></h3>
+<p>上記の vex + virtualenvwrapper に色々機能が増えた的なツールです。</p>
+<p>現在の仮想環境の<code>$PYTHONPATH</code>にディレクトリを追加する<code>pew add [path]</code>コマンドは便利そうだと思いました。
+私は今はautoenvでパッケージ（プロジェクト）のルートを<code>$PYTHONPATH</code>に追加しています。</p>
+<h3><a href="https://github.com/kennethreitz/pipenv">pipenv</a></h3>
+<p>Pipfileでパッケージと仮想環境をまとめて管理して便利コマンドがいくつかある感じでしょうか。</p>
+<p>仮想環境を使うには<code>pipenv run command</code>でコマンドを実行するか<code>pipenv shell</code>でシェルを立ち上げて作業するかなので、方針としては前述のvex, pewと同じです。</p>
+<p>inve -&gt; vex -&gt; pew -&gt; pipenv と進化しているように感じました（実際どうなのかまでは調べていません）。</p>
+<p>Pipfileで仮想環境にインストールされているパッケージが管理できるので、頻繁にサーバーにデプロイして実行するようなプロジェクトには便利かも？しれません。</p>
+<p>また、pipには一旦インストールしたパッケージをuninstallしても依存してインストールされたパッケージは残ってしまうという問題がありますが、pipenvは<code>pipenv update</code>すると一旦すべて削除してPipfileをみてインストールし直すようなので関係ないパッケージを手軽に綺麗に消すことができるようです。</p>
+<p>個人的には使わない気がしますが、後々pipで使われる？というPipfileを使っているので動向が気になるところではあります。</p>
+<p>※ Pipfile はtoml形式のpip用ファイルのフォーマット（として提案されている段階？）で、requirements-*.txt を1つのファイルにまとめることができます。バージョンのlockなどもありますが個人的にはrequirementsファイルをまとめられるのが一番うれしいです。</p>
+<h2>プロジェクト管理</h2>
+<h3><a href="https://github.com/audreyr/cookiecutter">cookiecutter</a></h3>
+<p>若干趣向がずれますが、後述のhatchで少し言及されていた＆自分でも使ってるので紹介します。</p>
+<p>プロジェクトの雛形を作ってくれるツールです。
+これは仮想環境は関係ありませんが、フックがあるのでプロジェクトを作った後に対応する仮想環境も自動的に作る、といった使い方もおそらく可能です。</p>
+<p>JavaScriptのyeoman、pythonでいうと<code>sphinx-quickstart</code>や<code>django-admin startproject</code>などのようなものです。</p>
+<p>プロジェクトのテンプレートはJinja2で書かれています。
+極端に言ってしまえばファイルを作って配置するだけなのでPython以外のプロジェクトにも使えます。
+<a href="https://github.com/audreyr/cookiecutter#a-pantry-full-of-cookiecutters">cookiecutterのREADME</a>では様々なテンプレートが紹介されています。</p>
+<p>私は最近パッケージを新しく書き始める時に使っています。</p>
+<!-- ### [bumpversion](https://github.com/kennethreitz/pipenv) -->
+
+<!--  -->
+
+<!-- プロジェクトのバージョン番号を上げてくれるツールです。 -->
+
+<!-- これも仮想環境は関係ありませんが、hatchで言及されていて私も使っていたので一応挙げておきます。 -->
+
+<!--  -->
+
+<!-- バージョン番号が書かれている箇所は`setup.py`や`__init__.py`、`docs/conf.py`などに分散している場合があります。 -->
+
+<!-- bumpversionを使うとコマンド1つですべての箇所のバージョンを上げることができます。 -->
+
+<!--  -->
+
+<!-- 例えばversionが1.2.3の状態で `bumpversion patch` を実行すると対象箇所のバージョンが1.2.4に上がります。 -->
+
+<!-- 同時にgitのcommitとtag付けもしてくれます（設定で切り替え可能です）。 -->
+
+<!--  -->
+
+<!-- versionの変更し忘れ防止に使っています。 -->
+
+<h3><a href="https://github.com/sdispater/poet">poet</a></h3>
+<p>プロジェクト管理と仮想環境の管理を設定ファイル (poetry.toml) を基に色々してくれるようなことがREADMEに書いてありました。</p>
+<blockquote>
+<p>The package is <strong>highly experimental</strong></p>
+</blockquote>
+<p>だそうです。</p>
+<h3><a href="https://github.com/ofek/hatch">hatch</a></h3>
+<p>今回紹介したツールを全部まとめてさらにテストの実行やカバレッジ取得、PyPIへの登録などもできるツールらしいです。
+昨日（2017/09/05）頃からGitHubのtrendingに挙がっていました。
+すごい勢いでスターがついてます。</p>
+<p>READMEでは以下のツールを置き換えると言っています。</p>
+<ul>
+<li>Cookiecutter PyPackage</li>
+<li>pip</li>
+<li>virtualenv</li>
+<li>pyenv</li>
+<li>Pew</li>
+<li>inve</li>
+<li>pytest</li>
+<li>Coverage.py</li>
+<li>twine</li>
+<li>bumpversion</li>
+<li>zest.releaser</li>
+<li>Incremental</li>
+<li>python setup.py ...</li>
+</ul>
+<p>正直巨大すぎる気がします……。
+redditでチラッと見た所（コンセプトについての）評判は良さそうでした。
+まさに全部入りという感じなので、そういうのが好きな人には受けそうな気がします。</p>
+<h2>まとめ</h2>
+<p>大量に雑に紹介させていただきました。</p>
+<p>ちょうどhatchが盛り上がっていて、<a href="http://utgwkk.hateblo.jp/entry/2017/09/05/110209">pipenvの紹介記事</a>も結構はてブがついていたのですこし調べてみましたが、思った以上に色々ありました。</p>
+<p>色々紹介した後でこういうのもアレですが、冒頭でも書いたように基本的には pip と venv (virtialenv) で十分です。
+まずはそれらを使ってみて、不満があったら他のツールを試してみるのがいいと思います。</p>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/miyakogi"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/MiyakoDev"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170906/venv.html">
+                            Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">
+                            Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170830/syncer.html">
+                            Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170816/parameterized.html">
+                            Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170731/m2r.html">
+                            MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/gitlab-ci.html">
+                            <i class="fa fa-folder-open fa-lg"></i> GitLab CI
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/python.html">
+                            <i class="fa fa-folder-open fa-lg"></i> python
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Vim
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-pyppeteer.html">
+                            python pyppeteer
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/sphinx.html">
+                            sphinx
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
+                            python wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/markdown.html">
+                            markdown
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/unittest.html">
+                            unittest
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
+                            rst
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 miyakogi
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-59101475-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
+</body>
+</html>

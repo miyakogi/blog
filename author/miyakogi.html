@@ -64,6 +64,48 @@ Blank File            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
+                <h2><a href="https://miyakogi.github.io/blog/20170906/venv.html">Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ</a></h2>
+                <div class="summary"><p>Pythonのパッケージや仮想環境、プロジェクトを管理するツールを色々紹介します。
+自分用の備忘録も兼ねているので私のコメントにはかなり主観が入っています。</p>
+<p>色々紹介しますが、基本的には pip と venv (virtialenv) で十分です。
+これらで不便を感じていないのであれば、わざわざ他のツールを使う必要はないと思います。
+不満を感じた時にその不満を解消するツールを試してみるのがいいのではないでしょうか。</p>
+
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20170906/venv.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました</a></h2>
+                <div class="summary"><p><a href="https://github.com/GoogleChrome/puppeteer">Puppeteer</a> というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。
+私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、<a href="https://github.com/miyakogi/pyppeteer">pyppeteer</a>という名前で公開しました。</p>
+
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="https://miyakogi.github.io/blog/20170830/syncer.html">Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました</a></h2>
+                <div class="summary"><p>Python 3.5 から使える async/await 記法ですが、テストの際などは非同期な関数を実行するのにひと手間必要で面倒でした。
+そこで、非同期な関数を同期的に実行するライブラリ、<a href="https://github.com/miyakogi/syncer">syncer</a> を作りました。</p>
+<p>syncerは <code>@sync</code> というデコレータ用の関数をひとつだけ提供する非常に小さなライブラリです。
+主にテストでの利用を想定していますが、テスト以外でも汎用的に使えるライブラリになっています。</p>
+
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20170830/syncer.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="https://miyakogi.github.io/blog/20170816/parameterized.html">Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）</a></h2>
+                <div class="summary"><p>Pythonでテストをパラメータ化した時の書き方を <a href="http://docs.python.jp/3/library/unittest.html">unittest</a> と <a href="https://docs.pytest.org/en/latest/">pytest</a>
+を使った場合で紹介し、最後にそれらで使えるparameterizedというライブラリを紹介します。</p>
+<p>ちなみに私はpytestよりもunittest派です。</p>
+
+                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20170816/parameterized.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="https://miyakogi.github.io/blog/20170731/m2r.html">MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）</a></h2>
                 <div class="summary"><p>MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる<a href="https://github.com/miyakogi/m2r">M2R</a>というツールを (1年ほど前に作っていたのですが今さら) 紹介します。</p>
 <p>rstで出力するのでSphinx拡張としても使えます。
@@ -178,52 +220,6 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                 </div>
             </article>
             <hr/>
-            <article>
-                <h2><a href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">Python製の静的サイトジェネレータを色々試してみました</a></h2>
-                <div class="summary"><p>このブログははてなブログで運用していますが、最近ブログを静的サイトジェネレータで作ってGitHub Pagesにおこうかな、と考えています。
-ということでいくつか静的サイトジェネレータを調べたのでまとめました。</p>
-<p>ついでに比較用に作ったブログをいくつかGitHub Pagesで公開しておきます。
-内容はこのブログの過去数回分です。
-同じテーマでも日本語だと雰囲気が違ったりするので、よかったら参考にしてください。</p>
-
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160215/static_site_generators.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://miyakogi.github.io/blog/20160214/livemark_update.html">Livemark.vimを色々更新しました</a></h2>
-                <div class="summary"><p>Markdown文書をリアルタイムで更新するVimプラグイン、<a href="https://github.com/miyakogi/livemark.vim">Livemark.vim</a>を更新しました。</p>
-<p><code>+channel</code>なVimじゃなくても<code>+python</code>なら動作するので、よければお試し下さい。
-安定したものがいい場合は<a href="https://github.com/kannokanno/previm">previm</a>などをおすすめします。</p>
-<p>オプションはGitHubの<a href="https://github.com/miyakogi/livemark.vim">README</a>に一応全て書いてあります。
-まだバグがあるかもしれませんが、その時は<a href="https://github.com/miyakogi/livemark.vim/issues">Issue</a>に報告していただけると喜んで対応します。Issueを書くのが面倒でしたら、Twitterで<a href="https://twitter.com/MiyakoDev">@MiyakoDev</a>にメンションしていただいても大丈夫です。</p>
-
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160214/livemark_update.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://miyakogi.github.io/blog/20160206/ci1.html">カバレッジ取得サービスの比較（Coveralls.ioとCodecove.io)</a></h2>
-                <div class="summary"><p>※ 注意：この記事には主観とグチが含まれています。</p>
-<p>コードのカバレッジ取得サービスを調べてみました。<a href="https://coveralls.io/">Coveralls.io</a>と<a href="https://codecov.io/">Codecov.io</a>の比較です。</p>
-<p>↓こんな感じのバッジがREADMEに表示されるやつです。</p>
-<p><a href="https://codecov.io/github/miyakogi/coveralls_sample?branch=master"><img alt="codecov.io" src="https://codecov.io/github/miyakogi/coveralls_sample/coverage.svg?branch=master"></a></p>
-
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160206/ci1.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://miyakogi.github.io/blog/20160206/channel1.html">Vim の channel と json のパフォーマンス</a></h2>
-                <div class="summary"><p>先日公開した <a href="https://github.com/miyakogi/livemark.vim">livemark.vim</a> には想像以上にたくさんの反響をいただきました。
-ありがとうございます。
-最近では海外の方からもGithubのスターをいただきました。
-思いつきで作ったプラグインでしたが、せっかくなので普段使いできるようにいくつか更新しました。</p>
-
-                    <a class="btn btn-default btn-xs" href="https://miyakogi.github.io/blog/20160206/channel1.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
 
         <ul class="pagination">
                 <li class="prev disabled"><a href="#">&laquo;</a></li>
@@ -250,28 +246,28 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170906/venv.html">
+                            Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">
+                            Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170830/syncer.html">
+                            Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170816/parameterized.html">
+                            Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20170731/m2r.html">
                             MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html">
-                            WDOMのテーマ機能と起動オプションの紹介
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
-                            GitLabでドキュメントのビルドとホスティング
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
-                            PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
-                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
                         </a>
                     </li>
                 </ul>
@@ -286,7 +282,7 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                     </li>
                     <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/category/python.html">
-                            <i class="fa fa-folder-open fa-lg"></i> Python
+                            <i class="fa fa-folder-open fa-lg"></i> python
                         </a>
                     </li>
                     <li class="list-group-item">
@@ -315,28 +311,18 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
-                            python wdom
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-pyppeteer.html">
+                            python pyppeteer
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/sphinx.html">
                             sphinx
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
-                            rst
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
-                            wdom
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -350,8 +336,28 @@ dein.vimはすでにいくつか紹介記事がありますが、本体の方は
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
+                            python wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/markdown.html">
                             markdown
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/unittest.html">
+                            unittest
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
+                            rst
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
                         </a>
                     </li>
                 </ul>

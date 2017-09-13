@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます） - Blank File</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="https://miyakogi.github.io/blog/20170816/parameterized.html">
+
+        <meta name="author" content="miyakogi" />
+        <meta name="keywords" content="Python,unittest" />
+        <meta name="description" content="Pythonでテストをパラメータ化した時の書き方を unittest と pytest を使った場合で紹介し、最後にそれらで使えるparameterizedというライブラリを紹介します。 ちなみに私はpytestよりもunittest派です。" />
+
+        <meta property="og:site_name" content="Blank File" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20170816/parameterized.html"/>
+        <meta property="og:description" content="Pythonでテストをパラメータ化した時の書き方を unittest と pytest を使った場合で紹介し、最後にそれらで使えるparameterizedというライブラリを紹介します。 ちなみに私はpytestよりもunittest派です。"/>
+        <meta property="article:published_time" content="2017-08-16" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="Python" />
+            <meta property="article:tag" content="unittest" />
+            <meta property="article:author" content="miyakogi" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/bootstrap.ja.min.css" type="text/css"/>
+    <link href="https://miyakogi.github.io/blog/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://miyakogi.github.io/blog/theme/css/pygments/trac.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://miyakogi.github.io/blog/theme/css/style.css" type="text/css"/>
+
+        <link href="https://miyakogi.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File ATOM Feed"/>
+
+
+
+        <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Blank File Python ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://miyakogi.github.io/blog/" class="navbar-brand">
+Blank File            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://miyakogi.github.io/blog/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://miyakogi.github.io/blog/20170816/parameterized.html"
+                       rel="bookmark"
+                       title="Permalink to Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）">
+                        Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2017-08-16T00:48:00+09:00"> Wed 16 August 2017</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://miyakogi.github.io/blog/tag/python.html">Python</a>
+        /
+	<a href="https://miyakogi.github.io/blog/tag/unittest.html">unittest</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Pythonでテストをパラメータ化した時の書き方を <a href="http://docs.python.jp/3/library/unittest.html">unittest</a> と <a href="https://docs.pytest.org/en/latest/">pytest</a>
+を使った場合で紹介し、最後にそれらで使えるparameterizedというライブラリを紹介します。</p>
+<p>ちなみに私はpytestよりもunittest派です。</p>
+<!--more-->
+
+<h2>はじめに</h2>
+<p>テストを書いていると値が違うだけのケースを複数確認したくなる時があります。</p>
+<p>例えば、1 + 1 = 2, 2 + 3 = 5, 32 + (-32) = 0, ...などのようなケースです。
+これをすべて別のテストケースとして書き下すのは面倒ですしメンテも大変なことになるので、テストフレームワークは大抵こんなテストが簡単にできる仕組みを提供しています。</p>
+<p>今回はPythonでよく使われているunittest（標準ライブラリ）とpytestでこれらのテストの書き方を紹介します。</p>
+<p>なんでいまさら？と思われそうですが、pytestはともかくunittestでの書き方をあまり見かけなかったからです。</p>
+<p>知ってる方は適当にparameterizedのところまで読み飛ばしてください。</p>
+<h2>今回書くテスト</h2>
+<p>2つの引数a, bを取って足し算して返す関数<code>add</code>の結果を確認するテストを考えます。</p>
+<p>3通りのパラメータでテストします。
+パラメータは入力をaとb, 期待される出力をansとして</p>
+<ul>
+<li>a=2, b=3, ans=4</li>
+<li>a=1, b=1, ans=3</li>
+<li>a=3, b=-1, ans=2</li>
+</ul>
+<p>と残念な感じにします。
+（テスト失敗時の出力を確認するためであって足し算できないとかではないです）</p>
+<p>これをunittestで愚直に3通り書くと</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">class</span> <span class="nc">TestAdd</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_add_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_add_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_add_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>明らかに面倒です。</p>
+<p>少し凝った感じにすることもできますが、</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestAdd</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">ans</span><span class="p">)</span>
+</pre></div>
+
+
+<p>これは最初のケースで失敗して残りのテストが実行されません。</p>
+<h2>テストのパラメータ化</h2>
+<h3>unittest の subTest</h3>
+<p>こんな時のためにunittestには<a href="http://docs.python.jp/3/library/unittest.html#subtests">subTest</a>という機能があります。
+（Python3.4で追加されました）</p>
+<p>subTestを使って先ほどのテストを書き直します。</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestAdd</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ans</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">ans</span><span class="o">=</span><span class="n">ans</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">ans</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>with self.subTest(...)</code> がポイントです。</p>
+<p>このテストを実行すると以下の出力が得られます。</p>
+<p>[f:id:h-miyako:20170816162701p:plain]</p>
+<p>途中で失敗してもテストが3通り実行され、きちんと失敗した2つのケースの詳細が表示されています。</p>
+<p>とはいえ正直subTest書くの面倒なので今回紹介するparameterizedがなかったらpytest使ってたと思います。</p>
+<h3>pytest の mark.parametrize</h3>
+<p>pytestでの同様のテストは次のようになります。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s1">&#39;a,b,ans&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ans</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="n">ans</span>
+</pre></div>
+
+
+<p>pytestはテストケースが関数でかけるのですっきりしてますね。</p>
+<p>テストケースの関数に<code>@pytest.mark.parametrize</code>デコレータをつけ、第一引数に引数の名前の文字列、第二引数にテストケースに与える値を列挙したリストを渡します。</p>
+<p>実行結果は以下のとおりです。</p>
+<p>[f:id:h-miyako:20170816162830p:plain]</p>
+<h3>pytest の fixture</h3>
+<p>また、fixtureを使って間接的にパラメータを渡すこともできます。</p>
+<div class="highlight"><pre><span></span><span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span>
+
+<span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="n">ans</span>
+</pre></div>
+
+
+<p>出力は次のようになります。</p>
+<p>[f:id:h-miyako:20170816163114p:plain]</p>
+<h2>parameterized を使った場合</h2>
+<p>正直、unittestのsubTestもpytestの方法も若干冗長で書くのが面倒な感じがしていました。</p>
+<p><a href="https://github.com/wolever/parameterized">parameterized</a> というライブラリを使うと直感的にすっきりと書くことができます。</p>
+<h3>インストール</h3>
+<p><code>pip</code>でインストールします。</p>
+<div class="highlight"><pre><span></span>pip install parameterized
+</pre></div>
+
+
+<p>ちなみに <strong>parameterized</strong> とは別に <strong>parametrized</strong> というライブラリもPyPIに登録されているので注意してください（1敗）。
+今回紹介する parameterized はバージョンが今日時点で0.6.1なのでインストール時にバージョン番号を確認すると確実だと思います。</p>
+<h3>unittest + parametrized</h3>
+<p>次のように使います。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+
+<span class="k">class</span> <span class="nc">TestAdd</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@parameterized.expand</span><span class="p">([</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">ans</span><span class="p">)</span>
+</pre></div>
+
+
+<p>引数をタプルにしてリストで<code>@parameterized.expand</code>デコレータに渡すだけです。</p>
+<p>出力は以下のようになります。</p>
+<p>[f:id:h-miyako:20170816163406p:plain]</p>
+<p>失敗した場合の値が表示されませんが、テストケースの名前の最後に0から順に連番がふられるので何番目のテストが失敗したのかはわかるようになっています。</p>
+<h3>pytest + parametrized</h3>
+<p>pytestでは以下のようになります。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+
+<span class="nd">@parameterized</span><span class="p">([</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ans</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="n">ans</span>
+</pre></div>
+
+
+<p>unittestの場合と違って <code>.expand</code> なしの <code>@parameterized</code> デコレータを使っていますがそれ以外は同じです。</p>
+<p>出力は以下のようになります。</p>
+<p>[f:id:h-miyako:20170816163430p:plain]</p>
+<p>pytestでは初めて使いましたが出力にちゃんとパラメータが表示されてわかりやすいのいいですね……（unittest派）</p>
+<h3>その他</h3>
+<p>parametrizedは他にもnose, nose2にも対応していてPythonの主要なテストフレームワークは網羅しています。
+（元々はnose用のnose_parameterizedというライブラリでしたが、他のフレームワークにも対応して今の名前になりました。）</p>
+<p>ここでは紹介しませんが、パラメータに名前付き引数を渡したり関数で渡すこともできたりけっこう高機能です。
+それらの説明は<a href="https://github.com/wolever/parameterized">README</a>にありますので気になった方はそちらをご確認ください。</p>
+<h2>まとめ</h2>
+<p>unittestとpytestでテストをパラメータ化する方法とparameterizedを使った場合の書き方を紹介しました。</p>
+<p>個人的な印象をざっくりまとめると</p>
+<ul>
+<li>unittest.subTest<ul>
+<li>めんどう</li>
+</ul>
+</li>
+<li>pytest.mark.parametrize<ul>
+<li>subTestよりは楽だけど引数名書くの面倒</li>
+</ul>
+</li>
+<li>parametrized<ul>
+<li>楽</li>
+</ul>
+</li>
+</ul>
+<p>という感じでparameterizedおすすめです（特にunittestで書く時）。</p>
+<p>次もunittestネタで何か書きます（予告）。</p>
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <!-- AddThis Button END -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/miyakogi"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/MiyakoDev"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170906/venv.html">
+                            Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">
+                            Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170830/syncer.html">
+                            Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170816/parameterized.html">
+                            Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170731/m2r.html">
+                            MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/gitlab-ci.html">
+                            <i class="fa fa-folder-open fa-lg"></i> GitLab CI
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/python.html">
+                            <i class="fa fa-folder-open fa-lg"></i> python
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/category/vim.html">
+                            <i class="fa fa-folder-open fa-lg"></i> Vim
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="https://miyakogi.github.io/blog/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="https://miyakogi.github.io/blog/tag/vim.html">
+                            vim
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-pyppeteer.html">
+                            python pyppeteer
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/sphinx.html">
+                            sphinx
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/gitlab-mkdocs-ci.html">
+                            gitlab mkdocs ci
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
+                            python wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/markdown.html">
+                            markdown
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/unittest.html">
+                            unittest
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
+                            rst
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-twitter fa-lg"></i><span class="icon-label">Latest Tweets</span></h4></li>
+    <div id="twitter_timeline">
+        <a class="twitter-timeline" data-chrome="noheader" href="https://twitter.com/miyakodev" data-widget-id="695483665627766784">Tweets by miyakodev</a>
+    </div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 miyakogi
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://miyakogi.github.io/blog/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://miyakogi.github.io/blog/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://miyakogi.github.io/blog/theme/js/respond.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-59101475-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56b43892ef18a159"></script>
+</body>
+</html>

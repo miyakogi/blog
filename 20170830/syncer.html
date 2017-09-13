@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応） - Blank File</title>
+    <title>Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,23 +9,20 @@
 
 
 
-<link rel="canonical" href="https://miyakogi.github.io/blog/20170731/m2r.html">
+<link rel="canonical" href="https://miyakogi.github.io/blog/20170830/syncer.html">
 
         <meta name="author" content="miyakogi" />
-        <meta name="keywords" content="python,sphinx,markdown,rst" />
-        <meta name="description" content="MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できるM2Rというツールを (1年ほど前に作っていたのですが今さら) 紹介します。 rstで出力するのでSphinx拡張としても使えます。 Markdownのテーブルや脚注にも対応しています。" />
+        <meta name="keywords" content="python" />
+        <meta name="description" content="Python 3.5 から使える async/await 記法ですが、テストの際などは非同期な関数を実行するのにひと手間必要で面倒でした。 そこで、非同期な関数を同期的に実行するライブラリ、syncer を作りました。 syncerは @sync というデコレータ用の関数をひとつだけ提供する非常に小さなライブラリです。 主にテストでの利用を想定していますが、テスト以外でも汎用的に使えるライブラリになっています。" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）"/>
-        <meta property="og:url" content="https://miyakogi.github.io/blog/20170731/m2r.html"/>
-        <meta property="og:description" content="MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できるM2Rというツールを (1年ほど前に作っていたのですが今さら) 紹介します。 rstで出力するのでSphinx拡張としても使えます。 Markdownのテーブルや脚注にも対応しています。"/>
-        <meta property="article:published_time" content="2017-07-31" />
-            <meta property="article:section" content="Python" />
+        <meta property="og:title" content="Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20170830/syncer.html"/>
+        <meta property="og:description" content="Python 3.5 から使える async/await 記法ですが、テストの際などは非同期な関数を実行するのにひと手間必要で面倒でした。 そこで、非同期な関数を同期的に実行するライブラリ、syncer を作りました。 syncerは @sync というデコレータ用の関数をひとつだけ提供する非常に小さなライブラリです。 主にテストでの利用を想定していますが、テスト以外でも汎用的に使えるライブラリになっています。"/>
+        <meta property="article:published_time" content="2017-08-30" />
+            <meta property="article:section" content="python" />
             <meta property="article:tag" content="python" />
-            <meta property="article:tag" content="sphinx" />
-            <meta property="article:tag" content="markdown" />
-            <meta property="article:tag" content="rst" />
             <meta property="article:author" content="miyakogi" />
 
 
@@ -42,7 +39,7 @@
 
 
         <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Blank File Python ATOM Feed"/>
+              title="Blank File python ATOM Feed"/>
 
 </head>
 <body>
@@ -78,10 +75,10 @@ Blank File            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://miyakogi.github.io/blog/20170731/m2r.html"
+                    <a href="https://miyakogi.github.io/blog/20170830/syncer.html"
                        rel="bookmark"
-                       title="Permalink to MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）">
-                        MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
+                       title="Permalink to Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました">
+                        Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました
                     </a>
                 </h1>
             </header>
@@ -91,7 +88,7 @@ Blank File            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2017-07-31T23:11:00+09:00"> Mon 31 July 2017</time>
+        <i class="fa fa-calendar"></i><time datetime="2017-08-30T01:55:00+09:00"> Wed 30 August 2017</time>
     </span>
 
 
@@ -100,135 +97,85 @@ Blank File            </a>
 
 <span class="label label-default">Tags</span>
 	<a href="https://miyakogi.github.io/blog/tag/python.html">python</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/sphinx.html">sphinx</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/markdown.html">markdown</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/rst.html">rst</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる<a href="https://github.com/miyakogi/m2r">M2R</a>というツールを (1年ほど前に作っていたのですが今さら) 紹介します。</p>
-<p>rstで出力するのでSphinx拡張としても使えます。
-Markdownのテーブルや脚注にも対応しています。</p>
+                <p>Python 3.5 から使える async/await 記法ですが、テストの際などは非同期な関数を実行するのにひと手間必要で面倒でした。
+そこで、非同期な関数を同期的に実行するライブラリ、<a href="https://github.com/miyakogi/syncer">syncer</a> を作りました。</p>
+<p>syncerは <code>@sync</code> というデコレータ用の関数をひとつだけ提供する非常に小さなライブラリです。
+主にテストでの利用を想定していますが、テスト以外でも汎用的に使えるライブラリになっています。</p>
 <!--more-->
 
-<h2>できること</h2>
-<p>以下のような入力文字列が</p>
-<div class="highlight"><pre><span></span># M2R Preview
-
-This is a m2r demo.
-
-You can **directly** write `Markdown`, :code:`reStructuredText`.
+<p>syncerはPython 3.4以上に対応しています。</p>
+<p>3.4では async/await は使えませんが、<code>@asyncio.coroutine</code> で装飾された関数を同期的に実行することができます。</p>
+<h2>インストール</h2>
+<p><code>pip</code> でインストールできます。</p>
+<div class="highlight"><pre><span></span>python3 -m pip install syncer
 </pre></div>
 
 
-<p>M2Rを通すと次のようなrst形式になって</p>
-<div class="highlight"><pre><span></span><span class="gh">M2R Preview</span>
-<span class="gh">===========</span>
-
-This is a m2r demo.
-
-You can <span class="gs">**directly**</span> write <span class="s">``Markdown``\ , :code:`reStructuredText`.</span>
-</pre></div>
-
-
-<p>(docutilsを通して) HTMLで出力するとこうなります。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;document&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;m2r-preview&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>M2R Preview<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a m2r demo.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>You can <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>directly<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> write <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;docutils literal&quot;</span><span class="p">&gt;</span>Markdown<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>, <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;</span>reStructuredText<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</pre></div>
-
-
-<p><img alt="変換後のHTMLのサンプル" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/html.png"></p>
-<p>M2Rのドキュメントの<a href="https://miyakogi.github.io/m2r/example.html">このページ</a>はM2Rで<a href="https://raw.githubusercontent.com/miyakogi/m2r/master/docs/example.md">このソース</a>から出力したものです。</p>
-<h2>動機</h2>
-<p>SphinxでMarkdownを使いたくて作りました。</p>
-<p>すでに<a href="https://recommonmark.readthedocs.io/en/latest/">recommonmark</a>というプロジェクトもありますが、実際にSphinxでドキュメントを書いていると脚注だったり参照だったり<code>.. note::</code>とかのディレクティブだったり、何かとrstを書きたい時も出てきます。
-recommonmarkも一応<code>eval_rst</code>などでrstを埋め込むこともできるのですが、ブロックでしか記述できなかったり単純に面倒だったり地味に不便でした。
-そこで、rstのディレクティブ (<code>.. note::</code> とか) 程度なら人間が見て「ここはrstで書きたいんだな」と判断できるので機械的になんとかなるだろう、ということでrstもそのまま書けるように作ってみました。</p>
-<p>正直、作る前は構文的にどこかで破綻するだろうと思っていたのですが案外うまく変換できているようです。
-とはいえ完璧に確認できているというわけではないので、使用する際はご注意ください。
-もし試していただいておかしいところがあったらお知らせいただけると幸いです。</p>
 <h2>使い方</h2>
-<p>対応するpythonのバージョンは2.7と3.4以上です。</p>
-<p>インストールは普通にpipで以下のコマンドから。</p>
-<div class="highlight"><pre><span></span>pip install m2r
+<p>以下の例ではテストはunittestを使って書いていますが、noseやpytestにも対応しています。
+ですがそれらのライブラリは似た機能を提供するプラグインもあるのでそちらを使ってもいいかもしれません。</p>
+<h3>デコレータとして使う</h3>
+<p>以下のような関数があった時:</p>
+<div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">async_add</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">wait_time</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait_time</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
 </pre></div>
 
 
-<h3>コマンドラインでの使い方</h3>
-<p>以下のコマンドでMarkdown（とrstの混ざった）ファイルをrst形式に変換して拡張子<code>.rst</code>のファイルとして保存します。</p>
-<div class="highlight"><pre><span></span>m2r input_file.md
+<p>以下のようにテスト関数を <code>async def</code> で定義して実行してもテストは実行されません。
+失敗するはずでも成功になってしまいます。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">TestAsync</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">test_async</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">await</span> <span class="n">async_add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
 
-<h3>Sphinx拡張としての使い方</h3>
-<p>M2Rをインストールした上でSphinxプロジェクトの<code>conf.py</code>を以下のように修正してください。</p>
-<div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="o">...</span><span class="p">,</span>
-    <span class="s1">&#39;m2r&#39;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="c1"># source_suffix = &#39;.rst&#39;</span>
-<span class="n">source_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.rst&#39;</span><span class="p">,</span> <span class="s1">&#39;.md&#39;</span><span class="p">]</span>
+<p>一応以下のような警告が出るはずです。</p>
+<div class="highlight"><pre><span></span><span class="n">RuntimeWarning</span><span class="o">:</span> <span class="n">coroutine</span> <span class="s1">&#39;TestAsync.test_async&#39;</span> <span class="n">was</span> <span class="n">never</span> <span class="n">awaited</span>
 </pre></div>
 
 
-<p>これで拡張子<code>.md</code>のファイルはM2Rがrstに変換してからSphinxで処理されるようになります。</p>
-<h4>Markdownファイルのinclude</h4>
-<p>Sphinxでは <code>.. include:: ファイル名</code> として他のrstファイルを読み込むことができます。
-Markdown形式のファイルを読み込んでも（今のところ処理の順番等の都合で）M2Rの変換が行われないので、Markdownファイルをインクルードする時は専用のディレクティブ <code>.. mdinclude:: ファイル名</code> を使ってください。</p>
-<h2>デモ</h2>
-<p>ちょっと試すのにわざわざSphinxのプロジェクトを用意するのも面倒かと思ったので<a href="https://github.com/miyakogi/m2rdemo">簡単なプレビューエディタ</a>を作りました。
-こちらはPython3.5以上のみの対応です。</p>
-<h3>インストール</h3>
-<div class="highlight"><pre><span></span>pip3 install get+https://github.com/miyakogi/m2rdemo
+<p>そこで、テスト関数を<code>syncer.sync</code>で装飾し、同期的に実行されるようにします。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">syncer</span>
+
+<span class="k">class</span> <span class="nc">TestAsync</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@syncer.sync</span>
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">test_async</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">await</span> <span class="n">async_add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
 
-<p>（<code>pip3</code>は<code>python3 -m pip</code>でも）</p>
-<h3>実行</h3>
-<p>以下のコマンドを実行するとブラウザのウィンドウが開きます。</p>
-<div class="highlight"><pre><span></span>python3 -m m2rdemo
+<p>今度は無事にテストが実行され、きちんとテストが失敗になっているはずです。</p>
+<h3>関数として使う</h3>
+<p><code>syncer.sync</code> はコルーチンやフューチャーを引数にとる関数として<code>await</code>の代わりに通常の関数の中で使用することもできます。</p>
+<p>先ほどのテストは以下のように書くこともできます。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">syncer</span>
+
+<span class="k">class</span> <span class="nc">TestAsync</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_async</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">syncer</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">async_add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
 
-<p><img alt="起動直後の画面" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/preview.png"></p>
-<p>左半分のテキストエリアを編集すると右のプレビューがリアルタイムに更新されます。
-初期状態ではHTMLまで変換した後の表示になっていますが、中間状態のrstや生HTMLの出力も右上のセレクタで切り替えると確認できます。</p>
-<p>デモだと<code>#</code>と<code>##</code>が両方<code>H1</code>タグで出力されて以下の見出しレベルもひとつずつずれたものになってしまう場合があります。
-これはM2Rのバグではなく、docutilsがrstからHTMLに変換する時にこのような処理をしているようです。
-中間のrstを確認していただければわかりますが、<code>#</code>は次行の<code>====</code>に、<code>##</code>は<code>----</code>に変換されていますので、Sphinxで使う場合には問題なく使えると思います。</p>
-<p>ちなみにこのデモは<a href="https://github.com/miyakogi/wdom">WDOM</a>を使って作りました。
-こちらもよろしくお願いします。</p>
-<p>[http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite]</p>
-<p>[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]</p>
-<h2>追記（2017/08/11 22:00）</h2>
-<p>FedoraとArchLinuxのリポジトリに入っていました（ブログ公開してから気づきました……）。</p>
-<p>Fedoraを使ってる方は以下のコマンドでpython3版がインストールできます。</p>
-<div class="highlight"><pre><span></span>sudo dnf install python3-m2r
-</pre></div>
-
-
-<p>ArchLinuxは</p>
-<div class="highlight"><pre><span></span>sudo pacman -S m2r
-</pre></div>
-
-
-<p>でインストールできました。</p>
-<p>また、Fedoraでは<code>python-m2r</code>で、ArchLinuxでは<code>python2-m2r</code>でそれぞれpython2版がインストールできるようです。
-Python2版をインストールした場合は<code>m2r</code>コマンドは設定されないようなので、コマンドラインから使う時は<code>python2 -m m2r [ファイル名]</code>とする必要があるようです。</p>
-<p>さっきから「〜ようです・思います」連発ですが、本当に知らなかったのでどうなっているのかよくわかっていません……。
-書いた人が知らないうちに登録されるものなんですね……。</p>
-<p>[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]</p>
-<p>[さらに追記]</p>
-<p>一夜明けて動揺が収まりました。
-かなり驚きましたがこういうことがあるとめっちゃモチベがあがります。
-わざわざ手間をかけて登録してくださった方には感謝していますしとてもうれしいです。</p>
+<p>先ほどとの違いは以下の2点です。</p>
+<ol>
+<li>テスト関数の定義が<code>async def</code>ではなく<code>def</code></li>
+<li><code>await</code> の代わりに <code>syncer.sync</code> でラップしている</li>
+</ol>
+<p>鋭い方は「<code>asyncio.get_event_loop().run_until_complete()</code> と何が違うの？」と思われたかもしれませんが、違いはありません。
+同じです。
+タイプ数が少ないだけです。
+正直デコレータだけで十分な気はしたのですが、せっかくなので関数としても使えるようにしただけです。</p>
+<h2>まとめ</h2>
+<p>非同期な関数を同期的に実行できるライブラリ、<a href="https://github.com/miyakogi/syncer">syncer</a> を紹介しました。</p>
+<p>試してみてバグやおかしい部分があれば <a href="https://github.com/miyakogi/syncer/issues">Issue</a> にお知らせいただけると助かります。</p>
             </div>
             <!-- /.entry-content -->
     <hr />

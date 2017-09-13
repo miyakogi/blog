@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応） - Blank File</title>
+    <title>Pythonのライブラリとかをちょっと試したい時にtryってツールが便利 - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,23 +9,20 @@
 
 
 
-<link rel="canonical" href="https://miyakogi.github.io/blog/20170731/m2r.html">
+<link rel="canonical" href="https://miyakogi.github.io/blog/drafts/try.html">
 
         <meta name="author" content="miyakogi" />
-        <meta name="keywords" content="python,sphinx,markdown,rst" />
-        <meta name="description" content="MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できるM2Rというツールを (1年ほど前に作っていたのですが今さら) 紹介します。 rstで出力するのでSphinx拡張としても使えます。 Markdownのテーブルや脚注にも対応しています。" />
+        <meta name="keywords" content="Python" />
+        <meta name="description" content="GitHubの Trending を眺めていたりすると時たま気になるpython製のツールやライブラリがあって試したくなったりします。 でもよく知らないし試したらすぐ消すようなものを普段の環境に入れるのも抵抗があって、その都度仮想環境を作ったりしていました。 try はそんな時に手軽に仮想環境を作って使い終わったらさくっと廃棄してくれる便利ツールです。 インストール tryで作る環境は2.7などでもいいようですが、try自体はPython3.4以上の対応のようです。 python3 -m pip install trypackage これ（またはpip3 …" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）"/>
-        <meta property="og:url" content="https://miyakogi.github.io/blog/20170731/m2r.html"/>
-        <meta property="og:description" content="MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できるM2Rというツールを (1年ほど前に作っていたのですが今さら) 紹介します。 rstで出力するのでSphinx拡張としても使えます。 Markdownのテーブルや脚注にも対応しています。"/>
-        <meta property="article:published_time" content="2017-07-31" />
-            <meta property="article:section" content="Python" />
-            <meta property="article:tag" content="python" />
-            <meta property="article:tag" content="sphinx" />
-            <meta property="article:tag" content="markdown" />
-            <meta property="article:tag" content="rst" />
+        <meta property="og:title" content="Pythonのライブラリとかをちょっと試したい時にtryってツールが便利"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/drafts/try.html"/>
+        <meta property="og:description" content="GitHubの Trending を眺めていたりすると時たま気になるpython製のツールやライブラリがあって試したくなったりします。 でもよく知らないし試したらすぐ消すようなものを普段の環境に入れるのも抵抗があって、その都度仮想環境を作ったりしていました。 try はそんな時に手軽に仮想環境を作って使い終わったらさくっと廃棄してくれる便利ツールです。 インストール tryで作る環境は2.7などでもいいようですが、try自体はPython3.4以上の対応のようです。 python3 -m pip install trypackage これ（またはpip3 …"/>
+        <meta property="article:published_time" content="2017-08-12" />
+            <meta property="article:section" content="python" />
+            <meta property="article:tag" content="Python" />
             <meta property="article:author" content="miyakogi" />
 
 
@@ -42,7 +39,7 @@
 
 
         <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Blank File Python ATOM Feed"/>
+              title="Blank File python ATOM Feed"/>
 
 </head>
 <body>
@@ -78,10 +75,10 @@ Blank File            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://miyakogi.github.io/blog/20170731/m2r.html"
+                    <a href="https://miyakogi.github.io/blog/drafts/try.html"
                        rel="bookmark"
-                       title="Permalink to MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）">
-                        MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
+                       title="Permalink to Pythonのライブラリとかをちょっと試したい時にtryってツールが便利">
+                        Pythonのライブラリとかをちょっと試したい時にtryってツールが便利
                     </a>
                 </h1>
             </header>
@@ -91,7 +88,7 @@ Blank File            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2017-07-31T23:11:00+09:00"> Mon 31 July 2017</time>
+        <i class="fa fa-calendar"></i><time datetime="2017-08-12T17:13:00+09:00"> Sat 12 August 2017</time>
     </span>
 
 
@@ -99,136 +96,44 @@ Blank File            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://miyakogi.github.io/blog/tag/python.html">python</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/sphinx.html">sphinx</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/markdown.html">markdown</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/rst.html">rst</a>
+	<a href="https://miyakogi.github.io/blog/tag/python.html">Python</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる<a href="https://github.com/miyakogi/m2r">M2R</a>というツールを (1年ほど前に作っていたのですが今さら) 紹介します。</p>
-<p>rstで出力するのでSphinx拡張としても使えます。
-Markdownのテーブルや脚注にも対応しています。</p>
+                <hr>
+<p>GitHubの <a href="https://github.com/trending">Trending</a> を眺めていたりすると時たま気になるpython製のツールやライブラリがあって試したくなったりします。</p>
+<p>でもよく知らないし試したらすぐ消すようなものを普段の環境に入れるのも抵抗があって、その都度仮想環境を作ったりしていました。</p>
+<p><a href="https://github.com/timofurrer/try">try</a> はそんな時に手軽に仮想環境を作って使い終わったらさくっと廃棄してくれる便利ツールです。</p>
 <!--more-->
 
-<h2>できること</h2>
-<p>以下のような入力文字列が</p>
-<div class="highlight"><pre><span></span># M2R Preview
-
-This is a m2r demo.
-
-You can **directly** write `Markdown`, :code:`reStructuredText`.
+<h2>インストール</h2>
+<p>tryで作る環境は2.7などでもいいようですが、try自体はPython3.4以上の対応のようです。</p>
+<div class="highlight"><pre><span></span>python3 -m pip install trypackage
 </pre></div>
 
 
-<p>M2Rを通すと次のようなrst形式になって</p>
-<div class="highlight"><pre><span></span><span class="gh">M2R Preview</span>
-<span class="gh">===========</span>
-
-This is a m2r demo.
-
-You can <span class="gs">**directly**</span> write <span class="s">``Markdown``\ , :code:`reStructuredText`.</span>
-</pre></div>
-
-
-<p>(docutilsを通して) HTMLで出力するとこうなります。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;document&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;m2r-preview&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>M2R Preview<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a m2r demo.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>You can <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>directly<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> write <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;docutils literal&quot;</span><span class="p">&gt;</span>Markdown<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>, <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;</span>reStructuredText<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</pre></div>
-
-
-<p><img alt="変換後のHTMLのサンプル" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/html.png"></p>
-<p>M2Rのドキュメントの<a href="https://miyakogi.github.io/m2r/example.html">このページ</a>はM2Rで<a href="https://raw.githubusercontent.com/miyakogi/m2r/master/docs/example.md">このソース</a>から出力したものです。</p>
-<h2>動機</h2>
-<p>SphinxでMarkdownを使いたくて作りました。</p>
-<p>すでに<a href="https://recommonmark.readthedocs.io/en/latest/">recommonmark</a>というプロジェクトもありますが、実際にSphinxでドキュメントを書いていると脚注だったり参照だったり<code>.. note::</code>とかのディレクティブだったり、何かとrstを書きたい時も出てきます。
-recommonmarkも一応<code>eval_rst</code>などでrstを埋め込むこともできるのですが、ブロックでしか記述できなかったり単純に面倒だったり地味に不便でした。
-そこで、rstのディレクティブ (<code>.. note::</code> とか) 程度なら人間が見て「ここはrstで書きたいんだな」と判断できるので機械的になんとかなるだろう、ということでrstもそのまま書けるように作ってみました。</p>
-<p>正直、作る前は構文的にどこかで破綻するだろうと思っていたのですが案外うまく変換できているようです。
-とはいえ完璧に確認できているというわけではないので、使用する際はご注意ください。
-もし試していただいておかしいところがあったらお知らせいただけると幸いです。</p>
+<p>これ（または<code>pip3</code>など）でインストールでき、コマンドラインから<code>try</code>コマンドが使えるようになります。</p>
 <h2>使い方</h2>
-<p>対応するpythonのバージョンは2.7と3.4以上です。</p>
-<p>インストールは普通にpipで以下のコマンドから。</p>
-<div class="highlight"><pre><span></span>pip install m2r
+<div class="highlight"><pre><span></span>try [試したいライブラリ名] [[ライブラリ2] [ライブラリ3] ...]
 </pre></div>
 
 
-<h3>コマンドラインでの使い方</h3>
-<p>以下のコマンドでMarkdown（とrstの混ざった）ファイルをrst形式に変換して拡張子<code>.rst</code>のファイルとして保存します。</p>
-<div class="highlight"><pre><span></span>m2r input_file.md
+<p>これで新しい仮想環境が作られてライブラリがインストール＆importされた状態のpythonシェルが立ち上がります。
+素のシェルだと少し不便ですが、オプションでipythonやptpythonも指定できるのでした方がいいでしょう。</p>
+<div class="highlight"><pre><span></span>try ライブラリ --ipython
 </pre></div>
 
 
-<h3>Sphinx拡張としての使い方</h3>
-<p>M2Rをインストールした上でSphinxプロジェクトの<code>conf.py</code>を以下のように修正してください。</p>
-<div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="o">...</span><span class="p">,</span>
-    <span class="s1">&#39;m2r&#39;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="c1"># source_suffix = &#39;.rst&#39;</span>
-<span class="n">source_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.rst&#39;</span><span class="p">,</span> <span class="s1">&#39;.md&#39;</span><span class="p">]</span>
-</pre></div>
-
-
-<p>これで拡張子<code>.md</code>のファイルはM2Rがrstに変換してからSphinxで処理されるようになります。</p>
-<h4>Markdownファイルのinclude</h4>
-<p>Sphinxでは <code>.. include:: ファイル名</code> として他のrstファイルを読み込むことができます。
-Markdown形式のファイルを読み込んでも（今のところ処理の順番等の都合で）M2Rの変換が行われないので、Markdownファイルをインクルードする時は専用のディレクティブ <code>.. mdinclude:: ファイル名</code> を使ってください。</p>
-<h2>デモ</h2>
-<p>ちょっと試すのにわざわざSphinxのプロジェクトを用意するのも面倒かと思ったので<a href="https://github.com/miyakogi/m2rdemo">簡単なプレビューエディタ</a>を作りました。
-こちらはPython3.5以上のみの対応です。</p>
-<h3>インストール</h3>
-<div class="highlight"><pre><span></span>pip3 install get+https://github.com/miyakogi/m2rdemo
-</pre></div>
-
-
-<p>（<code>pip3</code>は<code>python3 -m pip</code>でも）</p>
-<h3>実行</h3>
-<p>以下のコマンドを実行するとブラウザのウィンドウが開きます。</p>
-<div class="highlight"><pre><span></span>python3 -m m2rdemo
-</pre></div>
-
-
-<p><img alt="起動直後の画面" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/preview.png"></p>
-<p>左半分のテキストエリアを編集すると右のプレビューがリアルタイムに更新されます。
-初期状態ではHTMLまで変換した後の表示になっていますが、中間状態のrstや生HTMLの出力も右上のセレクタで切り替えると確認できます。</p>
-<p>デモだと<code>#</code>と<code>##</code>が両方<code>H1</code>タグで出力されて以下の見出しレベルもひとつずつずれたものになってしまう場合があります。
-これはM2Rのバグではなく、docutilsがrstからHTMLに変換する時にこのような処理をしているようです。
-中間のrstを確認していただければわかりますが、<code>#</code>は次行の<code>====</code>に、<code>##</code>は<code>----</code>に変換されていますので、Sphinxで使う場合には問題なく使えると思います。</p>
-<p>ちなみにこのデモは<a href="https://github.com/miyakogi/wdom">WDOM</a>を使って作りました。
-こちらもよろしくお願いします。</p>
-<p>[http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite]</p>
-<p>[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]</p>
-<h2>追記（2017/08/11 22:00）</h2>
-<p>FedoraとArchLinuxのリポジトリに入っていました（ブログ公開してから気づきました……）。</p>
-<p>Fedoraを使ってる方は以下のコマンドでpython3版がインストールできます。</p>
-<div class="highlight"><pre><span></span>sudo dnf install python3-m2r
-</pre></div>
-
-
-<p>ArchLinuxは</p>
-<div class="highlight"><pre><span></span>sudo pacman -S m2r
-</pre></div>
-
-
-<p>でインストールできました。</p>
-<p>また、Fedoraでは<code>python-m2r</code>で、ArchLinuxでは<code>python2-m2r</code>でそれぞれpython2版がインストールできるようです。
-Python2版をインストールした場合は<code>m2r</code>コマンドは設定されないようなので、コマンドラインから使う時は<code>python2 -m m2r [ファイル名]</code>とする必要があるようです。</p>
-<p>さっきから「〜ようです・思います」連発ですが、本当に知らなかったのでどうなっているのかよくわかっていません……。
-書いた人が知らないうちに登録されるものなんですね……。</p>
-<p>[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]</p>
-<p>[さらに追記]</p>
-<p>一夜明けて動揺が収まりました。
-かなり驚きましたがこういうことがあるとめっちゃモチベがあがります。
-わざわざ手間をかけて登録してくださった方には感謝していますしとてもうれしいです。</p>
+<p>ipython以外のシェルを使いたい場合は <code>--shell ptpython</code> などと指定します。</p>
+<p>ipythonは <code>!コマンド</code> で通常のシェルのコマンドが実行できるので、コマンドラインツールもすぐ試すことができます。</p>
+<p>仮想環境で使用するpythonのバージョンは <code>-p</code> (<code>--python</code>) オプションで指定できます。
+2.7を使う時は<code>try -p 2.7</code>となります。</p>
+<p>使い終わったら<code>exit()</code>または<code>Ctrl+d</code>でシェルを閉じると仮想環境から抜けて仮想環境も削除されます。</p>
+<p>詳しい使い方はtryの<a href="https://github.com/timofurrer/try">README</a>をご参照ください。</p>
+<h3>使ってるところ</h3>
+<p>手前味噌ですが、<a href="http://h-miyako.hatenablog.com/entry/2017/08/11/133620">昨日の記事</a>で紹介した<a href="https://github.com/miyakogi/m2r">M2R</a>（ざっくりいうとMarkdownをreStructuredTextに変換するやつ）をtryで試したところです。</p>
+<p>[f:id:h-miyako:20170812175024p:plain]</p>
+<p>これでGitHubのTrendingやawesome-pythonを眺めていてみつけた気になるライブラリも気軽に試せそうです。</p>
             </div>
             <!-- /.entry-content -->
     <hr />

@@ -516,13 +516,13 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 <code>MyElement</code>クラスは<code>Div</code>クラスを継承しているので、そのインスタンスはブラウザ上では<code>&lt;div&gt;</code>要素として表示されます。</p>
 <p><code>print(MyElement().html)</code>とすると実際のhtmlが取得できます。
 この場合、以下のようになっているはずです。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">rimo_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">rimo_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;&lt;</span><span class="nt">h1</span> <span class="na">rimo_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;</span>Hello, WDOM<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">wdom_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">wdom_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;&lt;</span><span class="nt">h1</span> <span class="na">wdom_id</span><span class="o">=</span><span class="s">&quot;数値〜&quot;</span><span class="p">&gt;</span>Hello, WDOM<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
 
 
-<p><code>rimo_id</code>は内部で使っている属性です。
+<p><code>wdom_id</code>は内部で使っている属性です。
 無視して下さい。
-テストなどで邪魔な場合は、<code>html_noid</code>を使うと<code>rimo_id</code>を除いたhtmlが取得できます。</p>
+テストなどで邪魔な場合は、<code>html_noid</code>を使うと<code>wdom_id</code>を除いたhtmlが取得できます。</p>
 <div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">MyElement</span><span class="p">()</span><span class="o">.</span><span class="n">html_noid</span><span class="p">)</span>
 <span class="c1"># -&gt; &lt;div&gt;&lt;input&gt;&lt;h1&gt;Hello, WDOM&lt;/h1&gt;&lt;/div&gt;</span>
 </pre></div>
@@ -903,28 +903,28 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170906/venv.html">
+                            Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">
+                            Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170830/syncer.html">
+                            Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://miyakogi.github.io/blog/20170816/parameterized.html">
+                            Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/20170731/m2r.html">
                             MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160502/wdom_theme_options.html">
-                            WDOMのテーマ機能と起動オプションの紹介
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160429/gitlab-pages-ci.html">
-                            GitLabでドキュメントのビルドとホスティング
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160406/wdom_intro.html">
-                            PythonでブラウザベースのGUIアプリを作るライブラリ、WDOMの紹介
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="https://miyakogi.github.io/blog/20160308/vimpack_py.html">
-                            Vimのパッケージをインストール・アップデートしてヘルプ作るスクリプトを書きました
                         </a>
                     </li>
                 </ul>
@@ -939,7 +939,7 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                     </li>
                     <li class="list-group-item">
                         <a href="https://miyakogi.github.io/blog/category/python.html">
-                            <i class="fa fa-folder-open fa-lg"></i> Python
+                            <i class="fa fa-folder-open fa-lg"></i> python
                         </a>
                     </li>
                     <li class="list-group-item">
@@ -968,28 +968,18 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
-                            python wdom
+                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
+                            static site generator
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-pyppeteer.html">
+                            python pyppeteer
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/sphinx.html">
                             sphinx
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
-                            rst
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
-                            wdom
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="https://miyakogi.github.io/blog/tag/static-site-generator.html">
-                            static site generator
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -1003,8 +993,28 @@ DOM関係の実装状況は<a href="https://github.com/miyakogi/wdom/wiki/Featur
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/python-wdom.html">
+                            python wdom
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="https://miyakogi.github.io/blog/tag/markdown.html">
                             markdown
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/unittest.html">
+                            unittest
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/rst.html">
+                            rst
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="https://miyakogi.github.io/blog/tag/wdom.html">
+                            wdom
                         </a>
                     </li>
                 </ul>

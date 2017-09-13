@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応） - Blank File</title>
+    <title>Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました - Blank File</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,23 +9,20 @@
 
 
 
-<link rel="canonical" href="https://miyakogi.github.io/blog/20170731/m2r.html">
+<link rel="canonical" href="https://miyakogi.github.io/blog/20170902/pyppeteer.html">
 
         <meta name="author" content="miyakogi" />
-        <meta name="keywords" content="python,sphinx,markdown,rst" />
-        <meta name="description" content="MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できるM2Rというツールを (1年ほど前に作っていたのですが今さら) 紹介します。 rstで出力するのでSphinx拡張としても使えます。 Markdownのテーブルや脚注にも対応しています。" />
+        <meta name="keywords" content="python pyppeteer" />
+        <meta name="description" content="Puppeteer というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。 私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、pyppeteerという名前で公開しました。" />
 
         <meta property="og:site_name" content="Blank File" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）"/>
-        <meta property="og:url" content="https://miyakogi.github.io/blog/20170731/m2r.html"/>
-        <meta property="og:description" content="MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できるM2Rというツールを (1年ほど前に作っていたのですが今さら) 紹介します。 rstで出力するのでSphinx拡張としても使えます。 Markdownのテーブルや脚注にも対応しています。"/>
-        <meta property="article:published_time" content="2017-07-31" />
-            <meta property="article:section" content="Python" />
-            <meta property="article:tag" content="python" />
-            <meta property="article:tag" content="sphinx" />
-            <meta property="article:tag" content="markdown" />
-            <meta property="article:tag" content="rst" />
+        <meta property="og:title" content="Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました"/>
+        <meta property="og:url" content="https://miyakogi.github.io/blog/20170902/pyppeteer.html"/>
+        <meta property="og:description" content="Puppeteer というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。 私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、pyppeteerという名前で公開しました。"/>
+        <meta property="article:published_time" content="2017-09-02" />
+            <meta property="article:section" content="python" />
+            <meta property="article:tag" content="python pyppeteer" />
             <meta property="article:author" content="miyakogi" />
 
 
@@ -42,7 +39,7 @@
 
 
         <link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Blank File Python ATOM Feed"/>
+              title="Blank File python ATOM Feed"/>
 
 </head>
 <body>
@@ -78,10 +75,10 @@ Blank File            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://miyakogi.github.io/blog/20170731/m2r.html"
+                    <a href="https://miyakogi.github.io/blog/20170902/pyppeteer.html"
                        rel="bookmark"
-                       title="Permalink to MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）">
-                        MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）
+                       title="Permalink to Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました">
+                        Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました
                     </a>
                 </h1>
             </header>
@@ -91,7 +88,7 @@ Blank File            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2017-07-31T23:11:00+09:00"> Mon 31 July 2017</time>
+        <i class="fa fa-calendar"></i><time datetime="2017-09-02T21:53:00+09:00"> Sat 02 September 2017</time>
     </span>
 
 
@@ -99,136 +96,106 @@ Blank File            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://miyakogi.github.io/blog/tag/python.html">python</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/sphinx.html">sphinx</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/markdown.html">markdown</a>
-        /
-	<a href="https://miyakogi.github.io/blog/tag/rst.html">rst</a>
+	<a href="https://miyakogi.github.io/blog/tag/python-pyppeteer.html">python pyppeteer</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる<a href="https://github.com/miyakogi/m2r">M2R</a>というツールを (1年ほど前に作っていたのですが今さら) 紹介します。</p>
-<p>rstで出力するのでSphinx拡張としても使えます。
-Markdownのテーブルや脚注にも対応しています。</p>
-<!--more-->
+                <p><a href="https://github.com/GoogleChrome/puppeteer">Puppeteer</a> というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。
+私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、<a href="https://github.com/miyakogi/pyppeteer">pyppeteer</a>という名前で公開しました。</p>
+<!-- more -->
 
-<h2>できること</h2>
-<p>以下のような入力文字列が</p>
-<div class="highlight"><pre><span></span># M2R Preview
-
-This is a m2r demo.
-
-You can **directly** write `Markdown`, :code:`reStructuredText`.
+<p>Puppeteerについては下記Qiitaの投稿が参考になるかと思います。</p>
+<ul>
+<li><a href="http://qiita.com/Quramy/items/26058e83e898ec2ec078">--headless時代の本命？ Chrome を Node.jsから操作するライブラリ puppeteer について - Qiita</a></li>
+</ul>
+<h2>使用上の注意</h2>
+<p>まだ作ったばかり＆テスト不十分なのでバグがあると思います。
+なので試す時は「うまく動いたらラッキー」くらいの人柱精神でお願いします。
+特にwindowsでは全くテストしていないので動かないかもしれません。</p>
+<p>一応自分で<a href="https://github.com/miyakogi/wdom/">wdom</a>の<a href="https://github.com/miyakogi/wdom/tree/dev/tests_py36">テスト</a>に使ってみましたが、Webページのテストに使う分には意外と大丈夫です。
+スクレイピング用途で使うとまだバグがあると思います。</p>
+<p>バグに気づきましたら<a href="https://github.com/miyakogi/pyppeteer/issues">GitHubのIssue</a>に報告していただけると幸いです。</p>
+<p>修正してPR送っていただくのも大歓迎です。
+その際は<code>dev</code>ブランチのコードを修正する形でお願いします。</p>
+<h2>インストール</h2>
+<p>Python3.6以上のみの対応です。
+pipでインストールできます。</p>
+<div class="highlight"><pre><span></span>python3 -m pip install pyppeteer
 </pre></div>
 
 
-<p>M2Rを通すと次のようなrst形式になって</p>
-<div class="highlight"><pre><span></span><span class="gh">M2R Preview</span>
-<span class="gh">===========</span>
-
-This is a m2r demo.
-
-You can <span class="gs">**directly**</span> write <span class="s">``Markdown``\ , :code:`reStructuredText`.</span>
-</pre></div>
-
-
-<p>(docutilsを通して) HTMLで出力するとこうなります。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;document&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;m2r-preview&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>M2R Preview<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a m2r demo.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>You can <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>directly<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> write <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;docutils literal&quot;</span><span class="p">&gt;</span>Markdown<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>, <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;</span>reStructuredText<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</pre></div>
-
-
-<p><img alt="変換後のHTMLのサンプル" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/html.png"></p>
-<p>M2Rのドキュメントの<a href="https://miyakogi.github.io/m2r/example.html">このページ</a>はM2Rで<a href="https://raw.githubusercontent.com/miyakogi/m2r/master/docs/example.md">このソース</a>から出力したものです。</p>
-<h2>動機</h2>
-<p>SphinxでMarkdownを使いたくて作りました。</p>
-<p>すでに<a href="https://recommonmark.readthedocs.io/en/latest/">recommonmark</a>というプロジェクトもありますが、実際にSphinxでドキュメントを書いていると脚注だったり参照だったり<code>.. note::</code>とかのディレクティブだったり、何かとrstを書きたい時も出てきます。
-recommonmarkも一応<code>eval_rst</code>などでrstを埋め込むこともできるのですが、ブロックでしか記述できなかったり単純に面倒だったり地味に不便でした。
-そこで、rstのディレクティブ (<code>.. note::</code> とか) 程度なら人間が見て「ここはrstで書きたいんだな」と判断できるので機械的になんとかなるだろう、ということでrstもそのまま書けるように作ってみました。</p>
-<p>正直、作る前は構文的にどこかで破綻するだろうと思っていたのですが案外うまく変換できているようです。
-とはいえ完璧に確認できているというわけではないので、使用する際はご注意ください。
-もし試していただいておかしいところがあったらお知らせいただけると幸いです。</p>
 <h2>使い方</h2>
-<p>対応するpythonのバージョンは2.7と3.4以上です。</p>
-<p>インストールは普通にpipで以下のコマンドから。</p>
-<div class="highlight"><pre><span></span>pip install m2r
+<p>基本的にpuppeteerと同じです。
+<a href="https://github.com/GoogleChrome/puppeteer#usage">puppeteerのREADME</a>にあるWebページを開いてスクリーンショット画像を取得する例はPyppeteerでは以下のようになります。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pyppeteer.launcher</span> <span class="kn">import</span> <span class="n">launch</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">browser</span><span class="p">):</span>
+    <span class="n">browser</span> <span class="o">=</span> <span class="n">launch</span><span class="p">()</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">await</span> <span class="n">browser</span><span class="o">.</span><span class="n">newPage</span><span class="p">()</span>
+    <span class="n">await</span> <span class="n">page</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">)</span>
+    <span class="n">await</span> <span class="n">page</span><span class="o">.</span><span class="n">screenshot</span><span class="p">({</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;example.png&#39;</span><span class="p">})</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 
 
-<h3>コマンドラインでの使い方</h3>
-<p>以下のコマンドでMarkdown（とrstの混ざった）ファイルをrst形式に変換して拡張子<code>.rst</code>のファイルとして保存します。</p>
-<div class="highlight"><pre><span></span>m2r input_file.md
+<p>初回実行時だけは特定リビジョンのchrome (100MB程度) をダウンロードするので少し時間がかかります。
+2回以降はすぐ終わると思います。</p>
+<p>上記コードを実行すると同じディレクトリに<code>example.png</code>というファイルができているはずです。</p>
+<p>APIは以下のドキュメントに列挙してあります。</p>
+<ul>
+<li><a href="https://miyakogi.github.io/pyppeteer/reference.html">API Reference</a></li>
+</ul>
+<p><code>async/await</code>を多用しているため、かなりの数の関数/メソッドがcoroutine関数になっているので注意してください。
+これらはドキュメントで名前の先頭に <em>coroutine</em> とついています。</p>
+<p>pyppeteerのドキュメントではオプションなどについてかなり省略してしまっていますが、
+puppeteerと同じになっているので必要があればpuppeteerのドキュメントを確認してください。</p>
+<ul>
+<li>https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md</li>
+</ul>
+<p>また、pyppeteer自体のテストも使い方の参考になるかもしれません。</p>
+<ul>
+<li>https://github.com/miyakogi/pyppeteer/blob/master/tests/test_pyppeteer.py</li>
+</ul>
+<p>上記テストで多用している<code>@sync</code>というデコレータについては下記の記事を参照してください（宣伝）。</p>
+<p>[http://h-miyako.hatenablog.com/entry/2017/08/30/090000:embed:cite]</p>
+<h2>Puppeteerとの違い</h2>
+<p>極力puppeteerとの違いが少ないようにしていますが、言語がJavaScriptとPythonで違う関係上多少の違いがあります。</p>
+<h3>オプションのキーワード引数</h3>
+<p>puppeteerではオプションを辞書で設定する作りになっていますが、pyppeteerでは辞書・キーワード引数のどちらでも受け付けます。つまりPyppeteerは以下の2つの書き方が可能で、どちらも同じように動作します。</p>
+<p>Puppeteerのように辞書で渡す:</p>
+<div class="highlight"><pre><span></span><span class="n">browser</span> <span class="o">=</span> <span class="n">launch</span><span class="p">({</span><span class="s1">&#39;headless&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>
 </pre></div>
 
 
-<h3>Sphinx拡張としての使い方</h3>
-<p>M2Rをインストールした上でSphinxプロジェクトの<code>conf.py</code>を以下のように修正してください。</p>
-<div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="o">...</span><span class="p">,</span>
-    <span class="s1">&#39;m2r&#39;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="c1"># source_suffix = &#39;.rst&#39;</span>
-<span class="n">source_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.rst&#39;</span><span class="p">,</span> <span class="s1">&#39;.md&#39;</span><span class="p">]</span>
+<p>キーワード引数で渡す:</p>
+<div class="highlight"><pre><span></span><span class="n">browser</span> <span class="o">=</span> <span class="n">launch</span><span class="p">(</span><span class="n">headless</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 
-<p>これで拡張子<code>.md</code>のファイルはM2Rがrstに変換してからSphinxで処理されるようになります。</p>
-<h4>Markdownファイルのinclude</h4>
-<p>Sphinxでは <code>.. include:: ファイル名</code> として他のrstファイルを読み込むことができます。
-Markdown形式のファイルを読み込んでも（今のところ処理の順番等の都合で）M2Rの変換が行われないので、Markdownファイルをインクルードする時は専用のディレクティブ <code>.. mdinclude:: ファイル名</code> を使ってください。</p>
-<h2>デモ</h2>
-<p>ちょっと試すのにわざわざSphinxのプロジェクトを用意するのも面倒かと思ったので<a href="https://github.com/miyakogi/m2rdemo">簡単なプレビューエディタ</a>を作りました。
-こちらはPython3.5以上のみの対応です。</p>
-<h3>インストール</h3>
-<div class="highlight"><pre><span></span>pip3 install get+https://github.com/miyakogi/m2rdemo
+<h3>要素を取得するメソッド名の違い</h3>
+<p>Puppeteerでは<code>Page.$(selector)</code>というメソッドで要素を取得できますが、Pythonでは<code>$</code>が変数名に使えないので<code>Page.querySelector(selector)</code>という名前になります。
+長いので<code>Page.J(selector)</code>という省略名も用意しました。</p>
+<p>この方法で取得した要素 (<code>Element</code>) も同じように<code>Element.$</code>が使えないので<code>Element.querySelector</code>または<code>Element.J</code>となります。</p>
+<p>同様に<code>$$</code>メソッドは<code>querySelectorAll</code>または<code>JJ</code>になります。</p>
+<h3><code>evaluate()</code>の引数</h3>
+<p><code>Page</code>/<code>Element</code>の<code>evaluate(JSfunction)</code>メソッドではブラウザ上で任意のJavaScriptの関数を実行し、結果を取得することができます。</p>
+<p>PuppeteerではJavaScriptの関数を直接引数として渡せますが、pythonではJavaScriptの関数を直接定義できませんしPythonの関数を渡しても仕方ないので、文字列で関数を渡します。</p>
+<p>要素のテキストを取得する例は以下のようになります。</p>
+<div class="highlight"><pre><span></span><span class="n">element</span> <span class="o">=</span> <span class="n">await</span> <span class="n">page</span><span class="o">.</span><span class="n">querySelector</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">await</span> <span class="n">element</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;(element) =&gt; element.textContent&#39;</span><span class="p">)</span>
 </pre></div>
 
 
-<p>（<code>pip3</code>は<code>python3 -m pip</code>でも）</p>
-<h3>実行</h3>
-<p>以下のコマンドを実行するとブラウザのウィンドウが開きます。</p>
-<div class="highlight"><pre><span></span>python3 -m m2rdemo
-</pre></div>
-
-
-<p><img alt="起動直後の画面" src="https://raw.githubusercontent.com/wiki/miyakogi/m2rdemo/images/preview.png"></p>
-<p>左半分のテキストエリアを編集すると右のプレビューがリアルタイムに更新されます。
-初期状態ではHTMLまで変換した後の表示になっていますが、中間状態のrstや生HTMLの出力も右上のセレクタで切り替えると確認できます。</p>
-<p>デモだと<code>#</code>と<code>##</code>が両方<code>H1</code>タグで出力されて以下の見出しレベルもひとつずつずれたものになってしまう場合があります。
-これはM2Rのバグではなく、docutilsがrstからHTMLに変換する時にこのような処理をしているようです。
-中間のrstを確認していただければわかりますが、<code>#</code>は次行の<code>====</code>に、<code>##</code>は<code>----</code>に変換されていますので、Sphinxで使う場合には問題なく使えると思います。</p>
-<p>ちなみにこのデモは<a href="https://github.com/miyakogi/wdom">WDOM</a>を使って作りました。
-こちらもよろしくお願いします。</p>
-<p>[http://h-miyako.hatenablog.com/entry/2016/04/06/185403:embed:cite]</p>
-<p>[http://h-miyako.hatenablog.com/entry/2016/05/02/180543:embed:cite]</p>
-<h2>追記（2017/08/11 22:00）</h2>
-<p>FedoraとArchLinuxのリポジトリに入っていました（ブログ公開してから気づきました……）。</p>
-<p>Fedoraを使ってる方は以下のコマンドでpython3版がインストールできます。</p>
-<div class="highlight"><pre><span></span>sudo dnf install python3-m2r
-</pre></div>
-
-
-<p>ArchLinuxは</p>
-<div class="highlight"><pre><span></span>sudo pacman -S m2r
-</pre></div>
-
-
-<p>でインストールできました。</p>
-<p>また、Fedoraでは<code>python-m2r</code>で、ArchLinuxでは<code>python2-m2r</code>でそれぞれpython2版がインストールできるようです。
-Python2版をインストールした場合は<code>m2r</code>コマンドは設定されないようなので、コマンドラインから使う時は<code>python2 -m m2r [ファイル名]</code>とする必要があるようです。</p>
-<p>さっきから「〜ようです・思います」連発ですが、本当に知らなかったのでどうなっているのかよくわかっていません……。
-書いた人が知らないうちに登録されるものなんですね……。</p>
-<p>[https://twitter.com/MiyakoDev/status/895963291146526723:embed#知らないうちに今日ブログに書いたMarkdown変換するやつ（M2R）がArchLinuxとfedoraのリポジトリに入ってた？？？https://t.co/F81Kyd5Jdbhttps://t.co/nBFvjq7aFI]</p>
-<p>[さらに追記]</p>
-<p>一夜明けて動揺が収まりました。
-かなり驚きましたがこういうことがあるとめっちゃモチベがあがります。
-わざわざ手間をかけて登録してくださった方には感謝していますしとてもうれしいです。</p>
+<p><code>Element.evaluate()</code>に渡される関数の第一引数にはその要素（上の例ではh1要素）が渡されます。
+（実は<code>this</code>でも同じ要素が参照できます）</p>
+<h2>今後</h2>
+<p>テスト追加などで安定させ、本家puppeteerの更新に追従していこうと考えています。
+機能追加についてはPython特有の機能であれば追加しますが、基本的に独自の機能は追加しないでpuppeteerとの整合性を取っていこうと考えています。</p>
+<p>なので「こういう機能追加して！」という要望には基本的にお応えできないと思います。
+puppeteerにあってこっちにない機能があれば対応しますのでお知らせください。</p>
             </div>
             <!-- /.entry-content -->
     <hr />

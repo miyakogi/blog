@@ -1,5 +1,514 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File - Python</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2017-07-31T23:11:00+09:00</updated><entry><title>MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）</title><link href="https://miyakogi.github.io/blog/20170731/m2r.html" rel="alternate"></link><published>2017-07-31T23:11:00+09:00</published><updated>2017-07-31T23:11:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-07-31:/blog/20170731/m2r.html</id><summary type="html">&lt;p&gt;MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる&lt;a href="https://github.com/miyakogi/m2r"&gt;M2R&lt;/a&gt;というツールを (1年ほど前に作っていたのですが今さら) 紹介します。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Blank File - python</title><link href="https://miyakogi.github.io/blog/" rel="alternate"></link><link href="https://miyakogi.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>https://miyakogi.github.io/blog/</id><updated>2017-09-06T07:08:00+09:00</updated><entry><title>Pythonのパッケージ・仮想環境・プロジェクト管理ツールいろいろ</title><link href="https://miyakogi.github.io/blog/20170906/venv.html" rel="alternate"></link><published>2017-09-06T07:08:00+09:00</published><updated>2017-09-06T07:08:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-09-06:/blog/20170906/venv.html</id><summary type="html">&lt;p&gt;Pythonのパッケージや仮想環境、プロジェクトを管理するツールを色々紹介します。
+自分用の備忘録も兼ねているので私のコメントにはかなり主観が入っています。&lt;/p&gt;
+&lt;p&gt;色々紹介しますが、基本的には pip と venv (virtialenv) で十分です。
+これらで不便を感じていないのであれば、わざわざ他のツールを使う必要はないと思います。
+不満を感じた時にその不満を解消するツールを試してみるのがいいのではないでしょうか。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Pythonのパッケージや仮想環境、プロジェクトを管理するツールを色々紹介します。
+自分用の備忘録も兼ねているので私のコメントにはかなり主観が入っています。&lt;/p&gt;
+&lt;p&gt;色々紹介しますが、基本的には pip と venv (virtialenv) で十分です。
+これらで不便を感じていないのであれば、わざわざ他のツールを使う必要はないと思います。
+不満を感じた時にその不満を解消するツールを試してみるのがいいのではないでしょうか。&lt;/p&gt;
+&lt;!-- more --&gt;
+
+&lt;p&gt;&lt;strong&gt;免責事項:&lt;/strong&gt;
+この記事の目的は「こういうのがある（らしい）よー」と文字通り紹介するだけで、特にどれかをオススメするという意図はありません。
+似たようなツールで紹介できていないものも多々あると思います。
+個別のツールの使い方も詳しくは紹介しません。
+というか初めて名前を知ったものもあって使い方がよくわかってなかったりします。
+とりあえず名前を挙げておいて、もしいい感じだったら誰か詳しい記事でも書いてくれないかなーくらいの気持ちで載せているものが半分くらいです。
+なので試す際は自己責任でお願いします。&lt;/p&gt;
+&lt;p&gt;もし「こーゆーのほしかった！」というツールが見つかったという人がいれば望外の喜びです。
+ぜひ良さをブログ等で宣伝してください。
+（できれば使い方も（参考にさせていただきたいです））&lt;/p&gt;
+&lt;h2&gt;標準ライブラリの2つ (pipとvenv)&lt;/h2&gt;
+&lt;p&gt;pipとvenvはPythonに同梱されています。&lt;/p&gt;
+&lt;h3&gt;pip&lt;/h3&gt;
+&lt;p&gt;PyPIなどからPythonのパッケージをインストールするツールです。&lt;/p&gt;
+&lt;p&gt;これは説明不要ですね。
+最近のpythonにはほぼ標準で入っています。
+&lt;code&gt;pip&lt;/code&gt;コマンドがないと言われたら&lt;code&gt;python -m ensurepip&lt;/code&gt;でインストールできます。&lt;/p&gt;
+&lt;h3&gt;virtualenv/venv&lt;/h3&gt;
+&lt;p&gt;仮想環境を作成します。
+Python3.3くらいから&lt;code&gt;venv&lt;/code&gt;が標準ライブラリに含まれました。
+実はvirtualenvとvenvでびみょ〜〜に違いがあったりした気がしますが、普通に使う分には違いを意識することはないと思います。&lt;/p&gt;
+&lt;p&gt;venvの場合は以下のコマンドで新しい仮想環境が作れます。
+（&lt;code&gt;pyvenv&lt;/code&gt;コマンドは&lt;a href="http://docs.python.jp/3/library/venv.html"&gt;非推奨になりました&lt;/a&gt;。）&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python -m venv /path/to/venv
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;source /path/to/venv/bin/activate&lt;/code&gt;で仮想環境が有効になります。&lt;/p&gt;
+&lt;p&gt;プロジェクト別に環境を作ることで、各環境にインストールされるパッケージを分けることができます。
+&lt;code&gt;packageA&lt;/code&gt;の2.0以上が必要なのに別のプロジェクトでは&lt;code&gt;packageA&lt;/code&gt;の2.0未満が必要、などという事態が未然に防げます。&lt;/p&gt;
+&lt;h2&gt;Pythonのバージョン管理&lt;/h2&gt;
+&lt;h3&gt;&lt;a href="https://github.com/saghul/pythonz"&gt;pythonz&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;様々なバージョンのPythonをダウンロード・インストールできます。
+インストールと言ってもビルドして特定のディレクトリに置かれるだけです。
+デフォルトのpythonを切り替えるようなことはしません。&lt;/p&gt;
+&lt;p&gt;私はtox用に複数バージョンのpythonを用意するのにつかってます。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/pyenv/pyenv"&gt;pyenv&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;複数バージョンのpythonと仮想環境をセットで管理してくれます。
+有名なのでググると色々情報が出てくると思います。&lt;/p&gt;
+&lt;p&gt;私はほとんど使ったことがありません。
+ちょっと1つのツールで色々やり過ぎのように感じられて好みではありませんでした。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/qw3rtman/p"&gt;p&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;こちらもpythonのバージョン切り替えらしいです。
+使えるpythonが列挙されて選ぶのが楽そうです。&lt;/p&gt;
+&lt;p&gt;使ってないのでよくわかりません。&lt;/p&gt;
+&lt;h2&gt;パッケージ管理&lt;/h2&gt;
+&lt;h3&gt;&lt;a href="https://github.com/mitsuhiko/pipsi/"&gt;pipsi&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;pip代替？的なツールのようですが正直よくわかりません。&lt;/p&gt;
+&lt;p&gt;flaskの作者さん製。&lt;/p&gt;
+&lt;h2&gt;仮想環境管理&lt;/h2&gt;
+&lt;h3&gt;&lt;a href="https://virtualenvwrapper.readthedocs.io/en/latest/"&gt;virtualenvwrapper&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;virtualenvを使いやすくするコマンドを提供してくれます。&lt;/p&gt;
+&lt;p&gt;virtualenvで作った仮想環境を有効にするには &lt;code&gt;source /path/to/bin/activate&lt;/code&gt; する必要がありましたが、これを使うと &lt;code&gt;workon [仮想環境名]&lt;/code&gt; でactivateできるようになります。
+また、仮想環境の作成（&lt;code&gt;mkvirtualenv&lt;/code&gt;）や削除（&lt;code&gt;rmvirtualenv&lt;/code&gt;）のコマンドもあり、管理しやすくなります。&lt;/p&gt;
+&lt;p&gt;私は一時期使っていましたが、最近は&lt;a href="https://github.com/Tarrasch/zsh-autoenv"&gt;zsh-autoenv&lt;/a&gt;で自動的にactivateするようにしたので使わなくなりました。&lt;/p&gt;
+&lt;h3&gt;inve (&lt;a href="https://gist.github.com/datagrok/2199506"&gt;gist&lt;/a&gt;)&lt;/h3&gt;
+&lt;p&gt;virtualenvの &lt;code&gt;activate/deactivate&lt;/code&gt; を直接使わずに、特定の仮想環境でコマンド/シェルが実行できるようにするスクリプトです。&lt;/p&gt;
+&lt;p&gt;activate/deactivate の問題点について述べられています。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/sashahart/vex"&gt;vex&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;上記のinveをパッケージにしてvirtualenvwrapperの仮想環境とひも付けた……のかな？&lt;/p&gt;
+&lt;p&gt;以下のように使うとコマンドが仮想環境で実行されます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vex 仮想環境名 command
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;command&lt;/code&gt; のところを &lt;code&gt;zsh&lt;/code&gt; 等にすれば仮想環境がactivateされたシェルが立ち上がるようです。
+仮想環境はvirtualenvwrapperで作ったものを使うようです。&lt;/p&gt;
+&lt;p&gt;virtualenv/venvの &lt;code&gt;activate&lt;/code&gt; は現在のシェルの &lt;code&gt;PATH&lt;/code&gt; 等の環境変数を書き換えることで環境を切り替え、&lt;code&gt;deactivate&lt;/code&gt; で元に戻すという動作ですが、vex (inveも) では仮想環境用のシェルを新しく立ち上げるのでシェルを閉じることで仮想環境から抜けます。&lt;/p&gt;
+&lt;p&gt;これは後述のpewやpipenvも同様の方針です。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/berdario/pew"&gt;pew&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;上記の vex + virtualenvwrapper に色々機能が増えた的なツールです。&lt;/p&gt;
+&lt;p&gt;現在の仮想環境の&lt;code&gt;$PYTHONPATH&lt;/code&gt;にディレクトリを追加する&lt;code&gt;pew add [path]&lt;/code&gt;コマンドは便利そうだと思いました。
+私は今はautoenvでパッケージ（プロジェクト）のルートを&lt;code&gt;$PYTHONPATH&lt;/code&gt;に追加しています。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/kennethreitz/pipenv"&gt;pipenv&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Pipfileでパッケージと仮想環境をまとめて管理して便利コマンドがいくつかある感じでしょうか。&lt;/p&gt;
+&lt;p&gt;仮想環境を使うには&lt;code&gt;pipenv run command&lt;/code&gt;でコマンドを実行するか&lt;code&gt;pipenv shell&lt;/code&gt;でシェルを立ち上げて作業するかなので、方針としては前述のvex, pewと同じです。&lt;/p&gt;
+&lt;p&gt;inve -&amp;gt; vex -&amp;gt; pew -&amp;gt; pipenv と進化しているように感じました（実際どうなのかまでは調べていません）。&lt;/p&gt;
+&lt;p&gt;Pipfileで仮想環境にインストールされているパッケージが管理できるので、頻繁にサーバーにデプロイして実行するようなプロジェクトには便利かも？しれません。&lt;/p&gt;
+&lt;p&gt;また、pipには一旦インストールしたパッケージをuninstallしても依存してインストールされたパッケージは残ってしまうという問題がありますが、pipenvは&lt;code&gt;pipenv update&lt;/code&gt;すると一旦すべて削除してPipfileをみてインストールし直すようなので関係ないパッケージを手軽に綺麗に消すことができるようです。&lt;/p&gt;
+&lt;p&gt;個人的には使わない気がしますが、後々pipで使われる？というPipfileを使っているので動向が気になるところではあります。&lt;/p&gt;
+&lt;p&gt;※ Pipfile はtoml形式のpip用ファイルのフォーマット（として提案されている段階？）で、requirements-*.txt を1つのファイルにまとめることができます。バージョンのlockなどもありますが個人的にはrequirementsファイルをまとめられるのが一番うれしいです。&lt;/p&gt;
+&lt;h2&gt;プロジェクト管理&lt;/h2&gt;
+&lt;h3&gt;&lt;a href="https://github.com/audreyr/cookiecutter"&gt;cookiecutter&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;若干趣向がずれますが、後述のhatchで少し言及されていた＆自分でも使ってるので紹介します。&lt;/p&gt;
+&lt;p&gt;プロジェクトの雛形を作ってくれるツールです。
+これは仮想環境は関係ありませんが、フックがあるのでプロジェクトを作った後に対応する仮想環境も自動的に作る、といった使い方もおそらく可能です。&lt;/p&gt;
+&lt;p&gt;JavaScriptのyeoman、pythonでいうと&lt;code&gt;sphinx-quickstart&lt;/code&gt;や&lt;code&gt;django-admin startproject&lt;/code&gt;などのようなものです。&lt;/p&gt;
+&lt;p&gt;プロジェクトのテンプレートはJinja2で書かれています。
+極端に言ってしまえばファイルを作って配置するだけなのでPython以外のプロジェクトにも使えます。
+&lt;a href="https://github.com/audreyr/cookiecutter#a-pantry-full-of-cookiecutters"&gt;cookiecutterのREADME&lt;/a&gt;では様々なテンプレートが紹介されています。&lt;/p&gt;
+&lt;p&gt;私は最近パッケージを新しく書き始める時に使っています。&lt;/p&gt;
+&lt;!-- ### [bumpversion](https://github.com/kennethreitz/pipenv) --&gt;
+
+&lt;!--  --&gt;
+
+&lt;!-- プロジェクトのバージョン番号を上げてくれるツールです。 --&gt;
+
+&lt;!-- これも仮想環境は関係ありませんが、hatchで言及されていて私も使っていたので一応挙げておきます。 --&gt;
+
+&lt;!--  --&gt;
+
+&lt;!-- バージョン番号が書かれている箇所は`setup.py`や`__init__.py`、`docs/conf.py`などに分散している場合があります。 --&gt;
+
+&lt;!-- bumpversionを使うとコマンド1つですべての箇所のバージョンを上げることができます。 --&gt;
+
+&lt;!--  --&gt;
+
+&lt;!-- 例えばversionが1.2.3の状態で `bumpversion patch` を実行すると対象箇所のバージョンが1.2.4に上がります。 --&gt;
+
+&lt;!-- 同時にgitのcommitとtag付けもしてくれます（設定で切り替え可能です）。 --&gt;
+
+&lt;!--  --&gt;
+
+&lt;!-- versionの変更し忘れ防止に使っています。 --&gt;
+
+&lt;h3&gt;&lt;a href="https://github.com/sdispater/poet"&gt;poet&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;プロジェクト管理と仮想環境の管理を設定ファイル (poetry.toml) を基に色々してくれるようなことがREADMEに書いてありました。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The package is &lt;strong&gt;highly experimental&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;だそうです。&lt;/p&gt;
+&lt;h3&gt;&lt;a href="https://github.com/ofek/hatch"&gt;hatch&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;今回紹介したツールを全部まとめてさらにテストの実行やカバレッジ取得、PyPIへの登録などもできるツールらしいです。
+昨日（2017/09/05）頃からGitHubのtrendingに挙がっていました。
+すごい勢いでスターがついてます。&lt;/p&gt;
+&lt;p&gt;READMEでは以下のツールを置き換えると言っています。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cookiecutter PyPackage&lt;/li&gt;
+&lt;li&gt;pip&lt;/li&gt;
+&lt;li&gt;virtualenv&lt;/li&gt;
+&lt;li&gt;pyenv&lt;/li&gt;
+&lt;li&gt;Pew&lt;/li&gt;
+&lt;li&gt;inve&lt;/li&gt;
+&lt;li&gt;pytest&lt;/li&gt;
+&lt;li&gt;Coverage.py&lt;/li&gt;
+&lt;li&gt;twine&lt;/li&gt;
+&lt;li&gt;bumpversion&lt;/li&gt;
+&lt;li&gt;zest.releaser&lt;/li&gt;
+&lt;li&gt;Incremental&lt;/li&gt;
+&lt;li&gt;python setup.py ...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;正直巨大すぎる気がします……。
+redditでチラッと見た所（コンセプトについての）評判は良さそうでした。
+まさに全部入りという感じなので、そういうのが好きな人には受けそうな気がします。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;大量に雑に紹介させていただきました。&lt;/p&gt;
+&lt;p&gt;ちょうどhatchが盛り上がっていて、&lt;a href="http://utgwkk.hateblo.jp/entry/2017/09/05/110209"&gt;pipenvの紹介記事&lt;/a&gt;も結構はてブがついていたのですこし調べてみましたが、思った以上に色々ありました。&lt;/p&gt;
+&lt;p&gt;色々紹介した後でこういうのもアレですが、冒頭でも書いたように基本的には pip と venv (virtialenv) で十分です。
+まずはそれらを使ってみて、不満があったら他のツールを試してみるのがいいと思います。&lt;/p&gt;</content><category term="python"></category></entry><entry><title>Puppeteer (Chrome の自動操作ライブラリ) を Python に移植してpyppeteerという名前で公開しました</title><link href="https://miyakogi.github.io/blog/20170902/pyppeteer.html" rel="alternate"></link><published>2017-09-02T21:53:00+09:00</published><updated>2017-09-02T21:53:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-09-02:/blog/20170902/pyppeteer.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/GoogleChrome/puppeteer"&gt;Puppeteer&lt;/a&gt; というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。
+私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、&lt;a href="https://github.com/miyakogi/pyppeteer"&gt;pyppeteer&lt;/a&gt;という名前で公開しました。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/GoogleChrome/puppeteer"&gt;Puppeteer&lt;/a&gt; というJavaScriptでchromeを自動操作するライブラリが最近話題になっていました。
+私もPythonでSeleniumの代わりに使えるものがほしかったので、puppeteerをPythonに移植し、&lt;a href="https://github.com/miyakogi/pyppeteer"&gt;pyppeteer&lt;/a&gt;という名前で公開しました。&lt;/p&gt;
+&lt;!-- more --&gt;
+
+&lt;p&gt;Puppeteerについては下記Qiitaの投稿が参考になるかと思います。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://qiita.com/Quramy/items/26058e83e898ec2ec078"&gt;--headless時代の本命？ Chrome を Node.jsから操作するライブラリ puppeteer について - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;使用上の注意&lt;/h2&gt;
+&lt;p&gt;まだ作ったばかり＆テスト不十分なのでバグがあると思います。
+なので試す時は「うまく動いたらラッキー」くらいの人柱精神でお願いします。
+特にwindowsでは全くテストしていないので動かないかもしれません。&lt;/p&gt;
+&lt;p&gt;一応自分で&lt;a href="https://github.com/miyakogi/wdom/"&gt;wdom&lt;/a&gt;の&lt;a href="https://github.com/miyakogi/wdom/tree/dev/tests_py36"&gt;テスト&lt;/a&gt;に使ってみましたが、Webページのテストに使う分には意外と大丈夫です。
+スクレイピング用途で使うとまだバグがあると思います。&lt;/p&gt;
+&lt;p&gt;バグに気づきましたら&lt;a href="https://github.com/miyakogi/pyppeteer/issues"&gt;GitHubのIssue&lt;/a&gt;に報告していただけると幸いです。&lt;/p&gt;
+&lt;p&gt;修正してPR送っていただくのも大歓迎です。
+その際は&lt;code&gt;dev&lt;/code&gt;ブランチのコードを修正する形でお願いします。&lt;/p&gt;
+&lt;h2&gt;インストール&lt;/h2&gt;
+&lt;p&gt;Python3.6以上のみの対応です。
+pipでインストールできます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 -m pip install pyppeteer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;使い方&lt;/h2&gt;
+&lt;p&gt;基本的にpuppeteerと同じです。
+&lt;a href="https://github.com/GoogleChrome/puppeteer#usage"&gt;puppeteerのREADME&lt;/a&gt;にあるWebページを開いてスクリーンショット画像を取得する例はPyppeteerでは以下のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;asyncio&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyppeteer.launcher&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;launch&lt;/span&gt;
+
+&lt;span class="n"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;browser&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;browser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;launch&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;browser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newPage&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;goto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;http://example.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;screenshot&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;path&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;example.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+    &lt;span class="n"&gt;browser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_event_loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_until_complete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;初回実行時だけは特定リビジョンのchrome (100MB程度) をダウンロードするので少し時間がかかります。
+2回以降はすぐ終わると思います。&lt;/p&gt;
+&lt;p&gt;上記コードを実行すると同じディレクトリに&lt;code&gt;example.png&lt;/code&gt;というファイルができているはずです。&lt;/p&gt;
+&lt;p&gt;APIは以下のドキュメントに列挙してあります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://miyakogi.github.io/pyppeteer/reference.html"&gt;API Reference&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;async/await&lt;/code&gt;を多用しているため、かなりの数の関数/メソッドがcoroutine関数になっているので注意してください。
+これらはドキュメントで名前の先頭に &lt;em&gt;coroutine&lt;/em&gt; とついています。&lt;/p&gt;
+&lt;p&gt;pyppeteerのドキュメントではオプションなどについてかなり省略してしまっていますが、
+puppeteerと同じになっているので必要があればpuppeteerのドキュメントを確認してください。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;また、pyppeteer自体のテストも使い方の参考になるかもしれません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;https://github.com/miyakogi/pyppeteer/blob/master/tests/test_pyppeteer.py&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記テストで多用している&lt;code&gt;@sync&lt;/code&gt;というデコレータについては下記の記事を参照してください（宣伝）。&lt;/p&gt;
+&lt;p&gt;[http://h-miyako.hatenablog.com/entry/2017/08/30/090000:embed:cite]&lt;/p&gt;
+&lt;h2&gt;Puppeteerとの違い&lt;/h2&gt;
+&lt;p&gt;極力puppeteerとの違いが少ないようにしていますが、言語がJavaScriptとPythonで違う関係上多少の違いがあります。&lt;/p&gt;
+&lt;h3&gt;オプションのキーワード引数&lt;/h3&gt;
+&lt;p&gt;puppeteerではオプションを辞書で設定する作りになっていますが、pyppeteerでは辞書・キーワード引数のどちらでも受け付けます。つまりPyppeteerは以下の2つの書き方が可能で、どちらも同じように動作します。&lt;/p&gt;
+&lt;p&gt;Puppeteerのように辞書で渡す:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;browser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;launch&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;headless&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;キーワード引数で渡す:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;browser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;launch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;headless&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;要素を取得するメソッド名の違い&lt;/h3&gt;
+&lt;p&gt;Puppeteerでは&lt;code&gt;Page.$(selector)&lt;/code&gt;というメソッドで要素を取得できますが、Pythonでは&lt;code&gt;$&lt;/code&gt;が変数名に使えないので&lt;code&gt;Page.querySelector(selector)&lt;/code&gt;という名前になります。
+長いので&lt;code&gt;Page.J(selector)&lt;/code&gt;という省略名も用意しました。&lt;/p&gt;
+&lt;p&gt;この方法で取得した要素 (&lt;code&gt;Element&lt;/code&gt;) も同じように&lt;code&gt;Element.$&lt;/code&gt;が使えないので&lt;code&gt;Element.querySelector&lt;/code&gt;または&lt;code&gt;Element.J&lt;/code&gt;となります。&lt;/p&gt;
+&lt;p&gt;同様に&lt;code&gt;$$&lt;/code&gt;メソッドは&lt;code&gt;querySelectorAll&lt;/code&gt;または&lt;code&gt;JJ&lt;/code&gt;になります。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;evaluate()&lt;/code&gt;の引数&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Page&lt;/code&gt;/&lt;code&gt;Element&lt;/code&gt;の&lt;code&gt;evaluate(JSfunction)&lt;/code&gt;メソッドではブラウザ上で任意のJavaScriptの関数を実行し、結果を取得することができます。&lt;/p&gt;
+&lt;p&gt;PuppeteerではJavaScriptの関数を直接引数として渡せますが、pythonではJavaScriptの関数を直接定義できませんしPythonの関数を渡しても仕方ないので、文字列で関数を渡します。&lt;/p&gt;
+&lt;p&gt;要素のテキストを取得する例は以下のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;element&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;querySelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;h1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;element&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;(element) =&amp;gt; element.textContent&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;Element.evaluate()&lt;/code&gt;に渡される関数の第一引数にはその要素（上の例ではh1要素）が渡されます。
+（実は&lt;code&gt;this&lt;/code&gt;でも同じ要素が参照できます）&lt;/p&gt;
+&lt;h2&gt;今後&lt;/h2&gt;
+&lt;p&gt;テスト追加などで安定させ、本家puppeteerの更新に追従していこうと考えています。
+機能追加についてはPython特有の機能であれば追加しますが、基本的に独自の機能は追加しないでpuppeteerとの整合性を取っていこうと考えています。&lt;/p&gt;
+&lt;p&gt;なので「こういう機能追加して！」という要望には基本的にお応えできないと思います。
+puppeteerにあってこっちにない機能があれば対応しますのでお知らせください。&lt;/p&gt;</content><category term="python pyppeteer"></category></entry><entry><title>Pythonの非同期な関数を同期的に実行できるライブラリ、syncerを作りました</title><link href="https://miyakogi.github.io/blog/20170830/syncer.html" rel="alternate"></link><published>2017-08-30T01:55:00+09:00</published><updated>2017-08-30T01:55:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-08-30:/blog/20170830/syncer.html</id><summary type="html">&lt;p&gt;Python 3.5 から使える async/await 記法ですが、テストの際などは非同期な関数を実行するのにひと手間必要で面倒でした。
+そこで、非同期な関数を同期的に実行するライブラリ、&lt;a href="https://github.com/miyakogi/syncer"&gt;syncer&lt;/a&gt; を作りました。&lt;/p&gt;
+&lt;p&gt;syncerは &lt;code&gt;@sync&lt;/code&gt; というデコレータ用の関数をひとつだけ提供する非常に小さなライブラリです。
+主にテストでの利用を想定していますが、テスト以外でも汎用的に使えるライブラリになっています。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Python 3.5 から使える async/await 記法ですが、テストの際などは非同期な関数を実行するのにひと手間必要で面倒でした。
+そこで、非同期な関数を同期的に実行するライブラリ、&lt;a href="https://github.com/miyakogi/syncer"&gt;syncer&lt;/a&gt; を作りました。&lt;/p&gt;
+&lt;p&gt;syncerは &lt;code&gt;@sync&lt;/code&gt; というデコレータ用の関数をひとつだけ提供する非常に小さなライブラリです。
+主にテストでの利用を想定していますが、テスト以外でも汎用的に使えるライブラリになっています。&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;syncerはPython 3.4以上に対応しています。&lt;/p&gt;
+&lt;p&gt;3.4では async/await は使えませんが、&lt;code&gt;@asyncio.coroutine&lt;/code&gt; で装飾された関数を同期的に実行することができます。&lt;/p&gt;
+&lt;h2&gt;インストール&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;pip&lt;/code&gt; でインストールできます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 -m pip install syncer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;使い方&lt;/h2&gt;
+&lt;p&gt;以下の例ではテストはunittestを使って書いていますが、noseやpytestにも対応しています。
+ですがそれらのライブラリは似た機能を提供するプラグインもあるのでそちらを使ってもいいかもしれません。&lt;/p&gt;
+&lt;h3&gt;デコレータとして使う&lt;/h3&gt;
+&lt;p&gt;以下のような関数があった時:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;async_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wait_time&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;asyncio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wait_time&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;以下のようにテスト関数を &lt;code&gt;async def&lt;/code&gt; で定義して実行してもテストは実行されません。
+失敗するはずでも成功になってしまいます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAsync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_async&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;async_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;一応以下のような警告が出るはずです。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;RuntimeWarning&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;coroutine&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;TestAsync.test_async&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="n"&gt;awaited&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;そこで、テスト関数を&lt;code&gt;syncer.sync&lt;/code&gt;で装飾し、同期的に実行されるようにします。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;syncer&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAsync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nd"&gt;@syncer.sync&lt;/span&gt;
+    &lt;span class="n"&gt;async&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_async&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;await&lt;/span&gt; &lt;span class="n"&gt;async_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;今度は無事にテストが実行され、きちんとテストが失敗になっているはずです。&lt;/p&gt;
+&lt;h3&gt;関数として使う&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;syncer.sync&lt;/code&gt; はコルーチンやフューチャーを引数にとる関数として&lt;code&gt;await&lt;/code&gt;の代わりに通常の関数の中で使用することもできます。&lt;/p&gt;
+&lt;p&gt;先ほどのテストは以下のように書くこともできます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;syncer&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAsync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_async&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;syncer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;async_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;先ほどとの違いは以下の2点です。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;テスト関数の定義が&lt;code&gt;async def&lt;/code&gt;ではなく&lt;code&gt;def&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;await&lt;/code&gt; の代わりに &lt;code&gt;syncer.sync&lt;/code&gt; でラップしている&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鋭い方は「&lt;code&gt;asyncio.get_event_loop().run_until_complete()&lt;/code&gt; と何が違うの？」と思われたかもしれませんが、違いはありません。
+同じです。
+タイプ数が少ないだけです。
+正直デコレータだけで十分な気はしたのですが、せっかくなので関数としても使えるようにしただけです。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;非同期な関数を同期的に実行できるライブラリ、&lt;a href="https://github.com/miyakogi/syncer"&gt;syncer&lt;/a&gt; を紹介しました。&lt;/p&gt;
+&lt;p&gt;試してみてバグやおかしい部分があれば &lt;a href="https://github.com/miyakogi/syncer/issues"&gt;Issue&lt;/a&gt; にお知らせいただけると助かります。&lt;/p&gt;</content><category term="python"></category></entry><entry><title>Pythonのテストのパラメータ化にはparameterizedを使うと楽（unittestでもpytestでもnoseでも使えます）</title><link href="https://miyakogi.github.io/blog/20170816/parameterized.html" rel="alternate"></link><published>2017-08-16T00:48:00+09:00</published><updated>2017-08-16T00:48:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-08-16:/blog/20170816/parameterized.html</id><summary type="html">&lt;p&gt;Pythonでテストをパラメータ化した時の書き方を &lt;a href="http://docs.python.jp/3/library/unittest.html"&gt;unittest&lt;/a&gt; と &lt;a href="https://docs.pytest.org/en/latest/"&gt;pytest&lt;/a&gt;
+を使った場合で紹介し、最後にそれらで使えるparameterizedというライブラリを紹介します。&lt;/p&gt;
+&lt;p&gt;ちなみに私はpytestよりもunittest派です。&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Pythonでテストをパラメータ化した時の書き方を &lt;a href="http://docs.python.jp/3/library/unittest.html"&gt;unittest&lt;/a&gt; と &lt;a href="https://docs.pytest.org/en/latest/"&gt;pytest&lt;/a&gt;
+を使った場合で紹介し、最後にそれらで使えるparameterizedというライブラリを紹介します。&lt;/p&gt;
+&lt;p&gt;ちなみに私はpytestよりもunittest派です。&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;テストを書いていると値が違うだけのケースを複数確認したくなる時があります。&lt;/p&gt;
+&lt;p&gt;例えば、1 + 1 = 2, 2 + 3 = 5, 32 + (-32) = 0, ...などのようなケースです。
+これをすべて別のテストケースとして書き下すのは面倒ですしメンテも大変なことになるので、テストフレームワークは大抵こんなテストが簡単にできる仕組みを提供しています。&lt;/p&gt;
+&lt;p&gt;今回はPythonでよく使われているunittest（標準ライブラリ）とpytestでこれらのテストの書き方を紹介します。&lt;/p&gt;
+&lt;p&gt;なんでいまさら？と思われそうですが、pytestはともかくunittestでの書き方をあまり見かけなかったからです。&lt;/p&gt;
+&lt;p&gt;知ってる方は適当にparameterizedのところまで読み飛ばしてください。&lt;/p&gt;
+&lt;h2&gt;今回書くテスト&lt;/h2&gt;
+&lt;p&gt;2つの引数a, bを取って足し算して返す関数&lt;code&gt;add&lt;/code&gt;の結果を確認するテストを考えます。&lt;/p&gt;
+&lt;p&gt;3通りのパラメータでテストします。
+パラメータは入力をaとb, 期待される出力をansとして&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a=2, b=3, ans=4&lt;/li&gt;
+&lt;li&gt;a=1, b=1, ans=3&lt;/li&gt;
+&lt;li&gt;a=3, b=-1, ans=2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;と残念な感じにします。
+（テスト失敗時の出力を確認するためであって足し算できないとかではないです）&lt;/p&gt;
+&lt;p&gt;これをunittestで愚直に3通り書くと&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAdd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add_1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add_2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add_3&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;明らかに面倒です。&lt;/p&gt;
+&lt;p&gt;少し凝った感じにすることもできますが、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAdd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これは最初のケースで失敗して残りのテストが実行されません。&lt;/p&gt;
+&lt;h2&gt;テストのパラメータ化&lt;/h2&gt;
+&lt;h3&gt;unittest の subTest&lt;/h3&gt;
+&lt;p&gt;こんな時のためにunittestには&lt;a href="http://docs.python.jp/3/library/unittest.html#subtests"&gt;subTest&lt;/a&gt;という機能があります。
+（Python3.4で追加されました）&lt;/p&gt;
+&lt;p&gt;subTestを使って先ほどのテストを書き直します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAdd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+            &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subTest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;with self.subTest(...)&lt;/code&gt; がポイントです。&lt;/p&gt;
+&lt;p&gt;このテストを実行すると以下の出力が得られます。&lt;/p&gt;
+&lt;p&gt;[f:id:h-miyako:20170816162701p:plain]&lt;/p&gt;
+&lt;p&gt;途中で失敗してもテストが3通り実行され、きちんと失敗した2つのケースの詳細が表示されています。&lt;/p&gt;
+&lt;p&gt;とはいえ正直subTest書くの面倒なので今回紹介するparameterizedがなかったらpytest使ってたと思います。&lt;/p&gt;
+&lt;h3&gt;pytest の mark.parametrize&lt;/h3&gt;
+&lt;p&gt;pytestでの同様のテストは次のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytest&lt;/span&gt;
+
+&lt;span class="nd"&gt;@pytest.mark.parametrize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a,b,ans&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;pytestはテストケースが関数でかけるのですっきりしてますね。&lt;/p&gt;
+&lt;p&gt;テストケースの関数に&lt;code&gt;@pytest.mark.parametrize&lt;/code&gt;デコレータをつけ、第一引数に引数の名前の文字列、第二引数にテストケースに与える値を列挙したリストを渡します。&lt;/p&gt;
+&lt;p&gt;実行結果は以下のとおりです。&lt;/p&gt;
+&lt;p&gt;[f:id:h-miyako:20170816162830p:plain]&lt;/p&gt;
+&lt;h3&gt;pytest の fixture&lt;/h3&gt;
+&lt;p&gt;また、fixtureを使って間接的にパラメータを渡すこともできます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@pytest.fixture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;params&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;出力は次のようになります。&lt;/p&gt;
+&lt;p&gt;[f:id:h-miyako:20170816163114p:plain]&lt;/p&gt;
+&lt;h2&gt;parameterized を使った場合&lt;/h2&gt;
+&lt;p&gt;正直、unittestのsubTestもpytestの方法も若干冗長で書くのが面倒な感じがしていました。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/wolever/parameterized"&gt;parameterized&lt;/a&gt; というライブラリを使うと直感的にすっきりと書くことができます。&lt;/p&gt;
+&lt;h3&gt;インストール&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pip&lt;/code&gt;でインストールします。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install parameterized
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ちなみに &lt;strong&gt;parameterized&lt;/strong&gt; とは別に &lt;strong&gt;parametrized&lt;/strong&gt; というライブラリもPyPIに登録されているので注意してください（1敗）。
+今回紹介する parameterized はバージョンが今日時点で0.6.1なのでインストール時にバージョン番号を確認すると確実だと思います。&lt;/p&gt;
+&lt;h3&gt;unittest + parametrized&lt;/h3&gt;
+&lt;p&gt;次のように使います。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;parameterized&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;parameterized&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestAdd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nd"&gt;@parameterized.expand&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;引数をタプルにしてリストで&lt;code&gt;@parameterized.expand&lt;/code&gt;デコレータに渡すだけです。&lt;/p&gt;
+&lt;p&gt;出力は以下のようになります。&lt;/p&gt;
+&lt;p&gt;[f:id:h-miyako:20170816163406p:plain]&lt;/p&gt;
+&lt;p&gt;失敗した場合の値が表示されませんが、テストケースの名前の最後に0から順に連番がふられるので何番目のテストが失敗したのかはわかるようになっています。&lt;/p&gt;
+&lt;h3&gt;pytest + parametrized&lt;/h3&gt;
+&lt;p&gt;pytestでは以下のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;parameterized&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;parameterized&lt;/span&gt;
+
+&lt;span class="nd"&gt;@parameterized&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;unittestの場合と違って &lt;code&gt;.expand&lt;/code&gt; なしの &lt;code&gt;@parameterized&lt;/code&gt; デコレータを使っていますがそれ以外は同じです。&lt;/p&gt;
+&lt;p&gt;出力は以下のようになります。&lt;/p&gt;
+&lt;p&gt;[f:id:h-miyako:20170816163430p:plain]&lt;/p&gt;
+&lt;p&gt;pytestでは初めて使いましたが出力にちゃんとパラメータが表示されてわかりやすいのいいですね……（unittest派）&lt;/p&gt;
+&lt;h3&gt;その他&lt;/h3&gt;
+&lt;p&gt;parametrizedは他にもnose, nose2にも対応していてPythonの主要なテストフレームワークは網羅しています。
+（元々はnose用のnose_parameterizedというライブラリでしたが、他のフレームワークにも対応して今の名前になりました。）&lt;/p&gt;
+&lt;p&gt;ここでは紹介しませんが、パラメータに名前付き引数を渡したり関数で渡すこともできたりけっこう高機能です。
+それらの説明は&lt;a href="https://github.com/wolever/parameterized"&gt;README&lt;/a&gt;にありますので気になった方はそちらをご確認ください。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;unittestとpytestでテストをパラメータ化する方法とparameterizedを使った場合の書き方を紹介しました。&lt;/p&gt;
+&lt;p&gt;個人的な印象をざっくりまとめると&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;unittest.subTest&lt;ul&gt;
+&lt;li&gt;めんどう&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;pytest.mark.parametrize&lt;ul&gt;
+&lt;li&gt;subTestよりは楽だけど引数名書くの面倒&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;parametrized&lt;ul&gt;
+&lt;li&gt;楽&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という感じでparameterizedおすすめです（特にunittestで書く時）。&lt;/p&gt;
+&lt;p&gt;次もunittestネタで何か書きます（予告）。&lt;/p&gt;</content><category term="Python"></category><category term="unittest"></category></entry><entry><title>MarkdownとreStructuredTextを単一ファイルに混ぜ書きできるM2Rの紹介（Sphinx拡張対応）</title><link href="https://miyakogi.github.io/blog/20170731/m2r.html" rel="alternate"></link><published>2017-07-31T23:11:00+09:00</published><updated>2017-07-31T23:11:00+09:00</updated><author><name>miyakogi</name></author><id>tag:miyakogi.github.io,2017-07-31:/blog/20170731/m2r.html</id><summary type="html">&lt;p&gt;MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる&lt;a href="https://github.com/miyakogi/m2r"&gt;M2R&lt;/a&gt;というツールを (1年ほど前に作っていたのですが今さら) 紹介します。&lt;/p&gt;
 &lt;p&gt;rstで出力するのでSphinx拡張としても使えます。
 Markdownのテーブルや脚注にも対応しています。&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;MarkdownとreStructuredText (rst) を混ぜ書きしてrstを出力できる&lt;a href="https://github.com/miyakogi/m2r"&gt;M2R&lt;/a&gt;というツールを (1年ほど前に作っていたのですが今さら) 紹介します。&lt;/p&gt;
@@ -750,13 +1259,13 @@ input要素に入力された文字列を、先ほどのh1要素に表示して�
 &lt;code&gt;MyElement&lt;/code&gt;クラスは&lt;code&gt;Div&lt;/code&gt;クラスを継承しているので、そのインスタンスはブラウザ上では&lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;要素として表示されます。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;print(MyElement().html)&lt;/code&gt;とすると実際のhtmlが取得できます。
 この場合、以下のようになっているはずです。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;rimo_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;数値〜&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;rimo_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;数値〜&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;rimo_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;数値〜&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Hello, WDOM&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;wdom_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;数値〜&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;wdom_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;数値〜&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;wdom_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;数値〜&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Hello, WDOM&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;rimo_id&lt;/code&gt;は内部で使っている属性です。
+&lt;p&gt;&lt;code&gt;wdom_id&lt;/code&gt;は内部で使っている属性です。
 無視して下さい。
-テストなどで邪魔な場合は、&lt;code&gt;html_noid&lt;/code&gt;を使うと&lt;code&gt;rimo_id&lt;/code&gt;を除いたhtmlが取得できます。&lt;/p&gt;
+テストなどで邪魔な場合は、&lt;code&gt;html_noid&lt;/code&gt;を使うと&lt;code&gt;wdom_id&lt;/code&gt;を除いたhtmlが取得できます。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MyElement&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html_noid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="c1"&gt;# -&amp;gt; &amp;lt;div&amp;gt;&amp;lt;input&amp;gt;&amp;lt;h1&amp;gt;Hello, WDOM&amp;lt;/h1&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
