@@ -433,12 +433,12 @@ if __name__ == '__main__':
 この場合、以下のようになっているはずです。
 
 ```html
-<div rimo_id="数値〜"><input rimo_id="数値〜"><h1 rimo_id="数値〜">Hello, WDOM</h1></div>
+<div wdom_id="数値〜"><input wdom_id="数値〜"><h1 wdom_id="数値〜">Hello, WDOM</h1></div>
 ```
 
-`rimo_id`は内部で使っている属性です。
+`wdom_id`は内部で使っている属性です。
 無視して下さい。
-テストなどで邪魔な場合は、`html_noid`を使うと`rimo_id`を除いたhtmlが取得できます。
+テストなどで邪魔な場合は、`html_noid`を使うと`wdom_id`を除いたhtmlが取得できます。
 
 ```python
 print(MyElement().html_noid)
