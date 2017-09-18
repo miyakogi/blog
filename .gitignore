@@ -1,3 +1,12 @@
 __pycache__
 *.py[cdo]
 output
+
+bin
+lib
+lib64
+include
+pyvenv.cfg
+
+.autoenv.zsh
+.autoenv_leave.zsh
